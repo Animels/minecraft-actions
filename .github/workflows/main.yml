@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  DAY_OF_WEEK: Monday
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -13,14 +16,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up SSH agent
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
+      - name: Set up SSH key
+        run: |
+          # Save the SSH private key from secret to a file
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          # Secure the private key file
+          chmod 600 private_key.pem
+          # Start the SSH agent
+          eval $(ssh-agent -s)
+          # Add the private key to the SSH agent
+          ssh-add private_key.pem
 
       - name: Copy files from push to droplet and start from the new version
         run: |
-          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+          ssh -o -i StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/tempMC
             git pull origin main
