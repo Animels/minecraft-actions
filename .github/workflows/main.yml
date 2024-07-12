@@ -28,7 +28,7 @@ jobs:
             cd /root/tempMC
             git pull origin main
             FILE=$(ls forge* | head -n 1)
-            ./$FILE
+            java -jar ./$FILE
           EOF
           
           
