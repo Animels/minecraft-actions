@@ -24,7 +24,8 @@ jobs:
             echo "Running commands on the Droplet"
             cd /root/tempMC
             git pull origin main
-            start java server
+            FILE=$(ls forge* | head -n 1)
+            ./$FILE
           EOF
           
           
