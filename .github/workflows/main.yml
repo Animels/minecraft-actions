@@ -18,7 +18,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
 
-      - name: Copy files from push to droplet and start from new version
+      - name: Copy files from push to droplet and start from the new version
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
