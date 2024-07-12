@@ -18,14 +18,23 @@ jobs:
 
       - name: Set up SSH key
         run: |
-          # Save the SSH private key from secret to a file
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          mkdir -p ~/.ssh
+
+          # Save the SSH private key from secret to a file and ensure correct formatting
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/private_key.pem
+          
+          # Correct any potential issues with line endings
+          tr -d '\r' < ~/.ssh/private_key.pem > ~/.ssh/private_key.pem_fixed
+          mv ~/.ssh/private_key.pem_fixed ~/.ssh/private_key.pem
+
           # Secure the private key file
-          chmod 600 private_key.pem
+          chmod 600 ~/.ssh/private_key.pem
+
           # Start the SSH agent
-          eval $(ssh-agent -s)
+          eval "$(ssh-agent -s)"
+
           # Add the private key to the SSH agent
-          ssh-add private_key.pem
+          ssh-add ~/.ssh/private_key.pem
 
       - name: Copy files from push to droplet and start from the new version
         run: |
