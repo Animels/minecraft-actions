@@ -1,0 +1,30 @@
+name: Connect to Droplet
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
+
+      - name: Copy files from push to droplet and start from new version
+        run: |
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+            echo "Running commands on the Droplet"
+            cd /root/tempMC
+            git pull origin main
+            start java server
+          EOF
+          
+          
