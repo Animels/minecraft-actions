@@ -23,7 +23,7 @@ jobs:
 
       - name: Copy files from push to droplet and start from the new version
         run: |
-          ssh -o -i StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/tempMC
             git pull origin main
