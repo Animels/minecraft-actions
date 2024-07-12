@@ -21,7 +21,7 @@ jobs:
           SUPER_SECRET: ${{ secrets.SSH_DO_DROPLET }}
         run: |
           # Save the SSH private key from secret to a file
-          echo $SUPER_SECRET > private_key.pem
+          echo "${{ secrets.SSH_DO_DROPLET }}" > private_key.pem
           # Secure the private key file
           chmod 600 private_key.pem
           # Start the SSH agent
