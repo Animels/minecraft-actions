@@ -1,0 +1,37 @@
+[01:20:46] [Server thread/INFO]: Starting minecraft server version 1.12.1
+[01:20:46] [Server console handler/ERROR]: Exception handling console input
+java.io.IOException: The handle is invalid
+	at java.io.FileInputStream.readBytes(Native Method) ~[?:1.8.0_391]
+	at java.io.FileInputStream.read(Unknown Source) ~[?:1.8.0_391]
+	at java.io.BufferedInputStream.read1(Unknown Source) ~[?:1.8.0_391]
+	at java.io.BufferedInputStream.read(Unknown Source) ~[?:1.8.0_391]
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source) ~[?:1.8.0_391]
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source) ~[?:1.8.0_391]
+	at sun.nio.cs.StreamDecoder.read(Unknown Source) ~[?:1.8.0_391]
+	at java.io.InputStreamReader.read(Unknown Source) ~[?:1.8.0_391]
+	at java.io.BufferedReader.fill(Unknown Source) ~[?:1.8.0_391]
+	at java.io.BufferedReader.readLine(Unknown Source) ~[?:1.8.0_391]
+	at java.io.BufferedReader.readLine(Unknown Source) ~[?:1.8.0_391]
+	at net.minecraft.server.dedicated.DedicatedServer$2.run(DedicatedServer.java:105) [nz$2.class:?]
+[01:20:47] [Server thread/INFO]: Loading properties
+[01:20:47] [Server thread/INFO]: Default game type: SURVIVAL
+[01:20:47] [Server thread/INFO]: Generating keypair
+[01:20:47] [Server thread/INFO]: Starting Minecraft server on *:25565
+[01:20:47] [Server thread/INFO]: Using default channel type
+[01:20:48] [Server thread/INFO]: Preparing level "world"
+[01:20:48] [Server thread/INFO]: Loaded 488 advancements
+[01:20:49] [Server thread/INFO]: Preparing start region for level 0
+[01:20:50] [Server thread/INFO]: Preparing spawn area: 16%
+[01:20:51] [Server thread/INFO]: Preparing spawn area: 35%
+[01:20:52] [Server thread/INFO]: Preparing spawn area: 56%
+[01:20:53] [Server thread/INFO]: Preparing spawn area: 82%
+[01:20:53] [Server thread/INFO]: Done (5.457s)! For help, type "help" or "?"
+[01:20:53] [Server thread/INFO]: Stopping server
+[01:20:53] [Server thread/INFO]: Saving players
+[01:20:53] [Server thread/INFO]: Saving worlds
+[01:20:53] [Server thread/INFO]: Saving chunks for level 'world'/overworld
+[01:20:54] [Server thread/INFO]: Saving chunks for level 'world'/the_nether
+[01:20:54] [Server thread/INFO]: Saving chunks for level 'world'/the_end
+[01:20:55] [Server Shutdown Thread/INFO]: Stopping server
+[01:20:55] [Server Shutdown Thread/INFO]: Saving players
+[01:20:55] [Server Shutdown Thread/INFO]: Saving worlds
