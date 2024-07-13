@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       modid_projectid:
-        description: 'Adds mods from project pack'
-        required: false
+        description: 'Write projetcId of mod'
+        required: true
         default: '876781'
         type: string
       fileid: 
-        description: 'Adds stand-alone file'
-        required: false
+        description: 'Write modId of mod'
+        required: true
         default: '5397482'
         type: string
 env:
@@ -57,12 +57,13 @@ jobs:
           cd /root/tempMC
             
           api_url="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
+          api_url2="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID"
           echo "API URL: $api_url"
             
           # Fetch the download URL using curl and jq
-          response=(curl --location "$api_url" --header "Range: bytes=0-7000000" --header "x-api-key: $API_KEY")
+          response=$(curl --location "$api_url" --header "Range: bytes=0-7000000" --header "x-api-key: $API_KEY")
           echo "Extracted response: $response"
-            
+          
           # Extract download URL
           downloadUrl=$(echo $response | jq -r '.data')
             
@@ -78,7 +79,12 @@ jobs:
            else
             echo "Invalid URL extracted: $downloadUrl"
             exit 1
-           fi
+          fi
+
+          echo "Install deps" 
+          getInfoAboutMod=$(curl --location "$api_url2" --header "Range: bytes=0-7000000" --header "x-api-key: $API_KEY")
+          echo "Extracted getInfoAboutMod: $getInfoAboutMod"
+          
          EOF
 
     
