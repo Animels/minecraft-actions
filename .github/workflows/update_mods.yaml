@@ -1,0 +1,49 @@
+name: Connect to Droplet
+
+on:
+  workflow_dispatch:
+    inputs:
+      modid_projectid:
+        description: 'Adds mods from project pack'
+        required: false
+        default: '321321'
+        type: string
+      fileid: 
+        description: 'Adds stand-alone file'
+        required: false
+        default: '123123'
+        type: string
+
+env: 
+  BASE_URL: https://api.curseforge.com
+  MAX_PAGE_SIZE: 50
+  API_KEY: $2a$10$4UughKvVMNC9Yl0cUfhAsOiOkCWgy/k/6rn.z5bIztd62LpZ1eibe
+
+jobs:
+  download_and_install_mods:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
+
+      - name: Copy files from push to droplet and start from the new version
+        run: |
+          INPUT_MOD_ID=${{ github.event.inputs.modid_projectid }}
+          INPUT_FILE_ID=${{ github.event.inputs.fileid }}
+        
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+            echo "Running commands on the Droplet"
+            cd /root/tempMC
+            
+            curl  ${{ BASE_URL }}/v1/mods/${{ INPUT_MOD_ID }}/files/${{ INPUT_FILE_ID }}/download-url \
+            -H 'Accept: application/json' \
+            -H 'x-api-key: ${{ API_KEY }}'
+          EOF
+
+    
