@@ -1,4 +1,4 @@
-name: Connect to Droplet
+name: Add mode from modpack or stand-alone
 
 on:
   workflow_dispatch:
