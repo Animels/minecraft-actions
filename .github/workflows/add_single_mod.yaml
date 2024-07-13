@@ -107,36 +107,21 @@ jobs:
              deps=$(echo "$response_body" | jq -r '.data.dependencies[] | select(.relationType == 3)')
 
              for dep in deps; do
+               echo $dep
                relationType=$(echo "$dep" | jq -r '.modId')
-
                if [ -n "$relationType" = "$dep_lvl" ]; then
                  modId=$(echo "$dep" | jq -r '.modId')
                  api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
                  getFirstCompatable=$(curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" | jq -r '.data[]  | select(.gameVersions[])')
                  echo "getFirstCompatable: $getFirstCompatable"
                else
-                 echo "Invalid URL extracted: $downloadUrl"
+                 echo "Not rel type 3: $relationType"
                  exit 1
                fi
-               
-              
-
-              
-                   
-
-                    
-               
-                     
-                      
-
-                   
-                 done
-                done
-             
              done
              
              
-            curl -o /root/temp/temp.zip -L "$downloadUrl"
+             curl -o /root/temp/temp.zip -L "$downloadUrl"
            else
             echo "Invalid URL extracted: $downloadUrl"
             exit 1
