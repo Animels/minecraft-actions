@@ -13,11 +13,10 @@ on:
         required: false
         default: '5397482'
         type: string
-
-env: 
-  BASE_URL: 'https://api.curseforge.com'
+env:
+  BASE_URL: https://api.curseforge.com
   MAX_PAGE_SIZE: 50
-  API_KEY: '$2a$10$4UughKvVMNC9Yl0cUfhAsOiOkCWgy/k/6rn.z5bIztd62LpZ1eibe'
+  API_KEY: $2a$10$4UughKvVMNC9Yl0cUfhAsOiOkCWgy/k/6rn.z5bIztd62LpZ1eibe
 
 jobs:
   download_and_install_mods:
@@ -37,10 +36,13 @@ jobs:
          INPUT_MOD_ID=${{ github.event.inputs.modid_projectid }}
          INPUT_FILE_ID=${{ github.event.inputs.fileid }}
 
+          echo "Base URL: outer $BASE_URL"
+
          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
             echo "Running commands on the Droplet"
             echo "Base URL: $BASE_URL"
-            echo "Base URL: $API_KEY"
+            echo "API_KEY: $API_KEY"
+            echo "API_KEY: $API_KEY"
             cd /root/tempMC
             
             api_url="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
