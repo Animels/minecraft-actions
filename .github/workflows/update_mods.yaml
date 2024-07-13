@@ -43,6 +43,10 @@ jobs:
 
          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
           echo "Running commands on the Droplet"
+          export BASE_URL="$BASE_URL"
+          export API_KEY="$API_KEY"
+          export INPUT_MOD_ID="$INPUT_MOD_ID"
+          export INPUT_FILE_ID="$INPUT_FILE_ID"
           echo "Base URL: $BASE_URL"
           echo "API_KEY: $API_KEY"
           echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
