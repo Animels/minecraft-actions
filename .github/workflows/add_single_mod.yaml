@@ -86,7 +86,7 @@ jobs:
           echo "Install deps if needed" 
           curl -vvv -L "$api_url_info" -H "x-api-key: $API_KEY" -o /root/temp/response.json
 
-          if [[ -s response.json ]]; then
+          if [[ -s /root/temp/response.json ]]; then
             echo "Successfully downloaded response.json"
             has_dependencies=$(jq -r '.data.dependencies | length > 0' /root/temp/response.json)
             echo "Has Deps? $has_dependencies"
