@@ -85,10 +85,26 @@ jobs:
             exit 1
           fi
 
-          echo "Install deps" 
-          getInfoAboutMod=$(curl -vvv "$api_url_info" -H "Range: bytes=0-7000000" -H "x-api-key: $API_KEY")
+         
+
+          echo "Install deps if needed" 
+          getInfoAboutMod=$(curl -vvv -L "$api_url_info" -H "x-api-key: $API_KEY")
           echo "Extracted getInfoAboutMod: $getInfoAboutMod"
           response_body=$(echo "$getInfoAboutMod" | sed '/HTTP_STATUS:/d')
+          echo "Extracted response_body: $response_body"
+          
+          has_dependencies=$(echo "$json_response" | jq '.data.dependencies | length > 0')
+          
+          if [[ $getInfoAboutMod =~ ^https?:// ]]; then
+            echo "Valid URL: $downloadUrl"
+            
+             # Download the file using the obtained URL
+            curl -o /root/temp/temp.zip -L "$downloadUrl"
+           else
+            echo "Invalid URL extracted: $downloadUrl"
+            exit 1
+          fi
+          
           # mockGameVersion="1.19.2"
           forgeGameVersion="Forge"
           gameVersions=$(echo "$response_body" | jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))')
