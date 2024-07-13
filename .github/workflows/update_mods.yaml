@@ -60,7 +60,7 @@ jobs:
           echo "API URL: $api_url"
             
           # Fetch the download URL using curl and jq
-          response=$(curl --location "$api_url" --header "Range: bytes=0-7000000" --header "x-api-key: $API_KEY")
+          response=(curl --location "$api_url" --header "Range: bytes=0-7000000" --header "x-api-key: $API_KEY")
           echo "Extracted response: $response"
             
           # Extract download URL
