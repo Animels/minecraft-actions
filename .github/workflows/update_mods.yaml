@@ -73,6 +73,6 @@ jobs:
             echo "Invalid URL extracted: $downloadUrl"
             exit 1
            fi
-       EOF
+         EOF
 
     
