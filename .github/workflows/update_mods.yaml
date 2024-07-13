@@ -43,6 +43,6 @@ jobs:
              curl "$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url" \
              -H 'Accept: application/json' \
              -H "x-api-key: $API_KEY"
-            EOF
+         EOF
 
     
