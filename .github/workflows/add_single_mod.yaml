@@ -97,7 +97,9 @@ jobs:
               gameVersions=$(jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))' /root/temp/response.json)
               echo "Game version and mod runner: $gameVersions $forgeGameVersion"
 
-              deps=$(jq -r '.data.dependencies[] | select(.relationType == 3)' /root/temp/response.json | while IFS= read -r dep; do
+              deps=$(jq -r '.data.dependencies[] | select(.relationType == 3)' /root/temp/response.json 
+              
+              echo "$deps" | while IFS= read -r dep; do
                 echo "Downloading dep: $dep"
                 modId=$(echo "$dep" | jq -r '.modId')
                 relationType=$(echo "$dep" | jq -r '.relationType'))
@@ -105,6 +107,7 @@ jobs:
                 curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
                 getInfoAboutDep=$(jq -r '.data[]  | select(.gameVersions[])' /root/temp/response_dep.json)
                 echo "getInfoAboutDep: $getInfoAboutDep"
+              done
 
               # for dep in deps; do
               #   echo "Downloading dep: $dep"
