@@ -76,9 +76,9 @@ jobs:
           # Validate the URL format
           if [[ $downloadUrl =~ ^https?:// ]]; then
             echo "Valid URL: $downloadUrl"
-              
+            
              # Download the file using the obtained URL
-            curl -o /root/temp.zip "$downloadUrl"
+            curl -o /root/temp/temp.zip -L "$downloadUrl"
            else
             echo "Invalid URL extracted: $downloadUrl"
             exit 1
