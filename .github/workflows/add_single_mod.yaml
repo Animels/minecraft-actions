@@ -102,7 +102,7 @@ jobs:
               echo "$deps" | while IFS= read -r dep; do
                 echo "Downloading dep: $dep"
                 modId=$(echo "$dep" | jq -r '.modId')
-                relationType=$(echo "$dep" | jq -r '.relationType'))
+                relationType=$(echo "$dep" | jq -r '.relationType')
                 api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
                 curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
                 getInfoAboutDep=$(jq -r '.data[]  | select(.gameVersions[])' /root/temp/response_dep.json)
