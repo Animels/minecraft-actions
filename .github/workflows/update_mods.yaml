@@ -33,16 +33,22 @@ jobs:
 
       - name: Create environment file
         run: |
+          INPUT_MOD_ID=${{ github.event.inputs.modid_projectid }}
+          INPUT_FILE_ID=${{ github.event.inputs.fileid }}
           echo "BASE_URL=$BASE_URL" > .env
           echo "API_KEY=$API_KEY" >> .env
-          echo "INPUT_MOD_ID=${{ github.event.inputs.modid_projectid }}" >> .env
-          echo "INPUT_FILE_ID=${{ github.event.inputs.fileid }}" >> .env
+          echo "INPUT_MOD_ID=$INPUT_MOD_ID" >> .env
+          echo "INPUT_FILE_ID=$INPUT_FILE_ID" >> .env
           cat .env  # Debug to ensure the file is correct
+
+      - name: Copy .env file to Droplet
+        run: |
+          scp -o StrictHostKeyChecking=no .env root@206.189.84.101:/root/tempMC/
 
       - name: Copy files from push to droplet and start from the new version
         run: |
-         scp -o StrictHostKeyChecking=no .env root@206.189.84.101:/root/tempMC/
          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+          source /root/tempMC/.env
           echo "Running commands on the Droplet"
           echo "Base URL: $BASE_URL"
           echo "API_KEY: $API_KEY"
