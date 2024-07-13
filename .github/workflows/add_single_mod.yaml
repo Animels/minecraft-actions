@@ -100,7 +100,7 @@ jobs:
               deps=$(jq -r '[.data.dependencies[] | select(.relationType == 3)]' /root/temp/response.json )
               echo "Dependencies: $deps"
               
-              echo "$deps" | while IFS= read -r dep; do
+              echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
                 echo "Downloading dep: $dep"
                 modId=$(echo "$dep" | jq -r '.modId')
                 relationType=$(echo "$dep" | jq -r '.relationType')
