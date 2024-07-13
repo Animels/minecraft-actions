@@ -6,12 +6,12 @@ on:
       modid_projectid:
         description: 'Adds mods from project pack'
         required: false
-        default: '321321'
+        default: '876781'
         type: string
       fileid: 
         description: 'Adds stand-alone file'
         required: false
-        default: '123123'
+        default: '5397482'
         type: string
 
 env: 
