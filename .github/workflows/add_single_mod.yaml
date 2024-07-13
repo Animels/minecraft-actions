@@ -98,9 +98,9 @@ jobs:
               echo "Game version and mod runner: $gameVersions $forgeGameVersion"
 
               deps=$(jq -r '.data.dependencies[] | select(.relationType == 3)' /root/temp/response.json )
-              echo "Devepndencies: $deps"
+              echo "Dependencies: $deps"
               
-              "$deps" | while IFS= read -r dep; do
+              echo "$deps" | while IFS= read -r dep; do
                 echo "Downloading dep: $dep"
                 modId=$(echo "$dep" | jq -r '.modId')
                 relationType=$(echo "$dep" | jq -r '.relationType')
