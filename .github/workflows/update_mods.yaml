@@ -36,13 +36,15 @@ jobs:
          INPUT_MOD_ID=${{ github.event.inputs.modid_projectid }}
          INPUT_FILE_ID=${{ github.event.inputs.fileid }}
 
-          echo "Base URL: outer $BASE_URL"
+        echo "Base URL: $BASE_URL"
+        echo "API_KEY: $API_KEY"
+        echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
 
-         ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
             echo "Running commands on the Droplet"
             echo "Base URL: $BASE_URL"
             echo "API_KEY: $API_KEY"
-            echo "API_KEY: $API_KEY"
+            echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
             cd /root/tempMC
             
             api_url="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
