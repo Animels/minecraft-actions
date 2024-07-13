@@ -64,7 +64,7 @@ jobs:
           echo "API URL: $api_url"
             
           # Fetch the download URL using curl and jq
-          response=$(curl -vvv "$api_url_dlink" -H "Host: api.curseforge.com" -H "Range: bytes=0-7000000" -H "x-api-key: $API_KEY" -H "User-Agent: GitHubActionsRunner/1.0" -H "Accept: */*" -H "Cache-Control: no-cache")
+          response=$(curl -vvv "$api_url_dlink" -H "x-api-key: $API_KEY")
           echo "Extracted response: $response"
 
           response_body=$(echo "$response" | sed '/HTTP_STATUS:/d')
@@ -89,41 +89,52 @@ jobs:
          
 
           echo "Install deps if needed" 
-          getInfoAboutMod=$(curl -vvv -L "$api_url_info" -H "x-api-key: $API_KEY")
-          echo "Extracted getInfoAboutMod: $getInfoAboutMod"
-          response_body=$(echo "$getInfoAboutMod" | sed '/HTTP_STATUS:/d')
-          echo "Extracted response_body: $response_body"
+          curl -vvv -L "$api_url_info" -H "x-api-key: $API_KEY" -o /root/temp/response.json
+
+          if [[ -s response.json ]]; then
+            echo "Successfully downloaded response.json"
+            has_dependencies=$(jq -r '.data.dependencies | length > 0' /root/temp/response.json)
+            
+            if [ -n "$has_dependencies" ]; then
+              forgeGameVersion="Forge"
+              dep_lvl=3
+              gameVersions=$(jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))' /root/temp/response.json)
+              echo "Game version and mod runner: $gameVersions $forgeGameVersion"
+
+              deps=$(jq -r '.data.dependencies[] | select(.relationType == 3)' /root/temp/response.json)
+
+              for dep in deps; do
+                relationType=$(echo "$dep" | jq -r '.modId')
+                if [ -n "$relationType" = "$dep_lvl" ]; then
+                  modId=$(echo "$dep" | jq -r '.modId')
+                  api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
+                  curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
+                  getInfoAboutDep=$(jq -r '.data[]  | select(.gameVersions[])' /root/temp/response_dep.json)
+                  echo "getInfoAboutDep: $getInfoAboutDep"
+                else
+                  echo "Not rel type 3: $relationType"
+                  exit 1
+                fi
+            done
+
+
+
+
+          done
+        
           
-          has_dependencies=$(echo "$json_response" | jq '.data.dependencies | length > 0')
+         
           
            if [ -n "$has_dependencies" ]; then
              # Download the file using the obtained URL
              # mockGameVersion="1.19.2"
-             forgeGameVersion="Forge"
-             dep_lvl=3
-             gameVersions=$(echo "$response_body" | jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))')
-             echo "Game version and mod runner: $gameVersions $forgeGameVersion"
-
-             deps=$(echo "$response_body" | jq -r '.data.dependencies[] | select(.relationType == 3)')
-
-             for dep in deps; do
-               echo $dep
-               relationType=$(echo "$dep" | jq -r '.modId')
-               if [ -n "$relationType" = "$dep_lvl" ]; then
-                 modId=$(echo "$dep" | jq -r '.modId')
-                 api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
-                 getFirstCompatable=$(curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" | jq -r '.data[]  | select(.gameVersions[])')
-                 echo "getFirstCompatable: $getFirstCompatable"
-               else
-                 echo "Not rel type 3: $relationType"
-                 exit 1
-               fi
-             done
              
+             done
+  
              
              curl -o /root/temp/temp.zip -L "$downloadUrl"
            else
-            echo "Invalid URL extracted: $downloadUrl"
+            echo "Doesnt have any deps: $has_dependencies"
             exit 1
            fi
          EOF
