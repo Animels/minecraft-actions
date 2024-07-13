@@ -62,24 +62,19 @@ jobs:
           api_url_info="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID"
       
           echo "API URL: $api_url"
-            
-          # Fetch the download URL using curl and jq
+
           response=$(curl -vvv "$api_url_dlink" -H "x-api-key: $API_KEY")
           echo "Extracted response: $response"
 
           response_body=$(echo "$response" | sed '/HTTP_STATUS:/d')
           echo "Response Body: $response_body"  # Debugging: Print the response body
-          
-          # Extract download URL
+
           downloadUrl=$(echo "$response_body" | jq -r '.data')
-          # Debug: Output the extracted URL
           echo "Extracted URL: $downloadUrl"
             
-          # Validate the URL format
+
           if [[ $downloadUrl =~ ^https?:// ]]; then
             echo "Valid URL: $downloadUrl"
-            
-             # Download the file using the obtained URL
             curl -o /root/temp/temp.zip -L "$downloadUrl"
            else
             echo "Invalid URL extracted: $downloadUrl"
@@ -115,28 +110,9 @@ jobs:
                   echo "Not rel type 3: $relationType"
                   exit 1
                 fi
+              done
             done
-
-
-
-
           done
-        
-          
-         
-          
-           if [ -n "$has_dependencies" ]; then
-             # Download the file using the obtained URL
-             # mockGameVersion="1.19.2"
-             
-             done
-  
-             
-             curl -o /root/temp/temp.zip -L "$downloadUrl"
-           else
-            echo "Doesnt have any deps: $has_dependencies"
-            exit 1
-           fi
          EOF
 
     
