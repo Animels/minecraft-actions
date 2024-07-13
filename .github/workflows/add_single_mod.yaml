@@ -60,6 +60,7 @@ jobs:
             
           api_url_dlink="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
           api_url_info="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID"
+      
           echo "API URL: $api_url"
             
           # Fetch the download URL using curl and jq
@@ -95,23 +96,51 @@ jobs:
           
           has_dependencies=$(echo "$json_response" | jq '.data.dependencies | length > 0')
           
-          if [[ $getInfoAboutMod =~ ^https?:// ]]; then
-            echo "Valid URL: $downloadUrl"
-            
+           if [ -n "$has_dependencies" ]; then
              # Download the file using the obtained URL
+             # mockGameVersion="1.19.2"
+             forgeGameVersion="Forge"
+             dep_lvl=3
+             gameVersions=$(echo "$response_body" | jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))')
+             echo "Game version and mod runner: $gameVersions $forgeGameVersion"
+
+             deps=$(echo "$response_body" | jq -r '.data.dependencies[] | select(.relationType == 3)')
+
+             for dep in deps; do
+               relationType=$(echo "$dep" | jq -r '.modId')
+
+               if [ -n "$relationType" = "$dep_lvl" ]; then
+                 modId=$(echo "$dep" | jq -r '.modId')
+                 api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
+                 getFirstCompatable=$(curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" | jq -r '.data[]  | select(.gameVersions[])')
+                 echo "getFirstCompatable: $getFirstCompatable"
+               else
+                 echo "Invalid URL extracted: $downloadUrl"
+                 exit 1
+               fi
+               
+              
+
+              
+                   
+
+                    
+               
+                     
+                      
+
+                   
+                 done
+                done
+             
+             done
+             
+             
             curl -o /root/temp/temp.zip -L "$downloadUrl"
            else
             echo "Invalid URL extracted: $downloadUrl"
             exit 1
-          fi
-          
-          # mockGameVersion="1.19.2"
-          forgeGameVersion="Forge"
-          gameVersions=$(echo "$response_body" | jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))')
-          echo "Game version and mod runner: $gameVersions $forgeGameVersion"
-          
-          
-          
+           fi
          EOF
 
     
