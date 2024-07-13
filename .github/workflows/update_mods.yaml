@@ -41,10 +41,7 @@ jobs:
             echo "Running commands on the Droplet"
             cd /root/tempMC
             
-            response=$(curl --location "$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url" \
-            --header "Range: bytes=0-7000000" \
-            --header "x-api-key: $API_KEY")
-            
+            response=$(curl --location $BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url --output /root/temp/ --header "Range: bytes=0-7000000" --header "x-api-key: $API_KEY")
             # Debug: Output the response
             echo "Response: $response"
             
