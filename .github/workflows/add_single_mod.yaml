@@ -98,19 +98,14 @@ jobs:
               echo "Game version and mod runner: $gameVersions $forgeGameVersion"
 
               deps=$(jq -r '.data.dependencies[] | select(.relationType == 3)' /root/temp/response.json)
+              echo "Goted deps: $deps"
 
               for dep in deps; do
-                relationType=$(echo "$dep" | jq -r '.modId')
-                if [ -n "$relationType" = "$dep_lvl" ]; then
-                  modId=$(echo "$dep" | jq -r '.modId')
-                  api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
-                  curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
-                  getInfoAboutDep=$(jq -r '.data[]  | select(.gameVersions[])' /root/temp/response_dep.json)
-                  echo "getInfoAboutDep: $getInfoAboutDep"
-                else
-                  echo "Not rel type 3: $relationType"
-                  exit 1
-                fi
+                modId=$(echo "$dep" | jq -r '.modId')
+                api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
+                curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
+                getInfoAboutDep=$(jq -r '.data[]  | select(.gameVersions[])' /root/temp/response_dep.json)
+                echo "getInfoAboutDep: $getInfoAboutDep"
               done
             else
               echo "Has no deps in mod"
