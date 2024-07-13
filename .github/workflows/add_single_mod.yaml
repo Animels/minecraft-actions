@@ -111,8 +111,12 @@ jobs:
                   exit 1
                 fi
               done
-            done
-          done
+            else
+              echo "Has no deps in mod"
+            fi
+          else
+            echo "No information on deps"
+          fi
          EOF
 
     
