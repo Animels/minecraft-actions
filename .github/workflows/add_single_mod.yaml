@@ -61,7 +61,7 @@ jobs:
           echo "API URL: $api_url"
             
           # Fetch the download URL using curl and jq
-          response=$(curl -vvv "$api_url" -H "Range: bytes=0-7000000" -H "x-api-key: $API_KEY" -H "User-Agent: curl/8.7.1" -H "Accept: */*" | jq -r '.data')
+          response=$(curl -vvv "$api_url" -H "Host: api.curseforge.com" -H "Range: bytes=0-7000000" -H "x-api-key: $API_KEY" -H "User-Agent: curl/8.7.1" -H "Accept: */*" | jq -r '.data')
           echo "Extracted response: $response2"
           
           # Extract download URL
