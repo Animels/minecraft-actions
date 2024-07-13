@@ -40,9 +40,10 @@ jobs:
          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<EOF
              echo "Running commands on the Droplet"
              cd /root/tempMC
-             curl "$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url" \
-             -H 'Accept: application/json' \
-             -H "x-api-key: $API_KEY"
+
+             response=\$(curl --location "https://api.curseforge.com/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url" --header "Range: bytes=0-7000000" --header "x-api-key: $API_KEY")
+             downloadUrl=\$(echo \$response | jq -r '.data')
+             curl -O "\$downloadUrl"
          EOF
 
     
