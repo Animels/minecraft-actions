@@ -36,13 +36,12 @@ jobs:
         run: |
          INPUT_MOD_ID=${{ github.event.inputs.modid_projectid }}
          INPUT_FILE_ID=${{ github.event.inputs.fileid }}
-         URL = "$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
    
          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<EOF
              echo "Running commands on the Droplet"
              cd /root/tempMC
 
-             response=\$(curl --location $URL --output /root/temp --header "Range: bytes=0-7000000" --header "x-api-key: $API_KEY")
+             response=\$(curl --location $BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url --output /root/temp --header "Range: bytes=0-7000000" --header "x-api-key: $API_KEY")
              downloadUrl=\$(echo \$response | jq -r '.data')
              curl "\$downloadUrl" --output out.bin
          EOF
