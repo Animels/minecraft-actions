@@ -56,12 +56,12 @@ jobs:
           echo "INPUT_MOD_ID: $INPUT_MOD_ID"
           cd /root/tempMC
             
-          api_url="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
-          api_url2="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID"
+          api_url_dlink="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
+          api_url_info="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID"
           echo "API URL: $api_url"
             
           # Fetch the download URL using curl and jq
-          response=$(curl -vvv "$api_url" -H "Host: api.curseforge.com" -H "Range: bytes=0-7000000" -H "x-api-key: $API_KEY" -H "User-Agent: GitHubActionsRunner/1.0" -H "Accept: */*" -H "Cache-Control: no-cache")
+          response=$(curl -vvv "$api_url_dlink" -H "Host: api.curseforge.com" -H "Range: bytes=0-7000000" -H "x-api-key: $API_KEY" -H "User-Agent: GitHubActionsRunner/1.0" -H "Accept: */*" -H "Cache-Control: no-cache")
           echo "Extracted response: $response"
 
           response_body=$(echo "$response" | sed '/HTTP_STATUS:/d')
@@ -69,7 +69,6 @@ jobs:
           
           # Extract download URL
           downloadUrl=$(echo "$response_body" | jq -r '.data')
-            
           # Debug: Output the extracted URL
           echo "Extracted URL: $downloadUrl"
             
@@ -85,8 +84,15 @@ jobs:
           fi
 
           echo "Install deps" 
-          getInfoAboutMod=$(curl --location "$api_url2" --header "Range: bytes=0-7000000" --header "x-api-key: $API_KEY")
+          getInfoAboutMod=$(curl -vvv "$api_url_info" -H "Range: bytes=0-7000000" -H "x-api-key: $API_KEY")
           echo "Extracted getInfoAboutMod: $getInfoAboutMod"
+          response_body=$(echo "$getInfoAboutMod" | sed '/HTTP_STATUS:/d')
+          # mockGameVersion="1.19.2"
+          forgeGameVersion="Forge"
+          gameVersions=$(echo "$response_body" | jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))')
+          echo "Game version and mod runner: $gameVersions $forgeGameVersion"
+          
+          
           
          EOF
 
