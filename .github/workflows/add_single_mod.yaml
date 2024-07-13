@@ -97,7 +97,7 @@ jobs:
               gameVersions=$(jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))' /root/temp/response.json)
               echo "Game version and mod runner: $gameVersions $forgeGameVersion"
 
-              deps=$(jq -r '.data.dependencies[] | select(.relationType == 3)' /root/temp/response.json 
+              deps=$(jq -r '.data.dependencies[] | select(.relationType == 3)' /root/temp/response.json )
               
               echo "$deps" | while IFS= read -r dep; do
                 echo "Downloading dep: $dep"
