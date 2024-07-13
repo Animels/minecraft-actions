@@ -1,4 +1,4 @@
-name: Add mode from modpack or stand-alone
+name: Add single mod and all dependencies
 
 on:
   workflow_dispatch:
