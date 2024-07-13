@@ -42,8 +42,7 @@ jobs:
              cd /root/tempMC
 
              response=\$(curl --location "$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url" --header "Range: bytes=0-7000000" --header "x-api-key: $API_KEY")
-             downloadUrl=\$(echo \$response | jq -r '.data')
-             curl -O "\$downloadUrl" --output out.bin
+             
          EOF
 
     
