@@ -36,41 +36,43 @@ jobs:
          INPUT_MOD_ID=${{ github.event.inputs.modid_projectid }}
          INPUT_FILE_ID=${{ github.event.inputs.fileid }}
 
-        echo "Base URL: $BASE_URL"
-        echo "API_KEY: $API_KEY"
-        echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
+         echo "Base URL: $BASE_URL"
+         echo "API_KEY: $API_KEY"
+         echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
+         echo "INPUT_MOD_ID: $INPUT_MOD_ID"
 
-          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
-            echo "Running commands on the Droplet"
-            echo "Base URL: $BASE_URL"
-            echo "API_KEY: $API_KEY"
-            echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
-            cd /root/tempMC
+         ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+          echo "Running commands on the Droplet"
+          echo "Base URL: $BASE_URL"
+          echo "API_KEY: $API_KEY"
+          echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
+          echo "INPUT_MOD_ID: $INPUT_MOD_ID"
+          cd /root/tempMC
             
-            api_url="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
-            echo "API URL: $api_url"
+          api_url="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
+          echo "API URL: $api_url"
             
-            # Fetch the download URL using curl and jq
-            response=$(curl --location "$api_url" \
-            --header "Range: bytes=0-7000000" \
-            --header "x-api-key: $API_KEY")
+          # Fetch the download URL using curl and jq
+          response=$(curl --location "$api_url" \
+          --header "Range: bytes=0-7000000" \
+          --header "x-api-key: $API_KEY")
             
-            # Extract download URL
-            downloadUrl=$(echo $response | jq -r '.data')
+          # Extract download URL
+          downloadUrl=$(echo $response | jq -r '.data')
             
-            # Debug: Output the extracted URL
-            echo "Extracted URL: $downloadUrl"
+          # Debug: Output the extracted URL
+          echo "Extracted URL: $downloadUrl"
             
-            # Validate the URL format
-            if [[ $downloadUrl =~ ^https?:// ]]; then
-              echo "Valid URL: $downloadUrl"
+          # Validate the URL format
+          if [[ $downloadUrl =~ ^https?:// ]]; then
+            echo "Valid URL: $downloadUrl"
               
-              # Download the file using the obtained URL
-              curl -O "$downloadUrl"
-            else
-              echo "Invalid URL extracted: $downloadUrl"
-              exit 1
-            fi
-         EOF
+             # Download the file using the obtained URL
+            curl -O "$downloadUrl"
+           else
+            echo "Invalid URL extracted: $downloadUrl"
+            exit 1
+           fi
+       EOF
 
     
