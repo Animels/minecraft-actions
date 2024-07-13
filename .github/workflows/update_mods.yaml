@@ -31,22 +31,19 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
 
+      - name: Create environment file
+        run: |
+          echo "BASE_URL=$BASE_URL" > .env
+          echo "API_KEY=$API_KEY" >> .env
+          echo "INPUT_MOD_ID=${{ github.event.inputs.modid_projectid }}" >> .env
+          echo "INPUT_FILE_ID=${{ github.event.inputs.fileid }}" >> .env
+          cat .env  # Debug to ensure the file is correct
+
       - name: Copy files from push to droplet and start from the new version
         run: |
-         INPUT_MOD_ID=${{ github.event.inputs.modid_projectid }}
-         INPUT_FILE_ID=${{ github.event.inputs.fileid }}
-
-         echo "Base URL: $BASE_URL"
-         echo "API_KEY: $API_KEY"
-         echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
-         echo "INPUT_MOD_ID: $INPUT_MOD_ID"
-
+         scp -o StrictHostKeyChecking=no .env root@206.189.84.101:/root/tempMC/
          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
           echo "Running commands on the Droplet"
-          export BASE_URL="$BASE_URL"
-          export API_KEY="$API_KEY"
-          export INPUT_MOD_ID="$INPUT_MOD_ID"
-          export INPUT_FILE_ID="$INPUT_FILE_ID"
           echo "Base URL: $BASE_URL"
           echo "API_KEY: $API_KEY"
           echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
