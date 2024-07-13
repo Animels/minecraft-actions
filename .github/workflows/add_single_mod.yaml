@@ -78,7 +78,7 @@ jobs:
             echo "Valid URL: $downloadUrl"
               
              # Download the file using the obtained URL
-            curl -O /root/temp "$downloadUrl"
+            curl -o /root/temp.zip "$downloadUrl"
            else
             echo "Invalid URL extracted: $downloadUrl"
             exit 1
