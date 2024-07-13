@@ -89,6 +89,7 @@ jobs:
           if [[ -s response.json ]]; then
             echo "Successfully downloaded response.json"
             has_dependencies=$(jq -r '.data.dependencies | length > 0' /root/temp/response.json)
+            echo "Has Deps? $has_dependencies"
             
             if [ -n "$has_dependencies" ]; then
               forgeGameVersion="Forge"
