@@ -101,6 +101,7 @@ jobs:
               echo "Goted deps: $deps"
 
               for dep in deps; do
+                echo "Downloading dep: $dep"
                 modId=$(echo "$dep" | jq -r '.modId')
                 api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
                 curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
