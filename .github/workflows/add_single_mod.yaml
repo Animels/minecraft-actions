@@ -112,8 +112,9 @@ jobs:
                   echo "versionInfo: $versionInfo"
                   if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersion" 'index($forge) and index($gameVersion)' >/dev/null; then
                     echo "Both $requiredPlatform and $requiredVersion are present in gameVersions."
+                    
                   else
-                    echo "Either $requiredPlatform or $requiredVersion is missing in gameVersions."
+                    echo "Forge or game version is not presented"
                   fi
                 done
                 echo "getInfoAboutDep: $getInfoAboutDep"
