@@ -108,7 +108,7 @@ jobs:
                         echo "Inner deps: $deps"
                         echo "There IS inner deps"
 
-                        echo "$deps" | jq -r '[]' while IFS= read -r dep; do
+                        echo "$deps" | jq -r '[]' | while IFS= read -r dep; do
                           process_dependencies "$dep" "$gameVersionFromMainMod"
                         done
                       else
