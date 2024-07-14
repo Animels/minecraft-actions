@@ -109,10 +109,10 @@ jobs:
                     curl -L "$download_link" -o "$pathForFile"
                     
                     echo "Checking for inner deps and install if needed"
-                    has_inner_deps=$(echo "$versionInfo" | jq -r '.dependencies | length > 0')
-                      if [ -n "$has_inner_deps" ]; then
+                    has_inner_deps=$(echo "$versionInfo" | jq -r '.dependencies')
+                      if [ "$has_inner_deps" -gt 0 ]; then
                         deps=$(echo "$versionInfo" | jq -r ".dependencies")
-                        echo "has_inner_dep: $has_inner_dep"
+                        echo "has_inner_dep: $has_inner_deps"
                         echo "Inner deps: $deps"
                         echo "There IS inner deps"
                       else
