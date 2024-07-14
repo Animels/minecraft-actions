@@ -39,6 +39,7 @@ jobs:
           INPUT_FILE_ID=${{ github.event.inputs.fileid }}
           echo "BASE_URL=$BASE_URL" > .env
           echo "API_KEY=$API_KEY" >> .env
+          echo "MAX_PAGE_SIZE=$MAX_PAGE_SIZE" >> .env
           echo "INPUT_MOD_ID=$INPUT_MOD_ID" >> .env
           echo "INPUT_FILE_ID=$INPUT_FILE_ID" >> .env
           cat .env  # Debug to ensure the file is correct
@@ -55,21 +56,14 @@ jobs:
           echo "Base URL: $BASE_URL"
           echo "API_KEY: $API_KEY"
           echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
+          echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
           echo "INPUT_MOD_ID: $INPUT_MOD_ID"
           cd /root/tempMC
             
           api_url_dlink="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
           api_url_info="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID"
-      
-          echo "API URL: $api_url"
 
-          response=$(curl "$api_url_dlink" -H "x-api-key: $API_KEY")
-          echo "Extracted response: $response"
-
-          response_body=$(echo "$response" | sed '/HTTP_STATUS:/d')
-          echo "Response Body: $response_body"
-
-          downloadUrl=$(echo "$response_body" | jq -r '.data')
+          downloadUrl=$(curl "$api_url_dlink" -H "x-api-key: $API_KEY" | sed '/HTTP_STATUS:/d' | jq -r '.data')
           echo "Extracted URL: $downloadUrl"
 
           fileName=$(basename "$downloadUrl")
@@ -84,8 +78,6 @@ jobs:
             echo "Invalid URL extracted: $downloadUrl"
             exit 1
           fi
-
-         
 
           echo "Install deps if needed"
           process_dependencies() {
@@ -109,12 +101,16 @@ jobs:
                     curl -L "$download_link" -o "$pathForFile"
                     
                     echo "Checking for inner deps and install if needed"
-                    has_inner_deps=$(echo "$versionInfo" | jq -r '.dependencies')
+                    has_inner_deps=$(echo "$versionInfo" | jq -r '.dependencies | length')
                       if [ "$has_inner_deps" -gt 0 ]; then
-                        deps=$(echo "$versionInfo" | jq -r ".dependencies")
+                        deps=$(echo "$versionInfo" | jq -r ".dependencies | select(.relationType == 3)")
                         echo "has_inner_dep: $has_inner_deps"
                         echo "Inner deps: $deps"
                         echo "There IS inner deps"
+
+                        echo "$deps" | jq -r '[]' while IFS= read -r dep; do
+                          process_dependencies "$dep" "$gameVersionFromMainMod"
+                        done
                       else
                         echo "There IS NO inner deps"
                       fi
@@ -129,10 +125,10 @@ jobs:
 
           if [[ -s /root/temp/response.json ]]; then
             echo "Successfully downloaded response.json"
-            has_dependencies=$(jq -r '.data.dependencies | length > 0' /root/temp/response.json)
+            has_dependencies=$(jq -r '.data.dependencies | length' /root/temp/response.json)
             echo "Has Deps? $has_dependencies"
             
-            if [ -n "$has_dependencies" ]; then
+            if [ "$has_dependencies" -gt 0 ]; then
               dep_lvl=3
               deps=$(jq -r '[.data.dependencies[] | select(.relationType == 3)]' /root/temp/response.json )
               gameVersion=$(jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))' /root/temp/response.json)
@@ -148,5 +144,14 @@ jobs:
             echo "No information on deps"
           fi
          EOF
+
+      - name: Install all modes from temp and clear temp
+        run: |
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+            rm /root/temp/response.json
+            rm /root/temp/response_dep.json
+            cp -r /root/temp/* /root/tempMC/mods/
+            rm -r /root/temp/*
+          EOF
 
     
