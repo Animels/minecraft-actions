@@ -91,8 +91,7 @@ jobs:
           process_dependencies() {
             local dep=$1
 
-            # Iterate over each dependency
-              echo "Downloading dep: $depId"
+              echo "Downloading dep: $dep"
               modId=$(echo "$dep" | jq -r '.modId')
               relationType=$(echo "$dep" | jq -r '.relationType')
               api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
@@ -100,7 +99,7 @@ jobs:
 
               echo "$getDepFiles" | jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
                   echo "versionInfo: $versionInfo"
-                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersion" '.gameVersion | index($forge) and index($gameVersion)' >/dev/null; then
+                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersion" '.gameVersion[] | index($forge) and index($gameVersion)' >/dev/null; then
                     echo "Downloading dependency"
                     download_link=$(echo "$versionInfo" | jq -r "downloadUrl")
                   
@@ -139,7 +138,6 @@ jobs:
               echo "Dependencies: $deps"
 
               echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
-                echo "dep: $dep"
                 process_dependencies "$dep" 
               done
 
