@@ -89,10 +89,9 @@ jobs:
 
           echo "Install deps if needed"
           process_dependencies() {
-            local json=$1
+            local dep=$1
 
             # Iterate over each dependency
-            echo "$json" | jq -c '.dependencies[]' | while IFS= read -r dep; do
               echo "Downloading dep: $depId"
               modId=$(echo "$dep" | jq -r '.modId')
               relationType=$(echo "$dep" | jq -r '.relationType')
@@ -121,7 +120,6 @@ jobs:
                   fi
                 echo "getInfoAboutDep: $getInfoAboutDep"
               done
-            done
           }
           
           curl -vvv -L "$api_url_info" -H "x-api-key: $API_KEY" -o /root/temp/response.json
@@ -141,7 +139,7 @@ jobs:
               echo "Dependencies: $deps"
 
               echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
-                echo "Dependencies: $dep"
+                echo "dep: $dep"
                 process_dependencies "$dep" 
               done
 
