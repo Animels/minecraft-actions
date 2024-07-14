@@ -90,8 +90,11 @@ jobs:
           echo "Install deps if needed"
           process_dependencies() {
             local dep=$1
+            local gameVersionFromMainMod=$2
 
               echo "Downloading dep: $dep"
+              forgeGameVersion="Forge"
+              
               modId=$(echo "$dep" | jq -r '.modId')
               relationType=$(echo "$dep" | jq -r '.relationType')
               api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
@@ -99,9 +102,7 @@ jobs:
 
               echo "$getDepFiles" | jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
                   echo "versionInfo: $versionInfo"
-                  gameVersions=$(echo "$versionsInfo" | jq ".gameVersions[]")
-                  echo "gameVersions: $gameVersions"
-                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersions" 'index($forge) and index($gameVersion)' >/dev/null; then
+                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" 'index($forge) and index($gameVersion)' >/dev/null; then
                     echo "Downloading dependency for $forgeGameVersion and $gameVersions"
                     download_link=$(echo "$versionInfo" | jq -r "downloadUrl")
                   
@@ -130,16 +131,13 @@ jobs:
             echo "Has Deps? $has_dependencies"
             
             if [ -n "$has_dependencies" ]; then
-              forgeGameVersion="Forge"
               dep_lvl=3
-              gameVersion=$(jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))' /root/temp/response.json)
-              echo "Game version and mod runner: $gameVersions $forgeGameVersion"
-
               deps=$(jq -r '[.data.dependencies[] | select(.relationType == 3)]' /root/temp/response.json )
+              gameVersion=$(jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))' /root/temp/response.json)
               echo "Dependencies: $deps"
 
               echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
-                process_dependencies "$dep" 
+                process_dependencies "$dep" "$gameVersion"
               done
 
               
