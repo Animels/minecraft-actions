@@ -111,8 +111,9 @@ jobs:
                     echo "Checking for inner deps and install if needed"
                     has_inner_deps=$(echo "$versionInfo" | jq -r '.dependencies | length > 0')
                       if [ -n "$has_inner_deps" ]; then
+                        deps=$(echo "$versionInfo" | jq -r ".dependencies")
                         echo "has_inner_dep: $has_inner_dep"
-                        echo "versionInfo: $versionInfo"
+                        echo "Inner deps: $deps"
                         echo "There IS inner deps"
                       else
                         echo "There IS NO inner deps"
