@@ -96,7 +96,7 @@ jobs:
                   if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" '.gameVersions | index($forge) and index($gameVersion)' >/dev/null; then
                     echo "Downloading dependency for $forgeGameVersion and $gameVersionFromMainMod"
                     download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
-                    fileName=$(basename "$downloadUrl")
+                    fileName=$(basename "$download_link")
                     pathForFile="/root/temp/$fileName"
                     curl -L "$download_link" -o "$pathForFile"
                     
