@@ -67,15 +67,20 @@ jobs:
           echo "Extracted response: $response"
 
           response_body=$(echo "$response" | sed '/HTTP_STATUS:/d')
-          echo "Response Body: $response_body"  # Debugging: Print the response body
+          echo "Response Body: $response_body"
 
           downloadUrl=$(echo "$response_body" | jq -r '.data')
           echo "Extracted URL: $downloadUrl"
+
+          fileName=$(basename "$downloadUrl")
+          echo "Extracted URL: $fileName"
             
 
+        
           if [[ $downloadUrl =~ ^https?:// ]]; then
             echo "Valid URL: $downloadUrl"
-            curl -o /root/temp/temp.zip -L "$downloadUrl"
+            pathForFile="/root/temp/$fileName"
+            curl -o "$pathForFile" -L "$downloadUrl"
            else
             echo "Invalid URL extracted: $downloadUrl"
             exit 1
@@ -83,7 +88,43 @@ jobs:
 
          
 
-          echo "Install deps if needed" 
+          echo "Install deps if needed"
+          process_dependencies() {
+            local json=$1
+
+            # Iterate over each dependency
+            echo "$json" | jq -c '.dependencies[]' | while IFS= read -r dep; do
+              echo "Downloading dep: $depId"
+              modId=$(echo "$dep" | jq -r '.modId')
+              relationType=$(echo "$dep" | jq -r '.relationType')
+              api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
+              curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
+
+              echo "$getDepFiles" | jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
+                  echo "versionInfo: $versionInfo"
+                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersion" '.gameVersion | index($forge) and index($gameVersion)' >/dev/null; then
+                    echo "Downloading dependency"
+                    download_link=$(echo "$versionInfo" | jq -r "downloadUrl")
+                  
+                    
+                    echo "Checking for inner deps and install if needed"
+                    has_inner_deps=$(echo "$versionInfo" | jq -r '.dependencies | length > 0')
+                    
+                    
+                    if [ -n "$has_inner_deps" ]; then
+                      
+                    else
+                      echo "There in no inner deps"
+                    fi
+                    break
+                  else
+                    echo "Forge or game version is not presented"
+                  fi
+                echo "getInfoAboutDep: $getInfoAboutDep"
+              done
+            done
+          }
+          
           curl -vvv -L "$api_url_info" -H "x-api-key: $API_KEY" -o /root/temp/response.json
 
           if [[ -s /root/temp/response.json ]]; then
@@ -101,7 +142,7 @@ jobs:
               echo "Dependencies: $deps"
               
               echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
-                echo "Downloading dep: $depId"
+                echo "Downloading dep: $dep"
                 modId=$(echo "$dep" | jq -r '.modId')
                 relationType=$(echo "$dep" | jq -r '.relationType')
                 api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
