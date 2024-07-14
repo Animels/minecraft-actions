@@ -63,7 +63,7 @@ jobs:
       
           echo "API URL: $api_url"
 
-          response=$(curl -vvv "$api_url_dlink" -H "x-api-key: $API_KEY")
+          response=$(curl "$api_url_dlink" -H "x-api-key: $API_KEY")
           echo "Extracted response: $response"
 
           response_body=$(echo "$response" | sed '/HTTP_STATUS:/d')
@@ -97,23 +97,25 @@ jobs:
               modId=$(echo "$dep" | jq -r '.modId')
               relationType=$(echo "$dep" | jq -r '.relationType')
               api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
-              curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
+              curl -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
 
               echo "$getDepFiles" | jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
                   echo "versionInfo: $versionInfo"
                   if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" '.gameVersions | index($forge) and index($gameVersion)' >/dev/null; then
-                    echo "Downloading dependency for $forgeGameVersion and $gameVersions"
-                    download_link=$(echo "$versionInfo" | jq -r "downloadUrl")
-                  
+                    echo "Downloading dependency for $forgeGameVersion and $gameVersionFromMainMod"
+                    download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
+                    fileName=$(basename "$downloadUrl")
+                    pathForFile="/root/temp/$fileName"
+                    curl -L "$download_link" -o "$pathForFile"
                     
                     echo "Checking for inner deps and install if needed"
                     has_inner_deps=$(echo "$versionInfo" | jq -r '.dependencies | length > 0')
-                    
-                    
                       if [ -n "$has_inner_deps" ]; then
+                        echo "has_inner_dep: $has_inner_dep"
+                        echo "versionInfo: $versionInfo"
                         echo "There IS inner deps"
                       else
-                        echo "There is no inner deps"
+                        echo "There IS NO inner deps"
                       fi
                     break
                   else
