@@ -47,7 +47,7 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no .env root@206.189.84.101:/root/tempMC/
 
-      - name: Copy files from push to droplet and start from the new version
+      - name: Fetch main mod and recursive fetch deps
         run: |
          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
           source /root/tempMC/.env
@@ -99,8 +99,10 @@ jobs:
 
               echo "$getDepFiles" | jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
                   echo "versionInfo: $versionInfo"
-                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersion" '.gameVersions[] | index($forge) and index($gameVersion)' >/dev/null; then
-                    echo "Downloading dependency"
+                  gameVersions=$(echo "$versionsInfo" | jq ".gameVersions[]")
+                  echo "gameVersions: $gameVersions"
+                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersions" 'index($forge) and index($gameVersion)' >/dev/null; then
+                    echo "Downloading dependency for $forgeGameVersion and $gameVersions"
                     download_link=$(echo "$versionInfo" | jq -r "downloadUrl")
                   
                     
