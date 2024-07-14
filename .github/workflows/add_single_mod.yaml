@@ -108,7 +108,7 @@ jobs:
                 curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
                 getDepFiles=$(jq -r '.data[]  | select(.gameVersions[])' /root/temp/response_dep.json)
 
-                echo "$getDepFiles" | jq -c '.[]' | while IFS= read -r versionInfo; do
+                echo "$getDepFiles" | jq -c '[.gameVersions]' | while IFS= read -r versionInfo; do
                   echo "$versionInfo" | jq -c '.gameVersions' | while IFS= read -r versionString; do
                     echo "versionString: $versionString"
                   done 
