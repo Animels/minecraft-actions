@@ -109,9 +109,9 @@ jobs:
 
                 echo "$getDepFiles" | jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
                   echo "versionInfo: $versionInfo"
-                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersion" 'index($forge) and index($gameVersion)' >/dev/null; then
-                    echo "Both $requiredPlatform and $requiredVersion are present in gameVersions."
-                    
+                  if echo "$versionInfo" | jq -e '.gameVersions' --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersion" 'index($forge) and index($gameVersion)' >/dev/null; then
+                    download_link=$(echo "$versionInfo" | jq -r "downloadUrl")
+                    echo "Both $requiredPlatform and $requiredVersion are present in gameVersions. And download_link $download_link"
                   else
                     echo "Forge or game version is not presented"
                   fi
