@@ -73,14 +73,13 @@ jobs:
           echo "Extracted URL: $downloadUrl"
 
           fileName=$(basename "$downloadUrl")
-          echo "Extracted URL: $fileName"
-            
-
-        
+          echo "fileName: $fileName"
+          
           if [[ $downloadUrl =~ ^https?:// ]]; then
             echo "Valid URL: $downloadUrl"
             pathForFile="/root/temp/$fileName"
             curl -o "$pathForFile" -L "$downloadUrl"
+            echo "Downloaded dep: $downloadUrl"
            else
             echo "Invalid URL extracted: $downloadUrl"
             exit 1
@@ -140,26 +139,32 @@ jobs:
 
               deps=$(jq -r '[.data.dependencies[] | select(.relationType == 3)]' /root/temp/response.json )
               echo "Dependencies: $deps"
-              
-              echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
-                echo "Downloading dep: $dep"
-                modId=$(echo "$dep" | jq -r '.modId')
-                relationType=$(echo "$dep" | jq -r '.relationType')
-                api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
-                curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
 
-                echo "$getDepFiles" | jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
-                  echo "versionInfo: $versionInfo"
-                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersion" '.gameVersion | index($forge) and index($gameVersion)' >/dev/null; then
-                    download_link=$(echo "$versionInfo" | jq -r "downloadUrl")
-                    echo "Both $requiredPlatform and $requiredVersion are present in gameVersions. And download_link $download_link"
-                    break
-                  else
-                    echo "Forge or game version is not presented"
-                  fi
-                done
-                echo "getInfoAboutDep: $getInfoAboutDep"
+              echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
+                echo "Dependencies: $dep"
+                process_dependencies "$dep" 
               done
+
+              
+              # echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
+              #   echo "Downloading dep: $dep"
+              #   modId=$(echo "$dep" | jq -r '.modId')
+              #   relationType=$(echo "$dep" | jq -r '.relationType')
+              #   api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
+              #   curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
+
+              #   echo "$getDepFiles" | jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
+              #     echo "versionInfo: $versionInfo"
+              #     if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersion" '.gameVersion | index($forge) and index($gameVersion)' >/dev/null; then
+              #       download_link=$(echo "$versionInfo" | jq -r "downloadUrl")
+              #       echo "Both $requiredPlatform and $requiredVersion are present in gameVersions. And download_link $download_link"
+              #       break
+              #     else
+              #       echo "Forge or game version is not presented"
+              #     fi
+              #   done
+              #   echo "getInfoAboutDep: $getInfoAboutDep"
+              # done
             else
               echo "Has no deps in mod"
             fi
