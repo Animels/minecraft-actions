@@ -101,14 +101,13 @@ jobs:
               echo "Dependencies: $deps"
               
               echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
-                echo "Downloading dep: $dep"
+                echo "Downloading dep: $depId"
                 modId=$(echo "$dep" | jq -r '.modId')
                 relationType=$(echo "$dep" | jq -r '.relationType')
                 api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
                 curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
-                getDepFiles=$(jq -r '.data[]  | select(.gameVersions[])' /root/temp/response_dep.json)
 
-                echo "$getDepFiles" | jq -c '.[]' | while IFS= read -r versionInfo; do
+                echo "$getDepFiles" | jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
                   echo "versionInfo: $versionInfo"
                   if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersion" 'index($forge) and index($gameVersion)' >/dev/null; then
                     echo "Both $requiredPlatform and $requiredVersion are present in gameVersions."
@@ -119,15 +118,6 @@ jobs:
                 done
                 echo "getInfoAboutDep: $getInfoAboutDep"
               done
-
-              # for dep in deps; do
-              #   echo "Downloading dep: $dep"
-              #   modId=$(jq -r '.modId' "$dep")
-              #   api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
-              #   curl -vvv -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
-              #   getInfoAboutDep=$(jq -r '.data[]  | select(.gameVersions[])' /root/temp/response_dep.json)
-              #   echo "getInfoAboutDep: $getInfoAboutDep"
-              # done
             else
               echo "Has no deps in mod"
             fi
