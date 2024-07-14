@@ -110,11 +110,11 @@ jobs:
                     has_inner_deps=$(echo "$versionInfo" | jq -r '.dependencies | length > 0')
                     
                     
-                    if [ -n "$has_inner_deps" ]; then
-                      
-                    else
-                      echo "There in no inner deps"
-                    fi
+                      if [ -n "$has_inner_deps" ]; then
+                        echo "There IS inner deps"
+                      else
+                        echo "There is no inner deps"
+                      fi
                     break
                   else
                     echo "Forge or game version is not presented"
