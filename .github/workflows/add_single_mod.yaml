@@ -101,9 +101,7 @@ jobs:
 
               echo "$getDepFiles" | jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
                   echo "versionInfo: $versionInfo"
-                  echo "gameVersionFromMainMod: $gameVersionFromMainMod"
-                  echo "forgeGameVersion: $forgeGameVersion"
-                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" 'index($forge) and index($gameVersion)' >/dev/null; then
+                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" 'index($forgeGameVersion) and index($gameVersionFromMainMod)' >/dev/null; then
                     echo "Downloading dependency for $forgeGameVersion and $gameVersions"
                     download_link=$(echo "$versionInfo" | jq -r "downloadUrl")
                   
