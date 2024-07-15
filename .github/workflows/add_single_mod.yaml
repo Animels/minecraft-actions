@@ -152,8 +152,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
             rm /root/temp/response.json
             rm /root/temp/response_dep.json
-            cd /root/tempMC/mods/
-
+            cd /root/temp/
             for file in *.zip; do
               if [ -f "$file" ]; then
                 unzip "$file"
