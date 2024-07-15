@@ -177,7 +177,7 @@ jobs:
                     curl -o "$pathForFile" -L "$downloadUrl"
                     echo "Downloaded mod dep: $downloadUrl"
                   else
-                    echo "$projectID" >> "$notAccessibleFile"
+                    echo "$projectID" >> "$notAccessibleModsFile"
                     echo "Some mod cannot be added $projectID. Current list: $(cat $notAccessibleModsFile)"
                   fi
                 done 
