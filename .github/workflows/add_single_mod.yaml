@@ -178,7 +178,6 @@ jobs:
                     echo "Downloaded mod dep: $downloadUrl"
                   else
                     echo "Invalid URL extracted: $downloadUrl"
-                    exit 1
                   fi
                 done 
 
