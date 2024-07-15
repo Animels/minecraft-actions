@@ -150,6 +150,7 @@ jobs:
       - name: Install all modes from temp and clear temp
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+            source /root/tempMC/.env
             api_url_dlink="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
             rm /root/temp/response.json
             rm /root/temp/response_dep.json
