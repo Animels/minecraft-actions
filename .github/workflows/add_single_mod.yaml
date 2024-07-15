@@ -159,7 +159,7 @@ jobs:
               if [ -f "$file" ]; then
                 unzip "$file"
                 
-                cat manifest.json | jq -r '.files[]' | while IFS= read -r mod ; do
+                cat ./manifest.json | jq -r '.files[]' | while IFS= read -r mod ; do
                   projectID=$(echo "$mod" | jq '.projectID')
                   fileId=$(echo "$mod" | jq '.fileID')
                   dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
@@ -167,8 +167,6 @@ jobs:
 
                   fileName=$(basename "$downloadUrl")
                   echo "fileName: $fileName"
-
-                  find /root/temp/ -name '*.zip' -exec cp {} /root/tempMC/mods/ \;
           
                   if [[ $downloadUrl =~ ^https?:// ]]; then
                     echo "Valid URL: $downloadUrl"
