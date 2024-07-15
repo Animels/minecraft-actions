@@ -183,7 +183,7 @@ jobs:
                 done 
                 cp -r /root/temp/overrides/* /root/tempMC/
               else 
-                echo "There is no mod .zips"  
+                echo 'There is no mod \.zips'  
               fi
             done
             find /root/temp/* -name '*.jar' -exec cp {} /root/tempMC/mods/ \;
