@@ -116,7 +116,7 @@ jobs:
                       fi
                     break
                   else
-                    echo "Forge or game version is not presented"
+                    echo "$forgeGameVersion or $gameVersionFromMainMod is not presented"
                   fi
               done
           }
