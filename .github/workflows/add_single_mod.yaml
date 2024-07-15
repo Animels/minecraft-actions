@@ -161,9 +161,11 @@ jobs:
                 unzip -o "$file"
                 
                 cat ./manifest.json | jq -r '.files[]' | while IFS= read -r mod ; do
+                  echo "$mod"
                   projectID=$(echo "$mod" | jq '.projectID')
                   fileId=$(echo "$mod" | jq '.fileID')
                   dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
+                  echo "projectID $projectID, fileId $fileId"
                   downloadUrl=$(curl "$dyn_api_url" -H "x-api-key: $API_KEY" | sed '/HTTP_STATUS:/d' | jq -r '.data')
 
                   fileName=$(basename "$downloadUrl")
