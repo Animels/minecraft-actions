@@ -153,15 +153,12 @@ jobs:
             source /root/tempMC/.env
             api_url_dlink="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
             notAccessible=()
-            rm /root/temp/response.json
-            rm /root/temp/response_dep.json
+            rm -f /root/temp/response.json /root/temp/response_dep.json
             cd /root/temp/
             
             for file in *.zip; do
               if [ -f "$file" ]; then
                 unzip -o "$file"
-
-                
                 cat ./manifest.json | jq -c '.files[]' | while IFS= read -r mod ; do
                   echo "$mod"
                   projectID=$(echo "$mod" | jq '.projectID')
@@ -180,10 +177,12 @@ jobs:
                     echo "Downloaded mod dep: $downloadUrl"
                   else
                     notAccessible+=("$projectID")
-                    echo "Invalid URL extracted: $downloadUrl"
+                    echo "Some mod cannot be added $projectID. There is the list for now: ${notAccessible[@]}."
                   fi
                 done 
                 cp -r /root/temp/overrides/* /root/tempMC/
+              else 
+                echo "There is no mod .zip's"  
               fi
             done
             find /root/temp/* -name '*.jar' -exec cp {} /root/tempMC/mods/ \;
