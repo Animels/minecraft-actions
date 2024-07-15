@@ -152,8 +152,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
             source /root/tempMC/.env
             api_url_dlink="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
-            notAccessibleFile="/root/temp/notAccessible.txt"
-            > "$notAccessibleFile"
+            notAccessibleModsFile='/root/temp/notAccessible.txt'
+            > "$notAccessibleModsFile"
             rm -f /root/temp/response.json /root/temp/response_dep.json
             cd /root/temp/
             
@@ -178,7 +178,7 @@ jobs:
                     echo "Downloaded mod dep: $downloadUrl"
                   else
                     echo "$projectID" >> "$notAccessibleFile"
-                    echo "Some mod cannot be added $projectID. Current list: $(cat $notAccessibleFile).
+                    echo "Some mod cannot be added $projectID. Current list: $(cat $notAccessibleModsFile).
                   fi
                 done 
                 cp -r /root/temp/overrides/* /root/tempMC/
@@ -188,7 +188,7 @@ jobs:
             done
             find /root/temp/* -name '*.jar' -exec cp {} /root/tempMC/mods/ \;
             rm -r /root/temp/*
-            echo "There is some mods that can not be downloaded via API, download them manually. List of mods: $(cat $notAccessibleFile)"
+            echo "There is some mods that can not be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
           EOF
 
     
