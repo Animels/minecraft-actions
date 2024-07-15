@@ -188,7 +188,7 @@ jobs:
             done
             find /root/temp/* -name '*.jar' -exec cp {} /root/tempMC/mods/ \;
             echo "There is some mods that can not be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
-            rm -r /root/temp/*
+            # rm -r /root/temp/*
           EOF
 
     
