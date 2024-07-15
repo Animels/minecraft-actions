@@ -186,7 +186,7 @@ jobs:
               fi
             done
             
-            find -r /root/temp/* -name '*.jar' -exec cp {} /root/tempMC/mods/\;
+            find /root/temp/* -name '*.jar' -exec cp {} /root/tempMC/mods/\;
             # rm -r /root/temp/*
           EOF
 
