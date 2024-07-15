@@ -6,13 +6,13 @@ on:
       modid_projectid:
         description: 'Write projetcId of mod'
         required: true
-        default: '69163' # mod with deps
+        default: '431168' # mod with deps
         # default: '876781' Just mod
         type: string
       fileid: 
         description: 'Write modId of mod'
         required: true
-        default: '4022681' # mod with deps
+        default: '5011582' # mod with deps
         # default: '5397482' Just mod
         type: string
 env:
@@ -150,17 +150,40 @@ jobs:
       - name: Install all modes from temp and clear temp
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+            api_url_dlink="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
             rm /root/temp/response.json
             rm /root/temp/response_dep.json
             cd /root/temp/
+            
             for file in *.zip; do
               if [ -f "$file" ]; then
                 unzip "$file"
-                rm "$file"
+                
+                cat manifest.json | jq -r '.files[]' | while IFS= read -r mod ; do
+                  projectID=$(echo "$mod" | jq '.projectID')
+                  fileId=$(echo "$mod" | jq '.fileID')
+                  dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
+                  downloadUrl=$(curl "$dyn_api_url" -H "x-api-key: $API_KEY" | sed '/HTTP_STATUS:/d' | jq -r '.data')
+
+                  fileName=$(basename "$downloadUrl")
+                  echo "fileName: $fileName"
+          
+                  if [[ $downloadUrl =~ ^https?:// ]]; then
+                    echo "Valid URL: $downloadUrl"
+                    pathForFile="/root/temp/$fileName"
+                    curl -o "$pathForFile" -L "$downloadUrl"
+                    echo "Downloaded mod dep: $downloadUrl"
+                  else
+                    echo "Invalid URL extracted: $downloadUrl"
+                    exit 1
+                  fi
+                done 
+
+                cp -r /overrides /root/tempMC/
               fi
             done
             
-            cp -r /root/temp/* /root/tempMC/mods/
+            cp -r --include '.jar' /root/temp/* /root/tempMC/mods/
             rm -r /root/temp/*
           EOF
 
