@@ -179,12 +179,12 @@ jobs:
                   fi
                 done 
 
-                cp -r /overrides /root/tempMC/
+                cp -r /root/temp/overrides/* /root/tempMC/
               fi
             done
             
             cp -r --include '.jar' /root/temp/* /root/tempMC/mods/
-            rm -r /root/temp/*
+            # rm -r /root/temp/*
           EOF
 
     
