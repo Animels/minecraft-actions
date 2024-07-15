@@ -178,12 +178,12 @@ jobs:
                     echo "Downloaded mod dep: $downloadUrl"
                   else
                     echo "$projectID" >> "$notAccessibleFile"
-                    echo "Some mod cannot be added $projectID. Current list: $(cat $notAccessibleModsFile).
+                    echo "Some mod cannot be added $projectID. Current list: $(cat $notAccessibleModsFile)"
                   fi
                 done 
                 cp -r /root/temp/overrides/* /root/tempMC/
               else 
-                echo 'There is no mod \.zips'  
+                echo "There is no modpack file"
               fi
             done
             find /root/temp/* -name '*.jar' -exec cp {} /root/tempMC/mods/ \;
