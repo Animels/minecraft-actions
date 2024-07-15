@@ -101,12 +101,12 @@ jobs:
                     curl -L "$download_link" -o "$pathForFile"
                     
                     echo "Checking for inner deps and install if needed"
-                    has_inner_deps=$(echo "$versionInfo" | jq -r '.dependencies | length')
-                      if [ "$has_inner_deps" -gt 0 ]; then
+                    has_req_inner_deps=$(echo "$versionInfo" | jq -r '.dependencies | select(.relationType == 3) |  length')
+                      if [ "$has_req_inner_deps" -gt 0 ]; then
                         echo "mainversionInfo: $versionInfo"
                         deps=$(echo "$versionInfo" | jq -r "[.dependencies[] | select(.relationType == 3)]")
                         echo "has_inner_dep: $has_inner_deps"
-                        echo "Inner deps: $deps"
+                        echo "Inner req deps: $deps"
                         echo "There IS inner deps"
 
                         echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
