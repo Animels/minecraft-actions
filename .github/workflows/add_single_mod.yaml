@@ -167,6 +167,8 @@ jobs:
 
                   fileName=$(basename "$downloadUrl")
                   echo "fileName: $fileName"
+
+                  find /root/temp/ -name '*.zip' -exec cp {} /root/tempMC/mods/ \;
           
                   if [[ $downloadUrl =~ ^https?:// ]]; then
                     echo "Valid URL: $downloadUrl"
@@ -183,7 +185,7 @@ jobs:
               fi
             done
             
-            cp -r --include '.jar' /root/temp/* /root/tempMC/mods/
+            find /root/temp/ -name '*.jar' -exec cp {} /root/tempMC/mods/
             # rm -r /root/temp/*
           EOF
 
