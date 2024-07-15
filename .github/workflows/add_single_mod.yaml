@@ -6,13 +6,13 @@ on:
       modid_projectid:
         description: 'Write projetcId of mod'
         required: true
-        default: '74072' # mod with deps
+        default: '69163' # mod with deps
         # default: '876781' Just mod
         type: string
       fileid: 
         description: 'Write modId of mod'
         required: true
-        default: '5358052' # mod with deps
+        default: '4022681' # mod with deps
         # default: '5397482' Just mod
         type: string
 env:
