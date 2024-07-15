@@ -157,7 +157,7 @@ jobs:
             
             for file in *.zip; do
               if [ -f "$file" ]; then
-                unzip "$file"
+                unzip -o "$file"
                 
                 cat ./manifest.json | jq -r '.files[]' | while IFS= read -r mod ; do
                   projectID=$(echo "$mod" | jq '.projectID')
