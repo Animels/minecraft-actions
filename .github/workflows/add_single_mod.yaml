@@ -18,7 +18,7 @@ on:
       excluded_mods: 
         description: 'Write modId of mod that should be excluded (1, 2, 3 input format)'
         required: true
-        default: '5011582, 1283789213, 21832387'
+        default: '245506, 298744, 298965, 231868, 64578'
         type: string
       start_server: 
         description: 'Start server after installation?'
