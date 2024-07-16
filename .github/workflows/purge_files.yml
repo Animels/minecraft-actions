@@ -24,6 +24,6 @@ jobs:
         - name: Purge files from /root
           run: |
             ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
-                rm -r "$input_path"
+                rm -r ${{ github.event.input.path}}
             EOF
           
