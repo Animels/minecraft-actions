@@ -17,7 +17,7 @@ on:
       excluded_mods: 
         description: 'Write modId of mod that should be excluded (1, 2, 3 input format)'
         required: true
-        default: '245506, 298744, 298965, 231868, 64578'
+        default: '245506 298744 298965 231868 64578'
         type: string
       start_server: 
         description: 'Start server after installation?'
@@ -196,7 +196,7 @@ jobs:
             echo "INPUT_FILE_ID: $INPUT_FILE_ID"
             echo "INPUT_EXLUDED_MODS: $INPUT_EXLUDED_MODS"
             
-            IFS=', ' read -r -a excluded_mods_array <<< "$INPUT_EXLUDED_MODS"
+            IFS=' ' read -r -a excluded_mods_array <<< "$INPUT_EXLUDED_MODS"
 
             api_url_dlink="$BASE_URL/v1/mods/$INPUT_PROJECT_ID/files/$INPUT_FILE_ID/download-url"
             notAccessibleModsFile='/root/temp/notAccessible.txt'
