@@ -24,8 +24,8 @@ jobs:
         - name: Create environment file
           run: |
             INPUT_PATH=${{ github.event.input.path}}
-            echo "INPUT_PATH=$INPUT_PATH"
-            echo "INPUT_PATH=$INPUT_PATH" > .env
+            echo "INPUT_PATH $INPUT_PATH"
+            echo "$INPUT_PATH" > .env
             cat .env  
 
         - name: Copy .env file to Droplet
@@ -35,8 +35,8 @@ jobs:
         - name: Purge files from /root
           run: |
             ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
-                source /root/tempMC/.env
-                echo "INPUT_PATH=$INPUT_PATH"
-                rm -r "$INPUT_PATH"
+              source /root/tempMC/.env
+              echo "INPUT_PATH $INPUT_PATH"
+              rm -r "$INPUT_PATH"
             EOF
           
