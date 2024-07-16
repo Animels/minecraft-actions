@@ -36,12 +36,12 @@ jobs:
 
       - name: Copy .env file to Droplet
         run: |
-          scp -o StrictHostKeyChecking=no .env root@206.189.84.101:/root/tempMC/
+          scp -o StrictHostKeyChecking=no .env root@206.189.84.101:/root/
 
       - name: Purge files from /root
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
-            source /root/tempMC/.env
+            source /root/.env
             if [[ "$IS_GLOB" ]]; then
               rm "$INPUT_PATH"/*
             else 
