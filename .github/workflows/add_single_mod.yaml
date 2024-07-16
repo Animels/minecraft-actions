@@ -164,10 +164,10 @@ jobs:
               local projectId="$1"
               for excluded_mod in "${excluded_mods_array[@]}"; do
                 if [[ "$projectId" == "$excluded_mod" ]]; then
-                  return 1
+                  return 0
                 fi
               done
-              return 0
+              return 1
             }
 
             fetch_with_dlink() {
