@@ -209,30 +209,30 @@ jobs:
                 unzip -o "$file"
 
                 echo "Trying to find manifest.json after unziping"
-                  if [[-f /root/temp/manifest.json]]; then 
-                    echo "There is manifest.json
-                    cat ./manifest.json | jq -c '.files[]' | while IFS= read -r mod ; do
-                      echo "$mod"
-                      projectID=$(echo "$mod" | jq '.projectID')
+                if [[-f /root/temp/manifest.json]]; then 
+                  echo "There is manifest.json"
+                  cat ./manifest.json | jq -c '.files[]' | while IFS= read -r mod ; do
+                    echo "$mod"
+                    projectID=$(echo "$mod" | jq '.projectID')
                       
-                      if is_excluded_mod "$projectID"; then
-                        echo "Skipping excluded mod: $projectID"
-                      else 
-                        echo "Downloading mod for modpack: $projectID"
-                        fileId=$(echo "$mod" | jq '.fileID')
-                        dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
+                    if is_excluded_mod "$projectID"; then
+                      echo "Skipping excluded mod: $projectID"
+                    else 
+                      echo "Downloading mod for modpack: $projectID"
+                      fileId=$(echo "$mod" | jq '.fileID')
+                      dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
                   
-                        fetch_with_dlink "$dyn_api_url"
-                      fi
-                    done
-                  else 
-                    echo "There is no manifest.json"
-                  fi
-                done 
-                cp -r /root/temp/overrides/* /root/tempMC/
-              else 
-                echo "There is no modpack file"
-              fi
+                      fetch_with_dlink "$dyn_api_url"
+                    fi
+                  done
+                else
+                  echo "There is no manifest.json"
+                fi
+              done 
+              cp -r /root/temp/overrides/* /root/tempMC/
+             else 
+               echo "There is no modpack file"
+             fi
             done
             find /root/temp/* -name '*.jar' -exec cp {} /root/tempMC/mods/ \;
             echo "There is some mods that can not be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
