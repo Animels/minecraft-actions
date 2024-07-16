@@ -36,7 +36,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
             source /root/tempMC/.env
             DIR="$(dirname "$INPUT_PATH")"
-            FILE="$(basename "$$INPUT_PATH")"
+            FILE="$(basename "$INPUT_PATH")"
+            echo "DIR $DIR FILE $FILE"
             cd "$DIR"
             rm "./$FILE"
             echo "No such file or directory: $INPUT_PATH"
