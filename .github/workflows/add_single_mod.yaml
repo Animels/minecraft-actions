@@ -6,14 +6,13 @@ on:
       projectid:
         description: 'Write projetcId of mod'
         required: true
-        default: '431168' # mod with deps
+        default: '431168' 
         # default: '876781' Just mod
         type: string
       fileid: 
         description: 'Write modId of mod'
         required: true
-        default: '5011582' # mod with deps
-        # default: '5397482' Just mod
+        default: '5011582'
         type: string
       excluded_mods: 
         description: 'Write modId of mod that should be excluded (1, 2, 3 input format)'
@@ -58,7 +57,7 @@ jobs:
 
       - name: Copy .env file to Droplet
         run: |
-          scp -o StrictHostKeyChecking=no .env root@206.189.84.101:/root/tempMC/
+          scp -o StrictHostKeyChecking=no .env root@206.189.84.101:/root/
 
       - name: Fetch main mod and recursive fetch deps
         run: |
@@ -119,7 +118,7 @@ jobs:
                  fi
              done
           }
-          source /root/tempMC/.env
+          source /root/.env
           echo "Base URL: $BASE_URL"
           echo "API_KEY: $API_KEY"
           echo "INPUT_PROJECT_ID: $INPUT_PROJECT_ID"
@@ -190,7 +189,7 @@ jobs:
                 echo "Some mod cannot be added $projectID. Current list: $(cat $notAccessibleModsFile)"
               fi
             }
-            source /root/tempMC/.env
+            source /root/.env
             echo "Base URL: $BASE_URL"
             echo "API_KEY: $API_KEY"
             echo "INPUT_PROJECT_ID: $INPUT_PROJECT_ID"
