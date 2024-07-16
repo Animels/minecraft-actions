@@ -36,7 +36,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
             source /root/tempMC/.env
             echo "INPUT_PATH $INPUT_PATH"
-            if [ -d "$INPUT_PATH" ] || [ -f "$INPUT_PATH" ]; then
+            if eval [ -d "$INPUT_PATH" ] || eval [ -f "$INPUT_PATH" ]; then
               rm -rf "$INPUT_PATH"
               echo "Removed $INPUT_PATH"
             else
