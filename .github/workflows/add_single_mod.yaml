@@ -224,6 +224,7 @@ jobs:
                   
                         fetch_with_dlink "$dyn_api_url"
                       fi
+                    done
                   else 
                     echo "There is no manifest.json"
                   fi
