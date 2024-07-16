@@ -36,10 +36,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
             source /root/tempMC/.env
             echo "INPUT_PATH $INPUT_PATH"
-            if eval [ -d "$INPUT_PATH" ] || eval [ -f "$INPUT_PATH" ]; then
-              rm -rf "$INPUT_PATH"
-              echo "Removed $INPUT_PATH"
-            else
-              echo "No such file or directory: $INPUT_PATH"
+            rm -rf "$INPUT_PATH"
+            echo "Removed $INPUT_PATH"
+            echo "No such file or directory: $INPUT_PATH"
             fi
           EOF
