@@ -169,16 +169,16 @@ jobs:
               done
               return 0
             }
-            
+
             fetch_with_dlink() {
               local url=$1
-              
-              downloadUrl=$(curl "$url" -H "x-api-key: $API_KEY"" | sed '/HTTP_STATUS:/d' | jq -r '.data')
+      
+              downloadUrl=$(curl "$url" -H "x-api-key: $API_KEY" | sed '/HTTP_STATUS:/d' | jq -r '.data')
               echo "Extracted URL: $downloadUrl"
 
               fileName=$(basename "$downloadUrl")
               echo "fileName: $fileName"
-          
+  
               if [[ $downloadUrl =~ ^https?:// ]]; then
                 echo "Valid URL: $downloadUrl"
                 pathForFile="/root/temp/$fileName"
@@ -189,53 +189,54 @@ jobs:
                 echo "Some mod cannot be added $projectID. Current list: $(cat $notAccessibleModsFile)"
               fi
             }
+    
             source /root/.env
             echo "Base URL: $BASE_URL"
             echo "API_KEY: $API_KEY"
             echo "INPUT_PROJECT_ID: $INPUT_PROJECT_ID"
             echo "INPUT_FILE_ID: $INPUT_FILE_ID"
             echo "INPUT_EXLUDED_MODS: $INPUT_EXLUDED_MODS"
-            
+    
             IFS=',' read -r -a excluded_mods_array <<< "$INPUT_EXLUDED_MODS"
 
             api_url_dlink="$BASE_URL/v1/mods/$INPUT_PROJECT_ID/files/$INPUT_FILE_ID/download-url"
             notAccessibleModsFile='/root/temp/notAccessible.txt'
             > "$notAccessibleModsFile"
             cd /root/temp/
-            
+    
             for file in *.zip; do
               if [ -f "$file" ]; then
                 echo "Found archive in folder, trying to unpack and install"
                 unzip -o "$file"
 
-                echo "Trying to find manifest.json after unziping"
-                if [[-f /root/temp/manifest.json]]; then 
+                echo "Trying to find manifest.json after unzipping"
+                if [[ -f /root/temp/manifest.json ]]; then 
                   echo "There is manifest.json"
                   cat ./manifest.json | jq -c '.files[]' | while IFS= read -r mod ; do
                     echo "$mod"
                     projectID=$(echo "$mod" | jq '.projectID')
-                      
+              
                     if is_excluded_mod "$projectID"; then
                       echo "Skipping excluded mod: $projectID"
                     else 
                       echo "Downloading mod for modpack: $projectID"
                       fileId=$(echo "$mod" | jq '.fileID')
                       dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
-                  
+          
                       fetch_with_dlink "$dyn_api_url"
                     fi
                   done
                 else
                   echo "There is no manifest.json"
                 fi
-              done 
-              cp -r /root/temp/overrides/* /root/tempMC/
-             else 
+              else
                echo "There is no modpack file"
-             fi
-            done
+              fi
+            done 
+            cp -r /root/temp/overrides/* /root/tempMC/
+            
             find /root/temp/* -name '*.jar' -exec cp {} /root/tempMC/mods/ \;
-            echo "There is some mods that can not be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
+            echo "There are some mods that cannot be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
             rm -r /root/temp/*
           EOF
 
