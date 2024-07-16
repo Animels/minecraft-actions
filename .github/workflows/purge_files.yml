@@ -23,7 +23,7 @@ jobs:
 
         - name: Create environment file
           run: |
-            INPUT_PATH=${{ github.event.input.path}}
+            INPUT_PATH=${{ github.event.inputs.path}}
             echo "INPUT_PATH=$INPUT_PATH" > .env
             cat .env  
 
