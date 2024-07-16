@@ -1,4 +1,4 @@
-name: Connect to Droplet
+name: Copy files from main branch and start forge
 
 on:
   workflow_dispatch:
@@ -21,7 +21,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
 
-      - name: Copy files from push to droplet and start from the new version
+      - name: Copy files from main branch and start forge
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
@@ -34,24 +34,25 @@ jobs:
 
       - name: Wait and check process
         run: |
-          # Read the process ID
-          PID=$(cat process_id.txt)
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+            PID=$(cat process_id.txt)
+            WAIT_TIME=60
 
-          # Duration to wait (in seconds)
-          WAIT_TIME=60
+            for ((i = 0 ; i < WAIT_TIME ; i++)); do
+              if ps -p $PID > /dev/null; then
+                cp -r /root/tempMC/* /root/mainMC/
+                sleep 1
+              else
+                cat /root/tempMC/logs/latest.log
+                exit 1
+              fi
+            done
 
-          # Wait for the specified duration and check if the process is still running
-          for ((i = 0 ; i < WAIT_TIME ; i++)); do
-            if ps -p $PID > /dev/null; then
-              cp -r /root/tempMC/* /root/mainMC/
-              sleep 1
-            else
-              cat /root/tempMC/logs/latest.log
-              exit 1
-            fi
-          done
+            echo "Server Process is still running after $WAIT_TIME seconds"
+          EOF
 
-          echo "Server Process is still running after $WAIT_TIME seconds"
+    
+          
           
           
           
