@@ -39,6 +39,6 @@ jobs:
             FILE="$(basename "$INPUT_PATH")"
             echo "DIR $DIR FILE $FILE"
             cd "$DIR"
-            rm "./$FILE"
+            rm "$DIR"/*
             echo "No such file or directory: $INPUT_PATH"
           EOF
