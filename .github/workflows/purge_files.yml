@@ -1,1 +1,29 @@
+name: Removes files according to path
 
+on:
+  workflow_dispatch:
+    inputs:
+      path:
+        description: 'Path to file or folder'
+        required: true
+        default: '/root/'
+        type: string
+
+jobs:
+  purge_path:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Set up SSH agent
+          uses: webfactory/ssh-agent@v0.5.3
+          with:
+            ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
+
+        - name: Purge files from /root
+          run: |
+            ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+                rm -r "$input_path"
+            EOF
+          
