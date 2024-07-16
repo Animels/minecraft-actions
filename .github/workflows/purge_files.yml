@@ -21,9 +21,19 @@ jobs:
           with:
             ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
 
+        - name: Create environment file
+          run: |
+            INPUT_PATH=${{ github.event.input.path}}
+            cat .env  
+
+        - name: Copy .env file to Droplet
+          run: |
+            scp -o StrictHostKeyChecking=no .env root@206.189.84.101:/root/tempMC/
+  
         - name: Purge files from /root
           run: |
             ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
-                rm -r ${{ github.event.input.path}}
+                source /root/tempMC/.env
+                rm -r "$INPUT_PATH"
             EOF
           
