@@ -8,6 +8,11 @@ on:
         required: true
         default: '/root/'
         type: string
+      glob:
+        description: 'Is it a directory?'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   purge_path:
@@ -24,7 +29,9 @@ jobs:
       - name: Create environment file
         run: |
           INPUT_PATH=${{ github.event.inputs.path }}
+          IS_GLOB=${{ github.event.inputs.glob }}
           echo "INPUT_PATH=$INPUT_PATH" > .env
+          echo "IS_GLOB=$IS_GLOB" >> .env
           cat .env  
 
       - name: Copy .env file to Droplet
@@ -35,9 +42,9 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
             source /root/tempMC/.env
-            DIR="$(dirname "$INPUT_PATH")"
-            FILE="$(basename "$INPUT_PATH")"
-            echo "DIR $DIR FILE $FILE"
-            cd "$DIR"
-            rm "./$FILE"
+            if [[ "$IS_GLOB" ]]; then
+              rm "$INPUT_PATH"/*
+            else 
+              rm "$INPUT_PATH"
+            fi
           EOF
