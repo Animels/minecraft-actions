@@ -3,7 +3,7 @@ name: Add single mod and all dependencies
 on:
   workflow_dispatch:
     inputs:
-      modid_projectid:
+      projectid:
         description: 'Write projetcId of mod'
         required: true
         default: '431168' # mod with deps
@@ -15,6 +15,11 @@ on:
         default: '5011582' # mod with deps
         # default: '5397482' Just mod
         type: string
+      start_server: 
+        description: 'Start server after installation?'
+        required: false
+        default: false 
+        type: boolean
 env:
   BASE_URL: https://api.curseforge.com
   MAX_PAGE_SIZE: 50
@@ -35,7 +40,7 @@ jobs:
 
       - name: Create environment file
         run: |
-          INPUT_MOD_ID=${{ github.event.inputs.modid_projectid }}
+          INPUT_MOD_ID=${{ github.event.inputs.projectid }}
           INPUT_FILE_ID=${{ github.event.inputs.fileid }}
           echo "BASE_URL=$BASE_URL" > .env
           echo "API_KEY=$API_KEY" >> .env
@@ -51,35 +56,26 @@ jobs:
       - name: Fetch main mod and recursive fetch deps
         run: |
          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
-          source /root/tempMC/.env
-          echo "Running commands on the Droplet"
-          echo "Base URL: $BASE_URL"
-          echo "API_KEY: $API_KEY"
-          echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
-          echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
-          echo "INPUT_MOD_ID: $INPUT_MOD_ID"
-          cd /root/tempMC
-            
-          api_url_dlink="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
-          api_url_info="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID"
+          fetch_with_dlink() {
+            local url=$1
+            # local api_key=$1
 
-          downloadUrl=$(curl "$api_url_dlink" -H "x-api-key: $API_KEY" | sed '/HTTP_STATUS:/d' | jq -r '.data')
-          echo "Extracted URL: $downloadUrl"
+            downloadUrl=$(curl "$url" -H "x-api-key: $API_KEY" | sed '/HTTP_STATUS:/d' | jq -r '.data')
+            echo "Extracted URL: $downloadUrl"
 
-          fileName=$(basename "$downloadUrl")
-          echo "fileName: $fileName"
+            fileName=$(basename "$downloadUrl")
+            echo "fileName: $fileName"
           
-          if [[ $downloadUrl =~ ^https?:// ]]; then
-            echo "Valid URL: $downloadUrl"
-            pathForFile="/root/temp/$fileName"
-            curl -o "$pathForFile" -L "$downloadUrl"
-            echo "Downloaded dep: $downloadUrl"
-          else
-            echo "Invalid URL extracted: $downloadUrl"
-            exit 1
-          fi
-
-          echo "Install deps if needed"
+            if [[ $downloadUrl =~ ^https?:// ]]; then
+              echo "Valid URL: $downloadUrl"
+              pathForFile="/root/temp/$fileName"
+              curl -o "$pathForFile" -L "$downloadUrl"
+              echo "Downloaded dep: $downloadUrl"
+            else
+              echo "Invalid URL extracted: $downloadUrl"
+              exit 1
+            fi
+          }
           process_dependencies() {
             local dep=$1
             local gameVersionFromMainMod=$2
@@ -96,9 +92,7 @@ jobs:
                   if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" '.gameVersions | index($forge) and index($gameVersion)' >/dev/null; then
                     echo "Downloading dependency for $forgeGameVersion and $gameVersionFromMainMod"
                     download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
-                    fileName=$(basename "$download_link")
-                    pathForFile="/root/temp/$fileName"
-                    curl -L "$download_link" -o "$pathForFile"
+                    fetch_with_dlink "$download_link" 
                     
                     echo "Checking for inner deps and install if needed"
                     has_req_inner_deps=$(echo "$versionInfo" | jq -r '[.dependencies[] | select(.relationType == 3)] |  length')
@@ -121,7 +115,21 @@ jobs:
                   fi
               done
           }
-          
+          source /root/tempMC/.env
+          echo "Running commands on the Droplet"
+          echo "Base URL: $BASE_URL"
+          echo "API_KEY: $API_KEY"
+          echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
+          echo "MAX_PAGE_SIZE: $MAX_PAGE_SIZE"
+          echo "INPUT_MOD_ID: $INPUT_MOD_ID"
+          cd /root/tempMC
+            
+          api_url_dlink="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
+          api_url_info="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID"
+
+          fetch_with_dlink "$api_url_dlink"
+
+          echo "Install deps if needed"
           curl -vvv -L "$api_url_info" -H "x-api-key: $API_KEY" -o /root/temp/response.json
 
           if [[ -s /root/temp/response.json ]]; then
@@ -150,6 +158,26 @@ jobs:
       - name: Install all modes from temp and clear temp
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+            fetch_with_dlink() {
+              local url=$1
+              # local api_key=$1
+
+              downloadUrl=$(curl "$url" -H "x-api-key: $API_KEY" | sed '/HTTP_STATUS:/d' | jq -r '.data')
+              echo "Extracted URL: $downloadUrl"
+
+              fileName=$(basename "$downloadUrl")
+              echo "fileName: $fileName"
+          
+              if [[ $downloadUrl =~ ^https?:// ]]; then
+                echo "Valid URL: $downloadUrl"
+                pathForFile="/root/temp/$fileName"
+                curl -o "$pathForFile" -L "$downloadUrl"
+                echo "Downloaded dep: $downloadUrl"
+              else
+                echo "$projectID" >> "$notAccessibleModsFile"
+                echo "Some mod cannot be added $projectID. Current list: $(cat $notAccessibleModsFile)"
+              fi
+            }
             source /root/tempMC/.env
             api_url_dlink="$BASE_URL/v1/mods/$INPUT_MOD_ID/files/$INPUT_FILE_ID/download-url"
             notAccessibleModsFile='/root/temp/notAccessible.txt'
@@ -168,18 +196,7 @@ jobs:
                   echo "projectID $projectID, fileId $fileId"
                   downloadUrl=$(curl "$dyn_api_url" -H "x-api-key: $API_KEY" | sed '/HTTP_STATUS:/d' | jq -r '.data')
 
-                  fileName=$(basename "$downloadUrl")
-                  echo "fileName: $fileName"
-          
-                  if [[ $downloadUrl =~ ^https?:// ]]; then
-                    echo "Valid URL: $downloadUrl"
-                    pathForFile="/root/temp/$fileName"
-                    curl -o "$pathForFile" -L "$downloadUrl"
-                    echo "Downloaded mod dep: $downloadUrl"
-                  else
-                    echo "$projectID" >> "$notAccessibleModsFile"
-                    echo "Some mod cannot be added $projectID. Current list: $(cat $notAccessibleModsFile)"
-                  fi
+                  fetch_with_dlink "$downloadUrl"
                 done 
                 cp -r /root/temp/overrides/* /root/tempMC/
               else 
@@ -188,7 +205,19 @@ jobs:
             done
             find /root/temp/* -name '*.jar' -exec cp {} /root/tempMC/mods/ \;
             echo "There is some mods that can not be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
-            # rm -r /root/temp/*
+            rm -r /root/temp/*
           EOF
+
+      - name: Start server if required
+        if: ${{ startsWith(github.event.inputs.start_server, true)  }}
+        run: |
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+            echo "Running commands on the Droplet"
+            cd /root/tempMC
+            FILE=$(ls forge* | head -n 1)
+            chmod 7 ./$FILE
+            java -jar ./$FILE
+          EOF
+      
 
     
