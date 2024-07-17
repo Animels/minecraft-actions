@@ -1,55 +1,22 @@
 {
-  "version": "1.2.4",
-  "logging": false,
-  "allowlist": [
-    "net.minecraft.entity.item.EntityXPOrb",
-    "net.minecraft.entity.passive.EntitySquid",
-    "net.minecraft.entity.passive.EntityBat",
-    "net.minecraft.entity.monster.EntityCaveSpider",
-    "net.minecraft.entity.monster.EntitySpider",
-    "net.minecraft.entity.monster.EntitySkeleton",
-    "net.minecraft.entity.monster.EntityZombie",
-    "net.minecraft.entity.monster.EntityBlaze",
-    "net.minecraft.entity.monster.EntityCreeper",
-    "net.minecraft.entity.monster.EntityEnderman",
-    "net.minecraft.entity.monster.EntityEndermite",
-    "net.minecraft.entity.monster.EntityGhast",
-    "net.minecraft.entity.monster.EntityGuardian",
-    "net.minecraft.entity.monster.EntityMagmaCube",
-    "net.minecraft.entity.monster.EntityPigZombie",
-    "net.minecraft.entity.monster.EntitySilverfish",
-    "net.minecraft.entity.monster.EntitySlime",
-    "com.sirsquidly.oe.entity.*",
-    "gigaherz.eyes.entity.EntityEyes",
-    "com.jamieswhiteshirt.trumpetskeleton.common.entity.EntityTrumpetSkeleton"
-  ],
-  "blocklist": [],
-  "defaultThreshold": 40,
-  "checkTimeSeconds": 20,
-  "purgeTamedEntities": false,
-  "purgeNamedEntities": false,
-  "blacklistedChunksNearPlayer": 2,
-  "claimedChunksAreBlacklisted": true,
-  "ftbUtilsIntegration": true,
-  "entitySettings": [
-    {
-      "entityId": "net.minecraft.entity.item.EntityXPOrb",
-      "threshold": 200,
-      "lifetime": 180,
-      "overrideClaimedChunk": true,
-      "overridePlayerChunk": true
-    },
-    {
-      "entityId": "com.sirsquidly.oe.entity.*",
-      "threshold": 80
-    },
-    {
-      "entityId": "gigaherz.eyes.entity.EntityEyes",
-      "threshold": 20
-    },
-    {
-      "entityId": "com.jamieswhiteshirt.trumpetskeleton.common.entity.EntityTrumpetSkeleton",
-      "threshold": 15
-    }
-  ]
+    "version": "1.2.4",
+    "logging": false,
+    "allowlist": [],
+    "blocklist": [],
+    "defaultThreshold": 20,
+    "checkTimeSeconds": 20,
+    "purgeTamedEntities": false,
+    "purgeNamedEntities": false,
+    "blacklistedChunksNearPlayer": 2,
+    "claimedChunksAreBlacklisted": true,
+    "ftbUtilsIntegration": true,
+    "entitySettings": [
+        {
+            "entityId": "net.minecraft.entity.item.EntityXPOrb",
+            "threshold": 100,
+            "lifetime": 120,
+            "overrideClaimedChunk": true,
+            "overridePlayerChunk": true
+        }
+    ]
 }

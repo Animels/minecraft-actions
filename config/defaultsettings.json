@@ -1,15 +1,24 @@
 {
   "version": "2.2.4",
-  "prevVersion": "2.2.0",
   "initPopup": false,
   "exportMode": false,
-  "generatedBy": "bc1938ac-1d75-4b52-9365-393bd8b3cccc",
-  "activeConfigs": [],
-  "hashes": {
-    "Default/servers.dat": "B855AEC2AC9AB21E4743F36145DB84B0",
-    "Default/keys.txt": "4de07c4342afb549f9cf26f2436d03bb",
-    "Default/options.txt": "8F1E00F9A0B7B9C2A067A0F67B23F781"
-  },
+  "generatedBy": "06ed6edd-449c-4005-aaa6-4e9123929992",
+  "activeConfigs": [
+    "fluidlogged_api.cfg",
+    "forge.cfg",
+    "forgeChunkLoading.cfg",
+    "Galacticraft",
+    "loliasm",
+    "loliasm.cfg",
+    "OpenModsLibCore.json",
+    "randompatches.cfg",
+    "splash.properties",
+    "Universal Tweaks - Bugfixes.cfg",
+    "Universal Tweaks - General.cfg",
+    "Universal Tweaks - Tweaks.cfg",
+    "vintagefix.properties"
+  ],
+  "hashes": {},
   "mainProfile": "Default",
-  "initially_created": "2.12.2021 16:08:45"
+  "initially_created": "17.07.2024 18:27:36"
 }
