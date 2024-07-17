@@ -62,7 +62,7 @@ jobs:
       - name: Fetch main mod and recursive fetch deps
         run: |
          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
-           is_excluded_mod() {
+           is_client() {
               local projectId="$1"
               for excluded_mod in "${excluded_mods_array[@]}"; do
                 if [[ "$projectId" == "$excluded_mod" ]]; then
@@ -256,7 +256,7 @@ jobs:
                echo "There is no modpack file"
               fi
             done 
-            cp -r /root/temp/overrides/* /root/main/server
+            cp -r /root/temp/overrides/* /root/main/temp/server
             
             find /root/temp/* -name '*.jar' -exec cp {} /root/main/server/mods/ \;
             echo "There are some mods that cannot be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
