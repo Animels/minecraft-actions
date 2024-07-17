@@ -60,20 +60,8 @@
 				"minCount": 1,
 				"enchantments": [
 					{
-						"enchantment": "cofhcore:insight",
-						"enchantmentLevel": 1
-					}, 
-					{
-						"enchantment": "simplyjetpacks:fuel_efficiency",
-						"enchantmentLevel": 1
-					}, 
-					{
-						"enchantment": "minecraft:protection",
+						"enchantment": "oe:riptide",
 						"enchantmentLevel": 2
-					}, 
-					{
-						"enchantment": "minecraft:unbreaking",
-						"enchantmentLevel": 1
 					}
 				],
 				"maxCount": 1
