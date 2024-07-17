@@ -231,7 +231,7 @@ jobs:
             api_url_dlink="$BASE_URL/v1/mods/$INPUT_PROJECT_ID/files/$INPUT_FILE_ID/download-url"
             notAccessibleModsFile='/root/temp/notAccessible.txt'
             > "$notAccessibleModsFile"
-            cd /root/temp/
+            cd /root/main/temp/server
     
             for file in *.zip; do
               if [ -f "$file" ]; then
