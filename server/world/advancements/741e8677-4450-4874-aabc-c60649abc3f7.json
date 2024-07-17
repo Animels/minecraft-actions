@@ -1,0 +1,62 @@
+{
+  "simplyjetpacks:vanilla/root_vanilla": {
+    "criteria": {
+      "code_trigger": "2024-07-17 13:19:51 +0000"
+    },
+    "done": true
+  },
+  "simplyjetpacks:eio/root_eio": {
+    "criteria": {
+      "code_trigger": "2024-07-17 13:19:51 +0000"
+    },
+    "done": true
+  },
+  "galacticraftcore:galacticraft/root": {
+    "criteria": {
+      "tick": "2024-07-17 13:19:52 +0000"
+    },
+    "done": true
+  },
+  "simplyjetpacks:te/root_te": {
+    "criteria": {
+      "code_trigger": "2024-07-17 13:19:51 +0000"
+    },
+    "done": true
+  },
+  "cfm:root": {
+    "criteria": {
+      "tick": "2024-07-17 13:19:52 +0000"
+    },
+    "done": true
+  },
+  "twilightforest:alt/compat/tconstruct": {
+    "criteria": {
+      "book": "2024-07-17 13:19:51 +0000"
+    },
+    "done": true
+  },
+  "cfm:install": {
+    "criteria": {
+      "tick": "2024-07-17 13:19:52 +0000"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "jungle": "2024-07-17 13:19:51 +0000"
+    },
+    "done": false
+  },
+  "simplyjetpacks:root": {
+    "criteria": {
+      "code_trigger": "2024-07-17 13:19:51 +0000"
+    },
+    "done": true
+  },
+  "cqrepoured:cqr/root": {
+    "criteria": {
+      "tick": "2024-07-17 13:19:52 +0000"
+    },
+    "done": true
+  }
+}
