@@ -26,7 +26,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/tempMC
-            git pull
+            git pull Animels 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
             FILE=$(ls forge* | head -n 1)
             chmod 7 ./$FILE
             java -jar ./$FILE
