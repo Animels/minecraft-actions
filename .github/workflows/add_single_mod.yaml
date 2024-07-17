@@ -73,6 +73,7 @@ jobs:
           }
           fetch_with_dlink() {
             local url=$1
+            local is_client=$2
 
             downloadUrl=$(curl "$url" -H "x-api-key: $API_KEY" | sed '/HTTP_STATUS:/d' | jq -r '.data')
             echo "Extracted URL: $downloadUrl"
@@ -82,9 +83,14 @@ jobs:
           
             if [[ $downloadUrl =~ ^https?:// ]]; then
               echo "Valid URL: $downloadUrl"
-              pathForFile="/root/temp/$fileName"
-              curl -o "$pathForFile" -L "$downloadUrl"
-              echo "Downloaded dep: $downloadUrl"
+              pathForFileServer="/root/main/temp/client/$fileName"
+              pathForFileClient="/root/main/temp/server/$fileName"
+              
+              if is_client; then 
+                curl -o "$pathForFileClient" -L "$downloadUrl"
+              else
+                curl -o "$pathForFileServer" -L "$downloadUrl"
+              fi
             else
               echo "Invalid URL extracted: $downloadUrl"
               exit 1
@@ -96,6 +102,7 @@ jobs:
 
               echo "Downloading dep: $dep"
               forgeGameVersion="Forge"
+              serverGameVersion="Server"
               modId=$(echo "$dep" | jq -r '.modId')
               if is_excluded_mod "$projectID"; then
                  echo "Skipping excluded mod: $projectID"
@@ -109,25 +116,31 @@ jobs:
                   if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" '.gameVersions | index($forge) and index($gameVersion)' >/dev/null; then
                     echo "Downloading dependency for $forgeGameVersion and $gameVersionFromMainMod"
                     download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
-                    fetch_with_dlink "$download_link" 
-                    
+
+                    if echo "$versionInfo" | jq -e --arg server "$serverGameVersion" '.gameVersions |  index($server)' >/dev/null; then 
+                      echo "Downloading server mod in \/server"
+                      fetch_with_dlink "$download_link" false
+                    else
+                      echo "Downloading server mod in \/client"
+                      fetch_with_dlink "$download_link" true
+                    fi
                     echo "Checking for inner deps and install if needed"
                     has_req_inner_deps=$(echo "$versionInfo" | jq -r '[.dependencies[] | select(.relationType == 3)] |  length')
-                      if [ "$has_req_inner_deps" -gt 0 ]; then
+                    if [ "$has_req_inner_deps" -gt 0 ]; then
                         echo "Mod with inner deps: $versionInfo"
                         deps=$(echo "$versionInfo" | jq -r "[.dependencies[] | select(.relationType == 3)]")
                         echo "Inner req deps: $deps"
 
                         echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
                            process_dependency "$dep" "$gameVersionFromMainMod"
-                         done
-                       else
+                        done
+                    else
                         echo "There IS NO inner deps"
-                      fi
-                     break
-                   else
-                     echo "$forgeGameVersion or $gameVersionFromMainMod is not presented, mod not compatible"
-                   fi
+                    fi
+                    break
+                  else
+                    echo "$forgeGameVersion or $gameVersionFromMainMod is not presented, mod not compatible"
+                  fi
                 done
               fi
           }
@@ -140,12 +153,12 @@ jobs:
     
           IFS=',' read -r -a excluded_mods_array <<< "$INPUT_EXLUDED_MODS"
           
-          cd /root/tempMC
+          cd /root/main/server
             
           api_url_dlink="$BASE_URL/v1/mods/$INPUT_PROJECT_ID/files/$INPUT_FILE_ID/download-url"
           api_url_info="$BASE_URL/v1/mods/$INPUT_PROJECT_ID/files/$INPUT_FILE_ID"
 
-          fetch_with_dlink "$api_url_dlink"
+          fetch_with_dlink "$api_url_dlink" false
 
           echo "Install deps if needed"
           curl -L "$api_url_info" -H "x-api-key: $API_KEY" -o /root/temp/response.json
@@ -231,16 +244,10 @@ jobs:
                   cat ./manifest.json | jq -c '.files[]' | while IFS= read -r mod ; do
                     echo "$mod"
                     projectID=$(echo "$mod" | jq '.projectID')
-              
-                    # if is_excluded_mod "$projectID"; then
-                    #   echo "Skipping excluded mod: $projectID"
-                    # else 
-                    #   echo "Downloading mod for modpack: $projectID"
-                      fileId=$(echo "$mod" | jq '.fileID')
-                      dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
+                    fileId=$(echo "$mod" | jq '.fileID')
+                    dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
           
-                      fetch_with_dlink "$dyn_api_url"
-                    # fi
+                    fetch_with_dlink "$dyn_api_url"
                   done
                 else
                   echo "There is no manifest.json"
@@ -249,9 +256,9 @@ jobs:
                echo "There is no modpack file"
               fi
             done 
-            cp -r /root/temp/overrides/* /root/tempMC/
+            cp -r /root/temp/overrides/* /root/main/server
             
-            find /root/temp/* -name '*.jar' -exec cp {} /root/tempMC/mods/ \;
+            find /root/temp/* -name '*.jar' -exec cp {} /root/main/server/mods/ \;
             echo "There are some mods that cannot be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
             rm -r /root/temp/*
           EOF
