@@ -62,6 +62,15 @@ jobs:
       - name: Fetch main mod and recursive fetch deps
         run: |
          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+           is_excluded_mod() {
+              local projectId="$1"
+              for excluded_mod in "${excluded_mods_array[@]}"; do
+                if [[ "$projectId" == "$excluded_mod" ]]; then
+                  return 0
+                fi
+              done
+              return 1
+          }
           fetch_with_dlink() {
             local url=$1
 
@@ -88,41 +97,48 @@ jobs:
               echo "Downloading dep: $dep"
               forgeGameVersion="Forge"
               modId=$(echo "$dep" | jq -r '.modId')
-              relationType=$(echo "$dep" | jq -r '.relationType')
-              api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
-              curl -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
+              if is_excluded_mod "$projectID"; then
+                 echo "Skipping excluded mod: $projectID"
+              else
+                relationType=$(echo "$dep" | jq -r '.relationType')
+                api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
+                curl -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
 
-              echo "Checking for compatible dependency"
-              jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
-                if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" '.gameVersions | index($forge) and index($gameVersion)' >/dev/null; then
-                  echo "Downloading dependency for $forgeGameVersion and $gameVersionFromMainMod"
-                  download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
-                  fetch_with_dlink "$download_link" 
+                echo "Checking for compatible dependency"
+                jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
+                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" '.gameVersions | index($forge) and index($gameVersion)' >/dev/null; then
+                    echo "Downloading dependency for $forgeGameVersion and $gameVersionFromMainMod"
+                    download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
+                    fetch_with_dlink "$download_link" 
                     
-                  echo "Checking for inner deps and install if needed"
-                  has_req_inner_deps=$(echo "$versionInfo" | jq -r '[.dependencies[] | select(.relationType == 3)] |  length')
-                    if [ "$has_req_inner_deps" -gt 0 ]; then
-                      echo "Mod with inner deps: $versionInfo"
-                      deps=$(echo "$versionInfo" | jq -r "[.dependencies[] | select(.relationType == 3)]")
-                      echo "Inner req deps: $deps"
+                    echo "Checking for inner deps and install if needed"
+                    has_req_inner_deps=$(echo "$versionInfo" | jq -r '[.dependencies[] | select(.relationType == 3)] |  length')
+                      if [ "$has_req_inner_deps" -gt 0 ]; then
+                        echo "Mod with inner deps: $versionInfo"
+                        deps=$(echo "$versionInfo" | jq -r "[.dependencies[] | select(.relationType == 3)]")
+                        echo "Inner req deps: $deps"
 
-                      echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
-                         process_dependency "$dep" "$gameVersionFromMainMod"
-                       done
-                     else
-                      echo "There IS NO inner deps"
-                    fi
-                   break
-                 else
-                   echo "$forgeGameVersion or $gameVersionFromMainMod is not presented, mod not compatible"
-                 fi
-             done
+                        echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
+                           process_dependency "$dep" "$gameVersionFromMainMod"
+                         done
+                       else
+                        echo "There IS NO inner deps"
+                      fi
+                     break
+                   else
+                     echo "$forgeGameVersion or $gameVersionFromMainMod is not presented, mod not compatible"
+                   fi
+                done
+              fi
           }
           source /root/.env
           echo "Base URL: $BASE_URL"
           echo "API_KEY: $API_KEY"
           echo "INPUT_PROJECT_ID: $INPUT_PROJECT_ID"
           echo "INPUT_FILE_ID: $INPUT_FILE_ID"
+          echo "INPUT_EXLUDED_MODS: $INPUT_EXLUDED_MODS"
+    
+          IFS=',' read -r -a excluded_mods_array <<< "$INPUT_EXLUDED_MODS"
           
           cd /root/tempMC
             
@@ -160,15 +176,15 @@ jobs:
       - name: Install all modes from temp and clear temp
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
-            is_excluded_mod() {
-              local projectId="$1"
-              for excluded_mod in "${excluded_mods_array[@]}"; do
-                if [[ "$projectId" == "$excluded_mod" ]]; then
-                  return 0
-                fi
-              done
-              return 1
-            }
+            # is_excluded_mod() {
+            #   local projectId="$1"
+            #   for excluded_mod in "${excluded_mods_array[@]}"; do
+            #     if [[ "$projectId" == "$excluded_mod" ]]; then
+            #       return 0
+            #     fi
+            #   done
+            #   return 1
+            # }
 
             fetch_with_dlink() {
               local url=$1
@@ -216,15 +232,15 @@ jobs:
                     echo "$mod"
                     projectID=$(echo "$mod" | jq '.projectID')
               
-                    if is_excluded_mod "$projectID"; then
-                      echo "Skipping excluded mod: $projectID"
-                    else 
-                      echo "Downloading mod for modpack: $projectID"
+                    # if is_excluded_mod "$projectID"; then
+                    #   echo "Skipping excluded mod: $projectID"
+                    # else 
+                    #   echo "Downloading mod for modpack: $projectID"
                       fileId=$(echo "$mod" | jq '.fileID')
                       dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
           
                       fetch_with_dlink "$dyn_api_url"
-                    fi
+                    # fi
                   done
                 else
                   echo "There is no manifest.json"
