@@ -272,9 +272,9 @@ jobs:
               curl -L "$api_url_info" -H "x-api-key: $API_KEY" -o "$WORK_PATH"/response_sr.json
               
               if cat "$WORK_PATH"/response_sr.json | jq -e --arg server "$serverGameVersion" '.gameVersions |  index($server)' >/dev/null; then
-                return "server"
+                return 0
               else 
-                return "client"
+                return 1
               fi
               rm "$WORK_PATH"/response_sr.json
             }
@@ -302,12 +302,10 @@ jobs:
                     dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
                     reuslt=$(server_or_client "$projectID" "$fileId")
                     
-                    if [ "$result" = "server" ]; then
+                    if "$result" ; then
                       fetch_with_dlink "$download_link" false
-                    elif [ "$result" = "client" ]; then
-                      fetch_with_dlink "$download_link" true
                     else
-                      echo "Unknown result: $result"
+                      fetch_with_dlink "$download_link" true
                     fi
                   done
                 else
