@@ -271,7 +271,7 @@ jobs:
                     dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
                     reuslt=$(server_or_client "$projectID" "$fileId")
                     
-                    if "$result" ; then
+                    if "$result"; then
                       fetch_with_dlink "$dyn_api_url" false
                     else
                       fetch_with_dlink "$dyn_api_url" true
