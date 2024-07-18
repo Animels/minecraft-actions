@@ -267,7 +267,7 @@ jobs:
                 unzip -o "$file"
 
                 cp -r "$TEMP_SERVER_PATH"/mods/overrides/* "$TEMP_SERVER_PATH"
-                cp "$TEMP_SERVER_PATH"/mods/overrides/manifest.json
+                cp "$TEMP_SERVER_PATH"/mods/overrides/manifest.json "$TEMP_SERVER_PATH"
                 rm -r "$TEMP_SERVER_PATH"/mods/overrides
                 rm -r "$TEMP_SERVER_PATH"/mods/manifest.json
                 rm -r "$TEMP_SERVER_PATH"/mods/modlist.html
