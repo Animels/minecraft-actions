@@ -83,14 +83,14 @@ jobs:
           server_or_client() {
               local versionInfo=$1
           
-              if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" '.gameVersions | index($forge) and index($gameVersion)' >/dev/null; then
-                if echo "$versionInfo" | jq -e --arg server "$serverGameVersion" '.gameVersions |  index($server)' >/dev/null; then 
-                  return "server"
+              if echo "$versionInfo" | jq -e  --arg gameVersion "$versionInfo" '.gameVersions | index($gameVersion)' >/dev/null; then
+                if echo "$versionInfo" | jq '.isServerPack'; then 
+                  return 0
                 else
-                  return "client"
+                  return 1
                 fi
               else 
-                return  "abort"
+                echo "Mod doesn't have needed version"
               fi
           }
           fetch_with_dlink() {
@@ -220,7 +220,7 @@ jobs:
               if [[ $downloadUrl =~ ^https?:// ]]; then
                 echo "Valid URL: $downloadUrl"
                 pathForFileServer="$TEMP_CLIENT_PATH/$fileName"
-                pathForFileClient="/$TEMP_SERVER_PATH/$fileName"
+                pathForFileClient="$TEMP_SERVER_PATH/$fileName"
                 
                 if "$is_client"; then 
                   curl -o "$pathForFileClient" -L "$downloadUrl"
@@ -239,11 +239,11 @@ jobs:
               
               touch "$WORK_PATH"/response_sr.json
               curl -L "$api_url_info" -H "x-api-key: $API_KEY" -o "$WORK_PATH"/response_sr.json
-              
-              if cat "$WORK_PATH"/response_sr.json | jq -e --arg server "$serverGameVersion" '.gameVersions |  index($server)' >/dev/null; then
-                return 0
-              else 
-                return 1
+
+              if cat "$WORK_PATH"/response_sr.json | jq '.isServerPack'; then 
+                 return 0
+              else
+                 return 1
               fi
               rm "$WORK_PATH"/response_sr.json
             }
