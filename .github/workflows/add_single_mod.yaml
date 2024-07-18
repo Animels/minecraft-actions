@@ -216,7 +216,6 @@ jobs:
             }
             fetch_with_dlink() {
               local url=$1
-              local is_client=$2
       
               downloadUrl=$(curl "$url" -H "x-api-key: $API_KEY" | sed '/HTTP_STATUS:/d' | jq -r '.data')
               echo "Extracted URL: $downloadUrl"
@@ -226,39 +225,14 @@ jobs:
               
               if [[ $downloadUrl =~ ^https?:// ]]; then
                 echo "Valid URL: $downloadUrl"
-                clientModPath="$TEMP_CLIENT_PATH/mods/$fileName"
                 serverModPath="$TEMP_SERVER_PATH/mods/$fileName"
-                
-                if "$is_client"; then 
-                  echo "Downloading mod for client: $downloadUrl $clientModPath"
-                  curl -o "$clientModPath" -L "$downloadUrl"
-                else
-                  echo "Downloading mod for server: $downloadUrl $serverModPath"
-                  curl -o "$serverModPath" -L "$downloadUrl"
-                fi
+                echo "Downloading mod for server: $downloadUrl $serverModPath"
+                curl -o "$serverModPath" -L "$downloadUrl"
               else
                 echo "$projectID" >> "$notAccessibleModsFile"
                 echo "Some mod cannot be added $projectID. Current list: $(cat $notAccessibleModsFile)"
               fi
             }
-            server_or_client() {
-              local projectId=$1
-              local fileId=$2
-              api_url_info="$BASE_URL/v1/mods/$projectId/files/$fileId"
-              
-              touch "$WORK_PATH"/response_sr.json
-              curl -L "$api_url_info" -H "x-api-key: $API_KEY" -o "$WORK_PATH"/response_sr.json
-
-              is_server_pack=$(cat "$WORK_PATH"/response_sr.json | jq '.data.isServerPack')
-              echo "is_server_pack $is_server_pack"
-              if [ "$is_server_pack" = "true" ]; then 
-                 return 0
-              else
-                 return 1
-              fi
-              rm "$WORK_PATH"/response_sr.json
-            }
-    
             source /root/.env
             IFS=',' read -r -a excluded_mods_array <<< "$INPUT_EXLUDED_MODS"
 
@@ -291,11 +265,7 @@ jobs:
                     if is_excluded_mod "$projectID"; then 
                       echo "Excluded mod. Skipping installation"
                     else 
-                      if server_or_client "$projectID" "$fileId"; then
-                        fetch_with_dlink "$dyn_api_url" false
-                      else
-                        fetch_with_dlink "$dyn_api_url" true
-                      fi
+                      fetch_with_dlink "$dyn_api_url"
                     fi
                   done
                 else
@@ -305,6 +275,14 @@ jobs:
                echo "There is no modpack file"
               fi
             done 
+
+            rm "$TEMP_SERVER_PATH"/mods/*.zip
+
+            mkdir "$TEMP_CLIENT_PATH"/mods
+            cp -r "$TEMP_SERVER_PATH"/mods/* "$TEMP_CLIENT_PATH"/mods
+            
+            mkdir "$TEMP_CLIENT_PATH"/config
+            cp -r "$TEMP_SERVER_PATH"/config/* "$TEMP_CLIENT_PATH"/config
             
             echo "There are some mods that cannot be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
             rm -r /root/temp/*
