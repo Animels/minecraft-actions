@@ -105,8 +105,8 @@ jobs:
           
             if [[ $downloadUrl =~ ^https?:// ]]; then
               echo "Valid URL: $downloadUrl"
-              pathForFileServer="$TEMP_CLIENT_PATH/$fileName"
-              pathForFileClient="/$TEMP_SERVER_PATH/$fileName"
+              pathForFileClient="$TEMP_CLIENT_PATH/$fileName"
+              pathForFileServer="$TEMP_SERVER_PATH/$fileName"
               
               if "$is_client"; then 
                 curl -o "$pathForFileClient" -L "$downloadUrl"
