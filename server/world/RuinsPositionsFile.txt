@@ -15,3 +15,5 @@
 115 79 382 127 84 394 AncientFountain.tml
 279 83 356 288 98 365 MoaiHead.tml
 281 61 113 286 64 120 PumpkinField.tml
+419 75 117 430 96 129 JungleTreePlatform_edit.tml
+425 69 416 430 72 423 PumpkinField.tml
