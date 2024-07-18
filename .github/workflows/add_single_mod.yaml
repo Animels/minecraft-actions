@@ -7,7 +7,6 @@ on:
         description: 'Write projetcId of mod'
         required: true
         default: '431168' 
-        # default: '876781' Just mod
         type: string
       fileid: 
         description: 'Write modId of mod'
@@ -26,6 +25,11 @@ on:
         type: boolean
 env:
   BASE_URL: https://api.curseforge.com
+  WORK_PATH: /root/temp
+  SERVER_PATH: /root/main/server
+  CLIENT_PATH: /root/main/client
+  TEMP_SERVER_PATH: /root/main/temp/server
+  TEMP_CLIENT_PATH: /root/main/temp/client
   MAX_PAGE_SIZE: 50
   API_KEY: \$2a\$10\$4UughKvVMNC9Yl0cUfhAsOiOkCWgy/k/6rn.z5bIztd62LpZ1eibe
 
@@ -48,6 +52,11 @@ jobs:
           INPUT_FILE_ID=${{ github.event.inputs.fileid }}
           INPUT_EXLUDED_MODS=${{ github.event.inputs.excluded_mods }}
           echo "BASE_URL=$BASE_URL" > .env
+          echo "WORK_PATH=$WORK_PATH" >> .env
+          echo "SERVER_PATH=$SERVER_PATH" >> .env
+          echo "CLIENT_PATH=$CLIENT_PATH" >> .env
+          echo "TEMP_CLIENT_PATH=$TEMP_CLIENT_PATH" >> .env
+          echo "TEMP_SERVER_PATH=$TEMP_SERVER_PATH" >> .env
           echo "API_KEY=$API_KEY" >> .env
           echo "MAX_PAGE_SIZE=$MAX_PAGE_SIZE" >> .env
           echo "INPUT_PROJECT_ID=$INPUT_PROJECT_ID" >> .env
@@ -63,7 +72,7 @@ jobs:
         run: |
          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
            is_excluded_mod() {
-              local projectId="$1"
+              local projectId=$1
               for excluded_mod in "${excluded_mods_array[@]}"; do
                 if [[ "$projectId" == "$excluded_mod" ]]; then
                   return 0
@@ -71,8 +80,22 @@ jobs:
               done
               return 1
           }
+          server_or_client() {
+              local versionInfo=$1
+          
+              if echo "$versionInfo" | jq -e  --arg gameVersion "$versionInfo" '.gameVersions | index($gameVersion)' >/dev/null; then
+                if echo "$versionInfo" | jq '.isServerPack'; then 
+                  return 0
+                else
+                  return 1
+                fi
+              else 
+                echo 2
+              fi
+          }
           fetch_with_dlink() {
             local url=$1
+            local is_client=$2
 
             downloadUrl=$(curl "$url" -H "x-api-key: $API_KEY" | sed '/HTTP_STATUS:/d' | jq -r '.data')
             echo "Extracted URL: $downloadUrl"
@@ -82,9 +105,16 @@ jobs:
           
             if [[ $downloadUrl =~ ^https?:// ]]; then
               echo "Valid URL: $downloadUrl"
-              pathForFile="/root/temp/$fileName"
-              curl -o "$pathForFile" -L "$downloadUrl"
-              echo "Downloaded dep: $downloadUrl"
+                clientModPath="$TEMP_CLIENT_PATH/mods/$fileName"
+                serverModPath="$TEMP_SERVER_PATH/mods/$fileName"
+              
+              if "$is_client"; then 
+                echo "Downloading mod for client: $downloadUrl $clientModPath"
+                curl -o "$clientModPath" -L "$downloadUrl"
+              else
+                echo "Downloading mod for server: $downloadUrl $serverModPath"
+                curl -o "$serverModPath" -L "$downloadUrl"
+              fi
             else
               echo "Invalid URL extracted: $downloadUrl"
               exit 1
@@ -96,70 +126,69 @@ jobs:
 
               echo "Downloading dep: $dep"
               forgeGameVersion="Forge"
+              serverGameVersion="Server"
               modId=$(echo "$dep" | jq -r '.modId')
               if is_excluded_mod "$projectID"; then
                  echo "Skipping excluded mod: $projectID"
               else
                 relationType=$(echo "$dep" | jq -r '.relationType')
                 api_url_mod_files="$BASE_URL/v1/mods/$modId/files"
-                curl -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o /root/temp/response_dep.json
+
+                touch "$WORK_PATH"/response_dep.json
+                curl -L "$api_url_mod_files" -H "x-api-key: $API_KEY" -o "$WORK_PATH"/response_dep.json
 
                 echo "Checking for compatible dependency"
-                jq -c -r '.data[]' /root/temp/response_dep.json | while IFS= read -r versionInfo; do
-                  if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" '.gameVersions | index($forge) and index($gameVersion)' >/dev/null; then
-                    echo "Downloading dependency for $forgeGameVersion and $gameVersionFromMainMod"
-                    download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
-                    fetch_with_dlink "$download_link" 
-                    
-                    echo "Checking for inner deps and install if needed"
-                    has_req_inner_deps=$(echo "$versionInfo" | jq -r '[.dependencies[] | select(.relationType == 3)] |  length')
-                      if [ "$has_req_inner_deps" -gt 0 ]; then
-                        echo "Mod with inner deps: $versionInfo"
-                        deps=$(echo "$versionInfo" | jq -r "[.dependencies[] | select(.relationType == 3)]")
-                        echo "Inner req deps: $deps"
 
-                        echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
-                           process_dependency "$dep" "$gameVersionFromMainMod"
-                         done
-                       else
-                        echo "There IS NO inner deps"
-                      fi
-                     break
-                   else
-                     echo "$forgeGameVersion or $gameVersionFromMainMod is not presented, mod not compatible"
-                   fi
+                jq -c -r '.data[]' "$WORK_PATH"/response_dep.json | while IFS= read -r versionInfo; do
+                  download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
+                  result=$(server_or_client "$versionInfo")
+                  
+                  if server_or_client "$versionInfo"; then
+                    fetch_with_dlink "$download_link" false
+                  else
+                    fetch_with_dlink "$download_link" true
+                  fi
+
+                  echo "Checking for inner deps and install if needed"
+                  has_req_inner_deps=$(echo "$versionInfo" | jq -r '[.dependencies[] | select(.relationType == 3)] |  length')
+                  if [ "$has_req_inner_deps" -gt 0 ]; then
+                    echo "Mod with inner deps: $versionInfo"
+                    eps=$(echo "$versionInfo" | jq -r "[.dependencies[] | select(.relationType == 3)]")
+                    echo "Inner req deps: $deps"
+
+                    echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
+                      process_dependency "$dep" "$gameVersionFromMainMod"
+                    done
+                  else
+                    echo "There IS NO inner deps"
+                  fi
                 done
               fi
           }
           source /root/.env
-          echo "Base URL: $BASE_URL"
-          echo "API_KEY: $API_KEY"
-          echo "INPUT_PROJECT_ID: $INPUT_PROJECT_ID"
-          echo "INPUT_FILE_ID: $INPUT_FILE_ID"
-          echo "INPUT_EXLUDED_MODS: $INPUT_EXLUDED_MODS"
-    
           IFS=',' read -r -a excluded_mods_array <<< "$INPUT_EXLUDED_MODS"
           
-          cd /root/tempMC
+          cd "$TEMP_SERVER_PATH"
             
           api_url_dlink="$BASE_URL/v1/mods/$INPUT_PROJECT_ID/files/$INPUT_FILE_ID/download-url"
           api_url_info="$BASE_URL/v1/mods/$INPUT_PROJECT_ID/files/$INPUT_FILE_ID"
 
-          fetch_with_dlink "$api_url_dlink"
+          fetch_with_dlink "$api_url_dlink" false
 
           echo "Install deps if needed"
-          curl -L "$api_url_info" -H "x-api-key: $API_KEY" -o /root/temp/response.json
+          touch "$WORK_PATH"/response.json
+          curl -L "$api_url_info" -H "x-api-key: $API_KEY" -o "$WORK_PATH"/response.json
 
-          if [[ -s /root/temp/response.json ]]; then
+          if [[ -s "$WORK_PATH"/response.json ]]; then
             echo "Successfully downloaded response.json"
-            has_dependencies=$(jq -r '.data.dependencies | length' /root/temp/response.json)
+            has_dependencies=$(jq -r '.data.dependencies | length' "$WORK_PATH"/response.json)
             echo "Has Deps? $has_dependencies"
             
             if [ "$has_dependencies" -gt 0 ]; then
               dep_lvl_req=3
               # dep_lvl_opt=2
-              deps=$(jq --argjson dep_lvl_req "$dep_lvl_req" --argjson dep_lvl_opt "$dep_lvl_opt" -r '[.data.dependencies[] | select(.relationType == $dep_lvl_req or .relationType == $dep_lvl_opt)]' /root/temp/response.json )
-              gameVersion=$(jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))' /root/temp/response.json)
+              deps=$(jq --argjson dep_lvl_req "$dep_lvl_req" --argjson dep_lvl_opt "$dep_lvl_opt" -r '[.data.dependencies[] | select(.relationType == $dep_lvl_req or .relationType == $dep_lvl_opt)]' "$WORK_PATH"/response.json )
+              gameVersion=$(jq -r '.data.gameVersions[] | select(test("^[0-9]+\\.[0-9]+\\.[0-9]+$"))' "$WORK_PATH"/response.json)
               echo "Dependencies list: $deps"
 
               echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
@@ -176,16 +205,15 @@ jobs:
       - name: Install all modes from temp and clear temp
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
-            # is_excluded_mod() {
-            #   local projectId="$1"
-            #   for excluded_mod in "${excluded_mods_array[@]}"; do
-            #     if [[ "$projectId" == "$excluded_mod" ]]; then
-            #       return 0
-            #     fi
-            #   done
-            #   return 1
-            # }
-
+            is_excluded_mod() {
+              local projectId=$1
+              for excluded_mod in "${excluded_mods_array[@]}"; do
+                if [[ "$projectId" == "$excluded_mod" ]]; then
+                  return 0
+                fi
+              done
+              return 1
+            }
             fetch_with_dlink() {
               local url=$1
       
@@ -194,64 +222,68 @@ jobs:
 
               fileName=$(basename "$downloadUrl")
               echo "fileName: $fileName"
-  
+              
               if [[ $downloadUrl =~ ^https?:// ]]; then
                 echo "Valid URL: $downloadUrl"
-                pathForFile="/root/temp/$fileName"
-                curl -o "$pathForFile" -L "$downloadUrl"
-                echo "Downloaded dep: $downloadUrl"
+                serverModPath="$TEMP_SERVER_PATH/mods/$fileName"
+                echo "Downloading mod for server: $downloadUrl $serverModPath"
+                curl -o "$serverModPath" -L "$downloadUrl"
               else
                 echo "$projectID" >> "$notAccessibleModsFile"
                 echo "Some mod cannot be added $projectID. Current list: $(cat $notAccessibleModsFile)"
               fi
             }
-    
             source /root/.env
-            echo "Base URL: $BASE_URL"
-            echo "API_KEY: $API_KEY"
-            echo "INPUT_PROJECT_ID: $INPUT_PROJECT_ID"
-            echo "INPUT_FILE_ID: $INPUT_FILE_ID"
-            echo "INPUT_EXLUDED_MODS: $INPUT_EXLUDED_MODS"
-    
             IFS=',' read -r -a excluded_mods_array <<< "$INPUT_EXLUDED_MODS"
 
             api_url_dlink="$BASE_URL/v1/mods/$INPUT_PROJECT_ID/files/$INPUT_FILE_ID/download-url"
-            notAccessibleModsFile='/root/temp/notAccessible.txt'
+            notAccessibleModsFile="$WORKING_PATH"/notAccessible.txt
             > "$notAccessibleModsFile"
-            cd /root/temp/
+            cd "$TEMP_SERVER_PATH"/mods
     
             for file in *.zip; do
               if [ -f "$file" ]; then
                 echo "Found archive in folder, trying to unpack and install"
                 unzip -o "$file"
 
+                cp -r "$TEMP_SERVER_PATH"/mods/overrides/* "$TEMP_SERVER_PATH"
+                cp "$TEMP_SERVER_PATH"/mods/manifest.json "$TEMP_SERVER_PATH"
+                rm -r "$TEMP_SERVER_PATH"/mods/overrides
+                rm -r "$TEMP_SERVER_PATH"/mods/manifest.json
+                rm -r "$TEMP_SERVER_PATH"/mods/modlist.html
+                cd ..
+
                 echo "Trying to find manifest.json after unzipping"
-                if [[ -f /root/temp/manifest.json ]]; then 
+                if [[ -f "$TEMP_SERVER_PATH"/manifest.json ]]; then 
                   echo "There is manifest.json"
                   cat ./manifest.json | jq -c '.files[]' | while IFS= read -r mod ; do
                     echo "$mod"
                     projectID=$(echo "$mod" | jq '.projectID')
-              
-                    # if is_excluded_mod "$projectID"; then
-                    #   echo "Skipping excluded mod: $projectID"
-                    # else 
-                    #   echo "Downloading mod for modpack: $projectID"
-                      fileId=$(echo "$mod" | jq '.fileID')
-                      dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
-          
+                    fileId=$(echo "$mod" | jq '.fileID')
+                    dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
+
+                    if is_excluded_mod "$projectID"; then 
+                      echo "Excluded mod. Skipping installation"
+                    else 
                       fetch_with_dlink "$dyn_api_url"
-                    # fi
+                    fi
                   done
                 else
-                  echo "There is no manifest.json"
+                  echo "There is no manifest.json in modpack"
                 fi
               else
                echo "There is no modpack file"
               fi
             done 
-            cp -r /root/temp/overrides/* /root/tempMC/
+
+            rm "$TEMP_SERVER_PATH"/mods/*.zip
+
+            mkdir "$TEMP_CLIENT_PATH"/mods
+            cp -r "$TEMP_SERVER_PATH"/mods/* "$TEMP_CLIENT_PATH"/mods
             
-            find /root/temp/* -name '*.jar' -exec cp {} /root/tempMC/mods/ \;
+            mkdir "$TEMP_CLIENT_PATH"/config
+            cp -r "$TEMP_SERVER_PATH"/config/* "$TEMP_CLIENT_PATH"/config
+            
             echo "There are some mods that cannot be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
             rm -r /root/temp/*
           EOF
