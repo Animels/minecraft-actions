@@ -165,37 +165,6 @@ jobs:
                     echo "There IS NO inner deps"
                   fi
                 done
-                
-                # jq -c -r '.data[]' "$WORK_PATH"/response_dep.json | while IFS= read -r versionInfo; do
-                #   if echo "$versionInfo" | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" '.gameVersions | index($forge) and index($gameVersion)' >/dev/null; then
-                #     echo "Downloading dependency for $forgeGameVersion and $gameVersionFromMainMod"
-                #     download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
-
-                #     if echo "$versionInfo" | jq -e --arg server "$serverGameVersion" '.gameVersions |  index($server)' >/dev/null; then 
-                #       echo "Downloading server mod in \/server"
-                #       fetch_with_dlink "$download_link" false
-                #     else
-                #       echo "Downloading server mod in \/client"
-                #       fetch_with_dlink "$download_link" true
-                #     fi
-                #     echo "Checking for inner deps and install if needed"
-                #     has_req_inner_deps=$(echo "$versionInfo" | jq -r '[.dependencies[] | select(.relationType == 3)] |  length')
-                #     if [ "$has_req_inner_deps" -gt 0 ]; then
-                #         echo "Mod with inner deps: $versionInfo"
-                #         deps=$(echo "$versionInfo" | jq -r "[.dependencies[] | select(.relationType == 3)]")
-                #         echo "Inner req deps: $deps"
-
-                #         echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
-                #            process_dependency "$dep" "$gameVersionFromMainMod"
-                #         done
-                #     else
-                #         echo "There IS NO inner deps"
-                #     fi
-                #     break
-                #   else
-                #     echo "$forgeGameVersion or $gameVersionFromMainMod is not presented, mod not compatible"
-                #   fi
-                # done
               fi
           }
           source /root/.env
@@ -253,7 +222,7 @@ jobs:
                 pathForFileServer="$TEMP_CLIENT_PATH/$fileName"
                 pathForFileClient="/$TEMP_SERVER_PATH/$fileName"
                 
-                if is_client; then 
+                if "$is_client"; then 
                   curl -o "$pathForFileClient" -L "$downloadUrl"
                 else
                   curl -o "$pathForFileServer" -L "$downloadUrl"
