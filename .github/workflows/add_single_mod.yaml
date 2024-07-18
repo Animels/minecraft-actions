@@ -90,7 +90,7 @@ jobs:
                   return 1
                 fi
               else 
-                echo "Mod doesn't have needed version"
+                echo 2
               fi
           }
           fetch_with_dlink() {
@@ -141,14 +141,10 @@ jobs:
                   download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
                   result=$(server_or_client "$versionInfo")
                   
-                  if [ "$result" = "server" ]; then
+                  if server_or_client "$versionInfo"; then
                     fetch_with_dlink "$download_link" false
-                  elif [ "$result" = "client" ]; then
-                    fetch_with_dlink "$download_link" true
-                  elif [ "$result" = "abort" ]; then
-                    break
                   else
-                    echo "Unknown result: $result"
+                    fetch_with_dlink "$download_link" true
                   fi
 
                   echo "Checking for inner deps and install if needed"
@@ -269,9 +265,8 @@ jobs:
                     projectID=$(echo "$mod" | jq '.projectID')
                     fileId=$(echo "$mod" | jq '.fileID')
                     dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
-                    reuslt=$(server_or_client "$projectID" "$fileId")
                     
-                    if "$result"; then
+                    if server_or_client "$projectID" "$fileId"; then
                       fetch_with_dlink "$dyn_api_url" false
                     else
                       fetch_with_dlink "$dyn_api_url" true
