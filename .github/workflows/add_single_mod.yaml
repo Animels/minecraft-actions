@@ -267,17 +267,16 @@ jobs:
               local projectId=$1
               local fileId=$2
               api_url_info="$BASE_URL/v1/mods/$projectId/files/$fileId"
-              curl -L "$api_url_info" -H "x-api-key: $API_KEY" -o "$WORK_PATH"/response.json
               
-              if cat "$WORK_PATH"/response.json | jq -e --arg forge "$forgeGameVersion" --arg gameVersion "$gameVersionFromMainMod" '.gameVersions | index($forge) and index($gameVersion)' >/dev/null; then
-                if echo "$versionInfo" | jq -e --arg server "$serverGameVersion" '.gameVersions |  index($server)' >/dev/null; then 
-                  return "server"
-                else
-                  return "client"
-                fi
+              touch "$WORK_PATH"/response_sr.json
+              curl -L "$api_url_info" -H "x-api-key: $API_KEY" -o "$WORK_PATH"/response_sr.json
+              
+              if cat "$WORK_PATH"/response_sr.json | jq -e --arg server "$serverGameVersion" '.gameVersions |  index($server)' >/dev/null; then
+                return "server"
               else 
-                return  "abort"
+                return "client"
               fi
+              rm "$WORK_PATH"/response_sr.json
             }
     
             source /root/.env
@@ -307,8 +306,6 @@ jobs:
                       fetch_with_dlink "$download_link" false
                     elif [ "$result" = "client" ]; then
                       fetch_with_dlink "$download_link" true
-                    elif [ "$result" = "abort" ]; then
-                      break
                     else
                       echo "Unknown result: $result"
                     fi
