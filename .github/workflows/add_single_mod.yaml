@@ -249,10 +249,7 @@ jobs:
               touch "$WORK_PATH"/response_sr.json
               curl -L "$api_url_info" -H "x-api-key: $API_KEY" -o "$WORK_PATH"/response_sr.json
 
-              cat "$WORK_PATH"/response_sr.json
-              isServerpack=$(cat "$WORK_PATH"/response_sr.json | jq '.isServerPack')
-              echo "isServerPack: $isServerpack"
-              
+              isServerpack=$(cat "$WORK_PATH"/response_sr.json | jq '.data.isServerPack')
               if [ "$is_server_pack" = "true" ]; then 
                  return 0
               else
