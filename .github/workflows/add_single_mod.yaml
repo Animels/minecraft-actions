@@ -105,13 +105,15 @@ jobs:
           
             if [[ $downloadUrl =~ ^https?:// ]]; then
               echo "Valid URL: $downloadUrl"
-              pathForFileClient="$TEMP_CLIENT_PATH/mods/$fileName"
-              pathForFileServer="$TEMP_SERVER_PATH/mods/$fileName"
+                clientModPath="$TEMP_CLIENT_PATH/mods/$fileName"
+                serverModPath="$TEMP_SERVER_PATH/mods/$fileName"
               
               if "$is_client"; then 
-                curl -o "$pathForFileClient" -L "$downloadUrl"
+                echo "Downloading mod for client: $downloadUrl $clientModPath"
+                curl -o "$clientModPath" -L "$downloadUrl"
               else
-                curl -o "$pathForFileServer" -L "$downloadUrl"
+                echo "Downloading mod for server: $downloadUrl $serverModPath"
+                curl -o "$serverModPath" -L "$downloadUrl"
               fi
             else
               echo "Invalid URL extracted: $downloadUrl"
@@ -224,13 +226,15 @@ jobs:
               
               if [[ $downloadUrl =~ ^https?:// ]]; then
                 echo "Valid URL: $downloadUrl"
-                pathForFileServer="$TEMP_CLIENT_PATH/mods/$fileName"
-                pathForFileClient="$TEMP_SERVER_PATH/mods/$fileName"
+                clientModPath="$TEMP_CLIENT_PATH/mods/$fileName"
+                serverModPath="$TEMP_SERVER_PATH/mods/$fileName"
                 
                 if "$is_client"; then 
-                  curl -o "$pathForFileClient" -L "$downloadUrl"
+                  echo "Downloading mod for client: $downloadUrl $clientModPath"
+                  curl -o "$clientModPath" -L "$downloadUrl"
                 else
-                  curl -o "$pathForFileServer" -L "$downloadUrl"
+                  echo "Downloading mod for server: $downloadUrl $serverModPath"
+                  curl -o "$serverModPath" -L "$downloadUrl"
                 fi
               else
                 echo "$projectID" >> "$notAccessibleModsFile"
