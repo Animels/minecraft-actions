@@ -105,8 +105,8 @@ jobs:
           
             if [[ $downloadUrl =~ ^https?:// ]]; then
               echo "Valid URL: $downloadUrl"
-              pathForFileClient="$TEMP_CLIENT_PATH/$fileName"
-              pathForFileServer="$TEMP_SERVER_PATH/$fileName"
+              pathForFileClient="$TEMP_CLIENT_PATH/mods/$fileName"
+              pathForFileServer="$TEMP_SERVER_PATH/mods/$fileName"
               
               if "$is_client"; then 
                 curl -o "$pathForFileClient" -L "$downloadUrl"
@@ -203,6 +203,15 @@ jobs:
       - name: Install all modes from temp and clear temp
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+            is_excluded_mod() {
+              local projectId=$1
+              for excluded_mod in "${excluded_mods_array[@]}"; do
+                if [[ "$projectId" == "$excluded_mod" ]]; then
+                  return 0
+                fi
+              done
+              return 1
+            }
             fetch_with_dlink() {
               local url=$1
               local is_client=$2
@@ -215,8 +224,8 @@ jobs:
               
               if [[ $downloadUrl =~ ^https?:// ]]; then
                 echo "Valid URL: $downloadUrl"
-                pathForFileServer="$TEMP_CLIENT_PATH/$fileName"
-                pathForFileClient="$TEMP_SERVER_PATH/$fileName"
+                pathForFileServer="$TEMP_CLIENT_PATH/mods/$fileName"
+                pathForFileClient="$TEMP_SERVER_PATH/mods/$fileName"
                 
                 if "$is_client"; then 
                   curl -o "$pathForFileClient" -L "$downloadUrl"
@@ -250,7 +259,7 @@ jobs:
             api_url_dlink="$BASE_URL/v1/mods/$INPUT_PROJECT_ID/files/$INPUT_FILE_ID/download-url"
             notAccessibleModsFile="$WORKING_PATH"/notAccessible.txt
             > "$notAccessibleModsFile"
-            cd "$TEMP_SERVER_PATH"
+            cd "$TEMP_SERVER_PATH"/mods
     
             for file in *.zip; do
               if [ -f "$file" ]; then
@@ -265,11 +274,15 @@ jobs:
                     projectID=$(echo "$mod" | jq '.projectID')
                     fileId=$(echo "$mod" | jq '.fileID')
                     dyn_api_url="$BASE_URL/v1/mods/$projectID/files/$fileId/download-url"
-                    
-                    if server_or_client "$projectID" "$fileId"; then
-                      fetch_with_dlink "$dyn_api_url" false
-                    else
-                      fetch_with_dlink "$dyn_api_url" true
+
+                    if is_excluded_mod "$projectID"; then 
+                      echo "Excluded mod. Skipping installation"
+                    else 
+                      if server_or_client "$projectID" "$fileId"; then
+                        fetch_with_dlink "$dyn_api_url" false
+                      else
+                        fetch_with_dlink "$dyn_api_url" true
+                      fi
                     fi
                   done
                 else
@@ -279,9 +292,9 @@ jobs:
                echo "There is no modpack file"
               fi
             done 
-            cp -r "$TEMP_SERVER_PATH"/overrides/* "$TEMP_SERVER_PATH"
+            cp -r "$TEMP_SERVER_PATH"/mods/overrides/* "$TEMP_SERVER_PATH"
             
-            rm -r /overrides
+            rm -r "$TEMP_SERVER_PATH"/mods/overrides
             echo "There are some mods that cannot be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
             rm -r /root/temp/*
           EOF
