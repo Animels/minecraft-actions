@@ -108,7 +108,7 @@ jobs:
               pathForFileServer="$TEMP_CLIENT_PATH/$fileName"
               pathForFileClient="/$TEMP_SERVER_PATH/$fileName"
               
-              if is_client; then 
+              if "$is_client"; then 
                 curl -o "$pathForFileClient" -L "$downloadUrl"
               else
                 curl -o "$pathForFileServer" -L "$downloadUrl"
@@ -320,9 +320,9 @@ jobs:
                echo "There is no modpack file"
               fi
             done 
-            cp -r /root/temp/overrides/* /root/main/temp/server
+            cp -r "$TEMP_SERVER_PATH"/overrides/* "$TEMP_SERVER_PATH"
             
-            find /root/temp/* -name '*.jar' -exec cp {} /root/main/server/mods/ \;
+            rm -r /overrides
             echo "There are some mods that cannot be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
             rm -r /root/temp/*
           EOF
