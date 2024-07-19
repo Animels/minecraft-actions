@@ -114,7 +114,7 @@ jobs:
                 echo "Checking for compatible dependency"
 
                 jq -c -r '.data[]' "$WORK_PATH"/response_dep.json | while IFS= read -r versionInfo; do
-                  if echo "$versionInfo" | jq -e  --arg gameVersion "$versionInfo" '.gameVersions | index($gameVersion)' >/dev/null;
+                  if echo "$versionInfo" | jq -e  --arg gameVersion "$versionInfo" '.gameVersions | index($gameVersion)' >/dev/null; then
                     download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
                     fetch_with_dlink "$download_link"
                     
