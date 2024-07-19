@@ -1,4 +1,4 @@
-name: Add single mod and all dependencies
+name: Add single mod and all dependencies or modpack
 
 on:
   workflow_dispatch:
@@ -26,10 +26,7 @@ on:
 env:
   BASE_URL: https://api.curseforge.com
   WORK_PATH: /root/temp
-  SERVER_PATH: /root/main/server
-  CLIENT_PATH: /root/main/client
-  TEMP_SERVER_PATH: /root/main/temp/server
-  TEMP_CLIENT_PATH: /root/main/temp/client
+  SERVER_PATH: /root/main
   MAX_PAGE_SIZE: 50
   API_KEY: \$2a\$10\$4UughKvVMNC9Yl0cUfhAsOiOkCWgy/k/6rn.z5bIztd62LpZ1eibe
 
@@ -54,9 +51,6 @@ jobs:
           echo "BASE_URL=$BASE_URL" > .env
           echo "WORK_PATH=$WORK_PATH" >> .env
           echo "SERVER_PATH=$SERVER_PATH" >> .env
-          echo "CLIENT_PATH=$CLIENT_PATH" >> .env
-          echo "TEMP_CLIENT_PATH=$TEMP_CLIENT_PATH" >> .env
-          echo "TEMP_SERVER_PATH=$TEMP_SERVER_PATH" >> .env
           echo "API_KEY=$API_KEY" >> .env
           echo "MAX_PAGE_SIZE=$MAX_PAGE_SIZE" >> .env
           echo "INPUT_PROJECT_ID=$INPUT_PROJECT_ID" >> .env
@@ -80,22 +74,8 @@ jobs:
               done
               return 1
           }
-          server_or_client() {
-              local versionInfo=$1
-          
-              if echo "$versionInfo" | jq -e  --arg gameVersion "$versionInfo" '.gameVersions | index($gameVersion)' >/dev/null; then
-                if echo "$versionInfo" | jq '.isServerPack'; then 
-                  return 0
-                else
-                  return 1
-                fi
-              else 
-                echo 2
-              fi
-          }
           fetch_with_dlink() {
             local url=$1
-            local is_client=$2
 
             downloadUrl=$(curl "$url" -H "x-api-key: $API_KEY" | sed '/HTTP_STATUS:/d' | jq -r '.data')
             echo "Extracted URL: $downloadUrl"
@@ -105,16 +85,10 @@ jobs:
           
             if [[ $downloadUrl =~ ^https?:// ]]; then
               echo "Valid URL: $downloadUrl"
-                clientModPath="$TEMP_CLIENT_PATH/mods/$fileName"
-                serverModPath="$TEMP_SERVER_PATH/mods/$fileName"
-              
-              if "$is_client"; then 
-                echo "Downloading mod for client: $downloadUrl $clientModPath"
-                curl -o "$clientModPath" -L "$downloadUrl"
-              else
-                echo "Downloading mod for server: $downloadUrl $serverModPath"
-                curl -o "$serverModPath" -L "$downloadUrl"
-              fi
+              serverModPath="$WORK_PATH/$fileName"
+         
+              echo "Downloading mod for server: $downloadUrl $serverModPath"
+              curl -o "$serverModPath" -L "$downloadUrl"
             else
               echo "Invalid URL extracted: $downloadUrl"
               exit 1
@@ -140,27 +114,25 @@ jobs:
                 echo "Checking for compatible dependency"
 
                 jq -c -r '.data[]' "$WORK_PATH"/response_dep.json | while IFS= read -r versionInfo; do
-                  download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
-                  result=$(server_or_client "$versionInfo")
-                  
-                  if server_or_client "$versionInfo"; then
-                    fetch_with_dlink "$download_link" false
-                  else
-                    fetch_with_dlink "$download_link" true
-                  fi
+                  if echo "$versionInfo" | jq -e  --arg gameVersion "$versionInfo" '.gameVersions | index($gameVersion)' >/dev/null;
+                    download_link=$(echo "$versionInfo" | jq -r ".downloadUrl")
+                    fetch_with_dlink "$download_link"
+                    
+                    echo "Checking for inner deps and install if needed"
+                    has_req_inner_deps=$(echo "$versionInfo" | jq -r '[.dependencies[] | select(.relationType == 3)] |  length')
+                    if [ "$has_req_inner_deps" -gt 0 ]; then
+                      echo "Mod with inner deps: $versionInfo"
+                      deps=$(echo "$versionInfo" | jq -r "[.dependencies[] | select(.relationType == 3)]")
 
-                  echo "Checking for inner deps and install if needed"
-                  has_req_inner_deps=$(echo "$versionInfo" | jq -r '[.dependencies[] | select(.relationType == 3)] |  length')
-                  if [ "$has_req_inner_deps" -gt 0 ]; then
-                    echo "Mod with inner deps: $versionInfo"
-                    eps=$(echo "$versionInfo" | jq -r "[.dependencies[] | select(.relationType == 3)]")
-                    echo "Inner req deps: $deps"
-
-                    echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
-                      process_dependency "$dep" "$gameVersionFromMainMod"
-                    done
+                      echo "Inner req deps: $deps"
+                      echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
+                        process_dependency "$dep" "$gameVersionFromMainMod"
+                      done
+                    else
+                      echo "There IS NO inner deps"
+                    fi
                   else
-                    echo "There IS NO inner deps"
+                    echo "Not suitable dep"
                   fi
                 done
               fi
@@ -168,7 +140,7 @@ jobs:
           source /root/.env
           IFS=',' read -r -a excluded_mods_array <<< "$INPUT_EXLUDED_MODS"
           
-          cd "$TEMP_SERVER_PATH"
+          cd "$SERVER_PATH"
             
           api_url_dlink="$BASE_URL/v1/mods/$INPUT_PROJECT_ID/files/$INPUT_FILE_ID/download-url"
           api_url_info="$BASE_URL/v1/mods/$INPUT_PROJECT_ID/files/$INPUT_FILE_ID"
@@ -225,7 +197,7 @@ jobs:
               
               if [[ $downloadUrl =~ ^https?:// ]]; then
                 echo "Valid URL: $downloadUrl"
-                serverModPath="$TEMP_SERVER_PATH/mods/$fileName"
+                serverModPath="$SERVER_PATH/mods/$fileName"
                 echo "Downloading mod for server: $downloadUrl $serverModPath"
                 curl -o "$serverModPath" -L "$downloadUrl"
               else
@@ -239,22 +211,17 @@ jobs:
             api_url_dlink="$BASE_URL/v1/mods/$INPUT_PROJECT_ID/files/$INPUT_FILE_ID/download-url"
             notAccessibleModsFile="$WORKING_PATH"/notAccessible.txt
             > "$notAccessibleModsFile"
-            cd "$TEMP_SERVER_PATH"/mods
+            cd "$WORK_PATH"
     
             for file in *.zip; do
               if [ -f "$file" ]; then
                 echo "Found archive in folder, trying to unpack and install"
                 unzip -o "$file"
 
-                cp -r "$TEMP_SERVER_PATH"/mods/overrides/* "$TEMP_SERVER_PATH"
-                cp "$TEMP_SERVER_PATH"/mods/manifest.json "$TEMP_SERVER_PATH"
-                rm -r "$TEMP_SERVER_PATH"/mods/overrides
-                rm -r "$TEMP_SERVER_PATH"/mods/manifest.json
-                rm -r "$TEMP_SERVER_PATH"/mods/modlist.html
-                cd ..
-
+                cp -r "$WORK_PATH"/overrides/* "$SERVER_PATH"
+                
                 echo "Trying to find manifest.json after unzipping"
-                if [[ -f "$TEMP_SERVER_PATH"/manifest.json ]]; then 
+                if [[ -f "$WORK_PATH"/manifest.json ]]; then 
                   echo "There is manifest.json"
                   cat ./manifest.json | jq -c '.files[]' | while IFS= read -r mod ; do
                     echo "$mod"
@@ -276,24 +243,21 @@ jobs:
               fi
             done 
 
-            rm "$TEMP_SERVER_PATH"/mods/*.zip
-
-            mkdir "$TEMP_CLIENT_PATH"/mods
-            cp -r "$TEMP_SERVER_PATH"/mods/* "$TEMP_CLIENT_PATH"/mods
-            
-            mkdir "$TEMP_CLIENT_PATH"/config
-            cp -r "$TEMP_SERVER_PATH"/config/* "$TEMP_CLIENT_PATH"/config
+            for file in *.jar; do 
+              cp "$WORK_PATH"/"$file" "$SERVER_PATH"/mods
+            done
             
             echo "There are some mods that cannot be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
-            rm -r /root/temp/*
+            rm -r "$WORK_PATH"/*
           EOF
 
       - name: Start server if required
         if: ${{ startsWith(github.event.inputs.start_server, true)  }}
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+            source /root/.env
             echo "Running commands on the Droplet"
-            cd /root/tempMC
+            cd "$SERVER_PATH"
             FILE=$(ls forge* | head -n 1)
             chmod 7 ./$FILE
             java -jar ./$FILE
