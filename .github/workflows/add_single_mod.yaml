@@ -128,11 +128,8 @@ jobs:
                       echo "$deps" | jq -c '.[]' | while IFS= read -r dep; do
                         process_dependency "$dep" "$gameVersionFromMainMod"
                       done
-                    else
-                      echo "There IS NO inner deps"
-                    fi
                   else
-                    echo "Not suitable dep"
+                      echo "There IS NO inner deps"
                   fi
                 done
               fi
