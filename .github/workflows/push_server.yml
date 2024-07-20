@@ -1,0 +1,41 @@
+name: Push server files to git
+
+on:
+  workflow_dispatch:
+    inputs:
+      path:
+        description: 'Pushes server files to git'
+        required: true
+        type: boolean
+
+jobs:
+  purge_path:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
+
+      - name: Purge files from /root
+        run: |
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+            cd /root/main
+            remote_repo="https://Animels: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@github.com/Animels/minecraft-actions.git"
+
+            git add ./forge*
+            git add ./minecraft*
+            git add ./config
+            git add ./mods
+            git add ./resourcepacks
+            git add ./scripts
+            git add ./ops.json
+            git add ./server.properties
+            git add ./whitelist.json
+            git commit -m "Pushing from server"
+            git merge "$remote_repo"
+            git push "$remote_repo"
+          EOF
