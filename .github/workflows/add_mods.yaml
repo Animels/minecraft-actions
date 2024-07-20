@@ -25,6 +25,8 @@ on:
         type: boolean
 env:
   BASE_URL: https://api.curseforge.com
+  USER: root
+  IP_ADDRESS: 206.189.84.101
   WORK_PATH: /root/temp
   SERVER_PATH: /root/main
   MAX_PAGE_SIZE: 50
@@ -48,7 +50,9 @@ jobs:
           INPUT_PROJECT_ID=${{ github.event.inputs.projectid }}
           INPUT_FILE_ID=${{ github.event.inputs.fileid }}
           INPUT_EXLUDED_MODS=${{ github.event.inputs.excluded_mods }}
+          SSH_AUTH="$USER"@"$IP_ADDRESS"
           echo "BASE_URL=$BASE_URL" > .env
+          echo "SSH_AUTH=$SSH_AUTH" >> .env
           echo "WORK_PATH=$WORK_PATH" >> .env
           echo "SERVER_PATH=$SERVER_PATH" >> .env
           echo "API_KEY=$API_KEY" >> .env
@@ -60,11 +64,11 @@ jobs:
 
       - name: Copy .env file to Droplet
         run: |
-          scp -o StrictHostKeyChecking=no .env root@206.189.84.101:/root/
+          scp -o StrictHostKeyChecking=no .env "$SSH_AUTH":/root/
 
       - name: Fetch main mod and recursive fetch deps
         run: |
-         ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+         ssh -o StrictHostKeyChecking=no "$SSH_AUTH" <<'EOF'
            is_excluded_mod() {
               local projectId=$1
               for excluded_mod in "${excluded_mods_array[@]}"; do
@@ -176,7 +180,7 @@ jobs:
 
       - name: Install all modes from temp and clear temp
         run: |
-          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+          ssh -o StrictHostKeyChecking=no "$SSH_AUTH" <<'EOF'
             is_excluded_mod() {
               local projectId=$1
               for excluded_mod in "${excluded_mods_array[@]}"; do
