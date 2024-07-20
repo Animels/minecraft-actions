@@ -67,7 +67,7 @@ jobs:
             cd /root/main
             file=$(forge*installer.jar)
 
-            java -jar "$file" --installServer /root/main
+            java -jar ./"$file" --installServer /root/main
 
             mcServerFile=$(minecraft_server*.jar)
             java -jar ./"$mcServerFile"
