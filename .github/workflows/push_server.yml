@@ -28,7 +28,7 @@ jobs:
 
             
             git pull "$remote_repo"
-            git merge "$remote_repo"
+            git merge "$remote_repo" --no-ff --strategy-option theirs
 
             git add ./.gitignore
             git add ./forge*
