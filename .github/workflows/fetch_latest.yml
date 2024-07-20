@@ -65,12 +65,12 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/main
-            file=$(forge*installer.jar)
+            file=$(find forge*installer.jar)
             echo "FILE: $file"
 
             java -jar ./"$file" --installServer
 
-            mcServerFile=$(minecraft_server*.jar)
+            mcServerFile=$(find minecraft_server*.jar)
             echo "mcServerFile: $mcServerFile"
             java -jar ./"$mcServerFile"
 
