@@ -20,7 +20,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
 
-      - name: Purge files from /root
+      - name: Addinf, committing, pushing
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
             cd /root/main
