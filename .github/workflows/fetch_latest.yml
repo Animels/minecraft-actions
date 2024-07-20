@@ -70,7 +70,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/main
-            git reset --hard            
+            git reset main/main --hard           
           EOF
 
       - name: Start installation if installer
