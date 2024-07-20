@@ -1,68 +1,613 @@
-[18:20:54] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
-[18:20:54] [main/INFO] [LaunchWrapper]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
-[18:20:54] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLServerTweaker
-[18:20:54] [main/INFO] [FML]: Forge Mod Loader version 14.23.5.2860 for Minecraft 1.12.2 loading
-[18:20:54] [main/INFO] [FML]: Java is OpenJDK 64-Bit Server VM, version 1.8.0_412, running on Linux:amd64:6.8.0-38-generic, installed at /usr/lib/jvm/java-8-openjdk-amd64/jre
-[18:20:54] [main/INFO] [FML]: Searching /root/main/./mods for mods
-[18:20:54] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
-[18:20:54] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
-[18:20:54] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
-[18:20:54] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
-[18:20:54] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
-[18:20:56] [main/INFO] [FML]: Found valid fingerprint for Minecraft Forge. Certificate fingerprint e3c3d50c7c986df74c645c0ac54639741c90a557
-[18:20:56] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
-[18:20:56] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
-[18:20:56] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.TerminalTweaker
-[18:20:56] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.TerminalTweaker
-[18:20:57] [main/INFO] [LaunchWrapper]: Launching wrapped minecraft {net.minecraft.server.MinecraftServer}
-[18:21:00] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Starting minecraft server version 1.12.2
-[18:21:00] [Server thread/INFO] [FML]: MinecraftForge v14.23.5.2860 Initialized
-[18:21:00] [Server thread/INFO] [FML]: Starts to replace vanilla recipe ingredients with ore ingredients.
-[18:21:00] [Server thread/INFO] [FML]: Invalid recipe found with multiple oredict ingredients in the same ingredient...
-[18:21:00] [Server thread/INFO] [FML]: Replaced 1227 ore ingredients
-[18:21:01] [Server thread/INFO] [FML]: Searching /root/main/./mods for mods
-[18:21:01] [Server thread/INFO] [FML]: Forge Mod Loader has identified 4 mods to load
-[18:21:01] [Server thread/WARN] [FML]: Missing English translation for FML: assets/fml/lang/en_us.lang
-[18:21:01] [Server thread/INFO] [FML]: Attempting connection with missing mods [minecraft, mcp, FML, forge] at CLIENT
-[18:21:01] [Server thread/INFO] [FML]: Attempting connection with missing mods [minecraft, mcp, FML, forge] at SERVER
-[18:21:01] [Server thread/INFO] [FML]: Processing ObjectHolder annotations
-[18:21:01] [Server thread/INFO] [FML]: Found 1168 ObjectHolder annotations
-[18:21:01] [Server thread/INFO] [FML]: Identifying ItemStackHolder annotations
-[18:21:01] [Server thread/INFO] [FML]: Found 0 ItemStackHolder annotations
-[18:21:01] [Server thread/INFO] [FML]: Configured a dormant chunk cache size of 0
-[18:21:01] [Forge Version Check/INFO] [forge.VersionCheck]: [forge] Starting version check at http://files.minecraftforge.net/maven/net/minecraftforge/forge/promotions_slim.json
-[18:21:02] [Server thread/INFO] [FML]: Applying holder lookups
-[18:21:02] [Server thread/INFO] [FML]: Holder lookups applied
-[18:21:02] [Server thread/INFO] [FML]: Applying holder lookups
-[18:21:02] [Server thread/INFO] [FML]: Holder lookups applied
-[18:21:02] [Server thread/INFO] [FML]: Applying holder lookups
-[18:21:02] [Server thread/INFO] [FML]: Holder lookups applied
-[18:21:02] [Server thread/INFO] [FML]: Applying holder lookups
-[18:21:02] [Server thread/INFO] [FML]: Holder lookups applied
-[18:21:02] [Server thread/INFO] [FML]: Injecting itemstacks
-[18:21:02] [Server thread/INFO] [FML]: Itemstack injection complete
-[18:21:02] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Loading properties
-[18:21:02] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Default game type: SURVIVAL
-[18:21:02] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Generating keypair
-[18:21:02] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Starting Minecraft server on *:25565
-[18:21:02] [Server thread/INFO] [net.minecraft.network.NetworkSystem]: Using epoll channel type
-[18:21:02] [Server thread/INFO] [FML]: Applying holder lookups
-[18:21:02] [Server thread/INFO] [FML]: Holder lookups applied
-[18:21:02] [Server thread/INFO] [FML]: Injecting itemstacks
-[18:21:02] [Server thread/INFO] [FML]: Itemstack injection complete
-[18:21:02] [Server thread/INFO] [FML]: Forge Mod Loader has successfully loaded 4 mods
-[18:21:02] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Preparing level "world"
-[18:21:02] [Server thread/INFO] [FML]: Injecting existing registry data into this server instance
-[18:21:03] [Server thread/INFO] [FML]: Applying holder lookups
-[18:21:03] [Server thread/INFO] [FML]: Holder lookups applied
-[18:21:03] [Server thread/INFO] [FML]: Loading dimension 0 (world) (net.minecraft.server.dedicated.DedicatedServer@3f098df8)
-[18:21:04] [Server thread/INFO] [net.minecraft.advancements.AdvancementList]: Loaded 488 advancements
-[18:21:04] [Server thread/INFO] [FML]: Loading dimension -1 (world) (net.minecraft.server.dedicated.DedicatedServer@3f098df8)
-[18:21:04] [Server thread/INFO] [FML]: Loading dimension 1 (world) (net.minecraft.server.dedicated.DedicatedServer@3f098df8)
-[18:21:04] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Preparing start region for level 0
-[18:21:04] [Forge Version Check/INFO] [forge.VersionCheck]: [forge] Found status: AHEAD Target: null
-[18:21:05] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Preparing spawn area: 13%
-[18:21:06] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Preparing spawn area: 98%
-[18:21:06] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Done (3.828s)! For help, type "help" or "?"
-[18:21:06] [Server thread/INFO] [FML]: Unloading dimension -1
-[18:21:06] [Server thread/INFO] [FML]: Unloading dimension 1
+[19:26:56] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[19:26:56] [main/INFO] [LaunchWrapper]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[19:26:56] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[19:26:56] [main/INFO] [FML]: Forge Mod Loader version 14.23.5.2860 for Minecraft 1.12.2 loading
+[19:26:56] [main/INFO] [FML]: Java is OpenJDK 64-Bit Server VM, version 1.8.0_412, running on Linux:amd64:6.8.0-38-generic, installed at /usr/lib/jvm/java-8-openjdk-amd64/jre
+[19:26:56] [main/INFO] [FML]: Searching /root/main/./mods for mods
+[19:26:56] [main/INFO] [FML]: Searching /root/main/./mods/1.12.2 for mods
+[19:26:56] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in !configanytime-1.0.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:56] [main/WARN] [FML]: The coremod com.cleanroommc.configanytime.ConfigAnytimePlugin does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[19:26:56] [main/WARN] [FML]: The coremod ConfigAnytimePlugin (com.cleanroommc.configanytime.ConfigAnytimePlugin) is not signed!
+[19:26:56] [main/INFO] [FML]: Loading tweaker org.spongepowered.asm.launch.MixinTweaker from !mixinbooter-8.9.jar
+[19:26:56] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in !Red-Core-MC-1.7-1.12-0.5.1.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:56] [main/WARN] [FML]: The coremod dev.redstudio.redcore.RedCorePlugin does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[19:26:56] [main/WARN] [FML]: The coremod Red Core (dev.redstudio.redcore.RedCorePlugin) is not signed!
+[19:26:56] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in appliedenergistics2-rv6-stable-7-extended_life-v0.55.29.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:56] [main/WARN] [FML]: The coremod AE2ELCore (appeng.core.AE2ELCore) is not signed!
+[19:26:56] [main/INFO] [FML]: Loading tweaker org.spongepowered.asm.launch.MixinTweaker from censoredasm5.18.jar
+[19:26:56] [main/INFO] [FML]: Loading tweaker codechicken.asm.internal.Tweaker from ChickenASM-1.12-1.0.2.7.jar
+[19:26:56] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in Chocolate_Quest_Repoured-1.12.2-2.6.16B.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:56] [main/WARN] [FML]: The coremod CQRPlugin (team.cqr.cqrepoured.asm.CQRPlugin) is not signed!
+[19:26:56] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in CreativeCore_v1.10.71_mc1.12.2.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:56] [main/WARN] [FML]: The coremod com.creativemd.creativecore.core.CreativePatchingLoader does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[19:26:56] [main/WARN] [FML]: The coremod CreativePatchingLoader (com.creativemd.creativecore.core.CreativePatchingLoader) is not signed!
+[19:26:56] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in CTM-MC1.12.2-1.0.2.31.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:56] [main/WARN] [FML]: The coremod team.chisel.ctm.client.asm.CTMCorePlugin does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[19:26:56] [main/WARN] [FML]: The coremod CTMCorePlugin (team.chisel.ctm.client.asm.CTMCorePlugin) is not signed!
+[19:26:56] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in DefaultSettings-1.8.x-1.12.x-2.2.4.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:56] [main/WARN] [FML]: The coremod de.pt400c.defaultsettings.core.DefaultSettingsPlugin does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[19:26:56] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in Fluidlogged-API-v2.2.4-mc1.12.2.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:56] [main/WARN] [FML]: The coremod Fluidlogged API Plugin (git.jbredwards.fluidlogged_api.mod.asm.ASMHandler) is not signed!
+[19:26:56] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in Forgelin-1.8.4.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:56] [main/WARN] [FML]: The coremod net.shadowfacts.forgelin.preloader.ForgelinPlugin does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[19:26:56] [main/WARN] [FML]: The coremod ForgelinPlugin (net.shadowfacts.forgelin.preloader.ForgelinPlugin) is not signed!
+[19:26:56] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in future-mc-0.2.14.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:56] [main/WARN] [FML]: The coremod FutureMC (thedarkcolour.futuremc.asm.CoreLoader) is not signed!
+[19:26:56] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in Galacticraft-1.12.2-4.0.6.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:57] [main/WARN] [FML]: The coremod MicdoodlePlugin (micdoodle8.mods.miccore.MicdoodlePlugin) is not signed!
+[19:26:57] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in LittleTiles_v1.5.85_mc1.12.2.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:57] [main/WARN] [FML]: The coremod com.creativemd.littletiles.LittlePatchingLoader does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[19:26:57] [main/WARN] [FML]: The coremod LittlePatchingLoader (com.creativemd.littletiles.LittlePatchingLoader) is not signed!
+[19:26:57] [main/INFO] [FML]: Loading tweaker org.spongepowered.asm.launch.MixinTweaker from modernsplash-1.12.2-1.3.jar
+[19:26:57] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in OpenModsLib-1.12.2-0.12.2.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:57] [main/WARN] [FML]: The coremod openmods.core.OpenModsCorePlugin does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[19:26:57] [main/INFO] [FML]: Loading tweaker org.spongepowered.asm.launch.MixinTweaker from particleculling-1.12.2-v1.4.1.jar
+[19:26:57] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in Quark-r1.6-179.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:57] [main/WARN] [FML]: The coremod Quark Plugin (vazkii.quark.base.asm.LoadingPlugin) is not signed!
+[19:26:57] [main/WARN] [FML]: The coremod com.therandomlabs.randompatches.core.RPCore does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[19:26:57] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in ReachFix-1.12.2-1.0.9.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:57] [main/WARN] [FML]: The coremod ReachFixPlugin (meldexun.reachfix.asm.ReachFixPlugin) is not signed!
+[19:26:57] [main/INFO] [FML]: Loading tweaker org.spongepowered.asm.launch.MixinTweaker from RoughlyEnoughIDs-2.0.7.jar
+[19:26:57] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in UniDict-1.12.2-3.0.10.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:57] [main/WARN] [FML]: The coremod UniDictCoreMod (wanion.unidict.core.UniDictCoreMod) is not signed!
+[19:26:57] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in UniversalTweaks-1.12.2-1.9.0.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:57] [main/WARN] [FML]: The coremod UniversalTweaksCore (mod.acgaming.universaltweaks.core.UTLoadingPlugin) is not signed!
+[19:26:57] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in vintagefix-0.3.3.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:57] [main/WARN] [FML]: The coremod VintageFix (org.embeddedt.vintagefix.core.VintageFixCore) is not signed!
+[19:26:57] [main/INFO] [STDOUT]: [org.embeddedt.vintagefix.core.VintageFixCore:<init>:28]: Disabled squashBakedQuads due to compatibility issues, please ask Rongmario to fix this someday
+[19:26:57] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in Xaeros_Minimap_23.9.1_Forge_1.12.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:57] [main/WARN] [FML]: The coremod XaeroMinimapPlugin (xaero.common.core.XaeroMinimapPlugin) is not signed!
+[19:26:57] [main/WARN] [FML]: Found FMLCorePluginContainsFMLMod marker in XaerosWorldMap_1.37.1_Forge_1.12.jar. This is not recommended, @Mods should be in a separate jar from the coremod.
+[19:26:57] [main/WARN] [FML]: The coremod XaeroWorldMapPlugin (xaero.map.core.XaeroWorldMapPlugin) is not signed!
+[19:26:57] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[19:26:57] [main/INFO] [LaunchWrapper]: Loading tweak class name org.spongepowered.asm.launch.MixinTweaker
+[19:26:57] [main/INFO] [mixin]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/root/main/./mods/!mixinbooter-8.9.jar Service=LaunchWrapper Env=SERVER
+[19:26:57] [main/WARN] [FML]: The coremod zone.rong.mixinbooter.MixinBooterPlugin does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[19:26:57] [main/WARN] [FML]: The coremod MixinBooter (zone.rong.mixinbooter.MixinBooterPlugin) is not signed!
+[19:26:57] [main/INFO] [MixinBooter]: Initializing Mixins...
+[19:26:57] [main/INFO] [mixin]: Compatibility level set to JAVA_8
+[19:26:57] [main/INFO] [MixinBooter]: Initializing MixinExtras...
+[19:26:57] [main/WARN] [FML]: The coremod LoliASM (zone.rong.loliasm.core.LoliLoadingPlugin) is not signed!
+[19:26:57] [main/INFO] [LoliASM]: Lolis are on the server-side.
+[19:26:57] [main/INFO] [LoliASM]: Lolis are preparing and loading in mixins since Rongmario's too lazy to write pure ASM at times despite the mod being called 'LoliASM'
+[19:26:57] [main/WARN] [LoliASM]: Replacing CA Certs with an updated one...
+[19:26:57] [main/INFO] [LoliASM]: Initializing StacktraceDeobfuscator...
+[19:26:57] [main/INFO] [LoliASM]: Downloading MCP stable-39 method mappings to: methods-stable_39.csv
+[19:26:58] [main/INFO] [LoliASM]: Initialized StacktraceDeobfuscator.
+[19:26:58] [main/INFO] [LoliASM]: Installing DeobfuscatingRewritePolicy...
+[19:26:58] [main/INFO] [LoliASM]: Installed DeobfuscatingRewritePolicy.
+[19:26:58] [main/WARN] [FML]: The coremod gkappa.modernsplash.MSLoadingPlugin does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[19:26:58] [main/WARN] [FML]: The coremod MSLoadingPlugin (gkappa.modernsplash.MSLoadingPlugin) is not signed!
+[19:26:58] [main/WARN] [FML]: The coremod ParticleCullingLoadingPlugin (bl4ckscor3.mod.particleculling.ParticleCullingLoadingPlugin) is not signed!
+[19:26:58] [main/WARN] [FML]: The coremod JustEnoughIDs Extension Plugin (org.dimdev.jeid.JEIDLoadingPlugin) is not signed!
+[19:26:58] [main/INFO] [JustEnoughIDs]: Initializing JustEnoughIDs core mixins
+[19:26:58] [main/INFO] [JustEnoughIDs]: Initializing JustEnoughIDs initialization mixins
+[19:26:58] [main/WARN] [LaunchWrapper]: Tweak class name org.spongepowered.asm.launch.MixinTweaker has already been visited -- skipping
+[19:26:58] [main/INFO] [LaunchWrapper]: Loading tweak class name codechicken.asm.internal.Tweaker
+[19:26:58] [main/WARN] [LaunchWrapper]: Tweak class name org.spongepowered.asm.launch.MixinTweaker has already been visited -- skipping
+[19:26:58] [main/WARN] [LaunchWrapper]: Tweak class name org.spongepowered.asm.launch.MixinTweaker has already been visited -- skipping
+[19:26:58] [main/WARN] [LaunchWrapper]: Tweak class name org.spongepowered.asm.launch.MixinTweaker has already been visited -- skipping
+[19:26:58] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
+[19:26:58] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[19:26:58] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:26:58] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLInjectionAndSortingTweaker
+[19:26:58] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:26:58] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:26:59] [main/INFO] [FML]: Found valid fingerprint for Minecraft Forge. Certificate fingerprint e3c3d50c7c986df74c645c0ac54639741c90a557
+[19:26:59] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:26:59] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:26:59] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:26:59] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:00] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:00] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:00] [main/INFO] [MicdoodleCore]: Successfully Registered Transformer
+[19:27:00] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:00] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:00] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:00] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:00] [main/INFO] [VintageFix]: Loading JarDiscovererCache
+[19:27:00] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:00] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:00] [main/INFO] [LaunchWrapper]: Calling tweak class org.spongepowered.asm.launch.MixinTweaker
+[19:27:00] [main/INFO] [mixin]: Initialised Mixin FML Remapper Adapter with net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper@52169758
+[19:27:00] [main/INFO] [MixinBooter]: Grabbing class mod.acgaming.universaltweaks.core.UTLoadingPlugin for its mixins.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.misc.buttons.snooper.server.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.misc.difficulty.server.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.blocks.comparatortiming.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.blocks.fallingblockdamage.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.blocks.hopper.boundingbox.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.blocks.hopper.tile.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.blocks.itemframevoid.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.blocks.ladderflying.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.blocks.miningglitch.server.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.blocks.pistontile.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.attackradius.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.blockfire.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.boatoffset.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.boundingbox.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.deathtime.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.destroypacket.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.desync.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.dimensionchange.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.disconnectdupe.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.entityid.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.horsefalling.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.maxhealth.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.mount.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.saturation.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.skeletonaim.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.suffocation.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.entities.tracker.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.world.chunksaving.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.bugfixes.world.tileentities.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.blocks.bedobstruction.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.blocks.leafdecay.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.blocks.lenientpaths.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.entities.ai.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.entities.ai.saddledwandering.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.entities.burning.horse.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.entities.burning.zombie.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.entities.despawning.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.entities.spawning.husk.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.entities.spawning.stray.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.entities.taming.horse.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.items.itementities.server.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.items.rarity.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.misc.incurablepotions.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.performance.craftingcache.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.performance.dyeblending.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.tweaks.performance.prefixcheck.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Grabbing class org.embeddedt.vintagefix.core.VintageFixCore for its mixins.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.vintagefix.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Grabbing class zone.rong.loliasm.core.LoliLoadingPlugin for its mixins.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.devenv.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.vfix_bugfixes.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.internal.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.vanities.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.registries.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.stripitemstack.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.lockcode.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.recipes.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.misc_fluidregistry.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.forgefixes.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.capability.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.efficienthashing.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.priorities.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.crashes.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Adding mixins.fix_mc129057.json mixin configuration.
+[19:27:00] [main/INFO] [MixinBooter]: Grabbing class gkappa.modernsplash.MSLoadingPlugin for its mixins.
+[19:27:00] [main/INFO] [MixinBooter]: Adding splash.mixins.json mixin configuration.
+[19:27:00] [main/INFO] [ModernSplash]: Found SmoothFont: false
+[19:27:00] [main/INFO] [LaunchWrapper]: Calling tweak class codechicken.asm.internal.Tweaker
+[19:27:00] [main/INFO] [STDOUT]: [codechicken.asm.internal.Tweaker:injectIntoClassLoader:30]: false
+[19:27:00] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:00] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLDeobfTweaker
+[19:27:00] [main/INFO] [LoliASM]: The lolis are now preparing to bytecode manipulate your game.
+[19:27:01] [main/INFO] [LoliASM]: Adding class net.minecraft.util.ResourceLocation to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class net.minecraft.util.registry.RegistrySimple to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class net.minecraft.nbt.NBTTagString to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class net.minecraftforge.fml.common.discovery.ModCandidate to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class net.minecraftforge.fml.common.discovery.ASMDataTable$ASMData to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class net.minecraft.item.ItemStack to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class net.minecraft.item.crafting.FurnaceRecipes to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class hellfirepvp.astralsorcery.common.enchantment.amulet.PlayerAmuletHandler to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class mezz.jei.suffixtree.Edge to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class betterwithmods.event.BlastingOilEvent to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class betterwithmods.common.items.ItemMaterial to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class lach_01298.qmd.render.entity.BeamRenderer to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class net.dries007.tfc.objects.entity.EntityFallingBlockTFC to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class net.minecraft.item.ItemStack to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class net.minecraft.client.renderer.EntityRenderer to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class net.minecraft.client.renderer.EntityRenderer to the transformation queue
+[19:27:01] [main/INFO] [LoliASM]: Adding class net.minecraft.nbt.NBTTagCompound to the transformation queue
+[19:27:01] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:01] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:01] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:01] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:01] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:01] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:02] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.relauncher.CoreModManager$FMLPluginWrapper
+[19:27:02] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.TerminalTweaker
+[19:27:02] [main/INFO] [LaunchWrapper]: Loading tweak class name org.spongepowered.asm.mixin.EnvironmentStateTweaker
+[19:27:02] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.TerminalTweaker
+[19:27:02] [main/INFO] [LaunchWrapper]: Calling tweak class org.spongepowered.asm.mixin.EnvironmentStateTweaker
+[19:27:02] [main/INFO] [STDOUT]: [xaero.common.core.transformer.ClassNodeTransformer:transform:29]: Transforming class net.minecraft.server.MinecraftServer net.minecraft.server.MinecraftServer
+[19:27:02] [main/INFO] [STDOUT]: [xaero.map.core.transformer.ClassNodeTransformer:transform:29]: Transforming class net.minecraft.server.MinecraftServer
+[19:27:02] [main/INFO] [VintageFix Mixin Loader]: Found 62 mixins
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.version_protest' to config file with default value 'false'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.jar_discoverer_cache' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.bugfix.exit_freeze' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.bugfix.extrautils' to config file with default value 'false'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.bugfix.tab_complete_ddos' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.bugfix.missing_edge_chunks' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.mod_opts.agricraft' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.dynamic_structures' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.dynamic_resources' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.blockstates' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.textures' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.backports.white_button_text' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.backports.new_world_name' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.model_optimizations.simpler_perspective_wrapper' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.model_optimizations.dedup_multipart' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.model_optimizations.dedup_baked_quad' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.model_optimizations.dedup_quad_lists' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.model_optimizations.location_canon' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.branding' to config file with default value 'true'
+[19:27:02] [main/WARN] [VintageFix Mixin Loader]: Added missing entry 'mixin.resourcepacks' to config file with default value 'true'
+[19:27:02] [main/INFO] [VintageFix Mixin Loader]: Successfully saved config file
+[19:27:02] [main/INFO] [STDOUT]: [team.chisel.ctm.client.asm.CTMTransformer:preTransform:230]: Transforming Class [net.minecraft.block.Block], Method [getExtendedState]
+[19:27:02] [main/INFO] [STDOUT]: [team.chisel.ctm.client.asm.CTMTransformer:finishTransform:242]: Transforming net.minecraft.block.Block Finished.
+[19:27:02] [main/INFO] [STDOUT]: [xaero.common.core.transformer.ClassNodeTransformer:transform:29]: Transforming class axw net.minecraft.world.chunk.Chunk
+[19:27:02] [main/INFO] [STDOUT]: [xaero.map.core.transformer.ClassNodeTransformer:transform:29]: Transforming class net.minecraft.world.chunk.Chunk
+[19:27:02] [main/INFO] [Quark ASM]: Transforming net.minecraft.enchantment.EnchantmentHelper
+[19:27:02] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [getEnchantments, func_82781_a] Descriptor (Lnet/minecraft/item/ItemStack;)Ljava/util/Map;)
+[19:27:02] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:02] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/item/ItemStack.func_77986_q ()Lnet/minecraft/nbt/NBTTagList;
+[19:27:02] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:02] [main/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraft.entity.player.EntityPlayer ...
+[19:27:02] [main/INFO] [STDOUT]: [xaero.common.core.transformer.ClassNodeTransformer:transform:29]: Transforming class aed net.minecraft.entity.player.EntityPlayer
+[19:27:02] [main/INFO] [STDOUT]: [xaero.map.core.transformer.ClassNodeTransformer:transform:29]: Transforming class net.minecraft.entity.player.EntityPlayer
+[19:27:03] [main/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraft.network.NetHandlerPlayServer ...
+[19:27:03] [main/INFO] [org.spongepowered.asm.service.mojang.MixinServiceLaunchWrapper]: A re-entrant transformer '$wrapper.meldexun.reachfix.asm.ReachFixClassTransformer' was detected and will no longer process meta class data
+[19:27:03] [main/INFO] [Quark ASM]: Transforming net.minecraft.tileentity.TileEntityPiston
+[19:27:03] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [update, func_73660_a] Descriptor ()V)
+[19:27:03] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:03] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:03] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [clearPistonTileEntity, func_145866_f] Descriptor ()V)
+[19:27:03] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:03] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/world/World.func_180501_a (Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;I)Z
+[19:27:03] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:03] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [update, func_73660_a] Descriptor ()V)
+[19:27:03] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:03] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/world/World.func_180501_a (Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;I)Z
+[19:27:03] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:03] [main/INFO] [Quark ASM]: Transforming net.minecraft.entity.item.EntityBoat
+[19:27:03] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [attackEntityFrom, func_70097_a] Descriptor (Lnet/minecraft/util/DamageSource;F)Z)
+[19:27:03] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:03] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/entity/item/EntityBoat.func_145778_a (Lnet/minecraft/item/Item;IF)Lnet/minecraft/entity/item/EntityItem;
+[19:27:03] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:03] [main/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraft.entity.Entity ...
+[19:27:03] [main/INFO] [Quark ASM]: Transforming net.minecraft.entity.Entity
+[19:27:03] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [move, func_70091_d] Descriptor (Lnet/minecraft/entity/MoverType;DDD)V)
+[19:27:03] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:03] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:03] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:03] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/entity/Entity.func_145775_I ()V
+[19:27:03] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:03] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [onEntityUpdate, func_70030_z] Descriptor ()V)
+[19:27:03] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:03] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:03] [main/INFO] [org.spongepowered.asm.service.mojang.MixinServiceLaunchWrapper]: A re-entrant transformer '$wrapper.thedarkcolour.futuremc.asm.CoreTransformer' was detected and will no longer process meta class data
+[19:27:03] [main/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraft.entity.player.EntityPlayerMP ...
+[19:27:03] [main/INFO] [STDOUT]: [xaero.common.core.transformer.ClassNodeTransformer:transform:29]: Transforming class oq net.minecraft.entity.player.EntityPlayerMP
+[19:27:03] [main/INFO] [STDOUT]: [xaero.map.core.transformer.ClassNodeTransformer:transform:29]: Transforming class net.minecraft.entity.player.EntityPlayerMP
+[19:27:03] [main/INFO] [STDOUT]: [xaero.common.core.transformer.ClassNodeTransformer:transform:29]: Transforming class pl net.minecraft.server.management.PlayerList
+[19:27:03] [main/INFO] [STDOUT]: [xaero.map.core.transformer.ClassNodeTransformer:transform:29]: Transforming class net.minecraft.server.management.PlayerList
+[19:27:03] [main/INFO] [Quark ASM]: Transforming net.minecraft.world.WorldServer
+[19:27:03] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [areAllPlayersAsleep, func_73056_e] Descriptor ()Z)
+[19:27:03] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:03] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:03] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [wakeAllPlayers, func_73053_d] Descriptor ()V)
+[19:27:03] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:03] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:03] [main/INFO] [Quark ASM]: Transforming net.minecraft.entity.item.EntityItem
+[19:27:03] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [onUpdate, func_70071_h_] Descriptor ()V)
+[19:27:03] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:03] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:03] [main/INFO] [STDOUT]: [appeng.core.transformer.ItemStackPatch:patchCountGetSet:53]: Patched ItemStack Count getter!
+[19:27:03] [main/INFO] [STDOUT]: [appeng.core.transformer.ItemStackPatch:patchCountGetSet:81]: Patched ItemStack Count setter!
+[19:27:03] [main/INFO] [Quark ASM]: Transforming net.minecraft.item.ItemStack
+[19:27:03] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [getTextComponent, func_151000_E] Descriptor ()Lnet/minecraft/util/text/ITextComponent;)
+[19:27:03] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:03] [main/INFO] [Quark ASM]: Located patch target node ARETURN
+[19:27:03] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:03] [main/INFO] [LoliASM]: Improving FurnaceRecipes. Lookups are now a lot faster.
+[19:27:04] [main/INFO] [STDOUT]: [xaero.common.core.transformer.ClassNodeTransformer:transform:29]: Transforming class net.minecraft.server.MinecraftServer net.minecraft.server.MinecraftServer
+[19:27:04] [main/INFO] [STDOUT]: [xaero.map.core.transformer.ClassNodeTransformer:transform:29]: Transforming class net.minecraft.server.MinecraftServer
+[19:27:04] [main/WARN] [VintageFix Mixin Loader]: Not applying mixin 'org.embeddedt.vintagefix.mixin.version_protest.MinecraftMixin' as 'mixin.version_protest' is disabled in config
+[19:27:04] [main/WARN] [VintageFix Mixin Loader]: Not applying mixin 'org.embeddedt.vintagefix.mixin.version_protest.FMLCommonHandlerMixin' as 'mixin.version_protest' is disabled in config
+[19:27:04] [main/WARN] [mixin]: Error loading class: net/minecraft/server/integrated/IntegratedServer (net.minecraftforge.fml.common.asm.ASMTransformerWrapper$TransformerException: Exception in class transformer net.minecraftforge.fml.common.asm.transformers.SideTransformer@65b66b08 from coremod FMLCorePlugin)
+[19:27:04] [main/WARN] [mixin]: @Mixin target net.minecraft.server.integrated.IntegratedServer was not found mixins.vintagefix.json:bugfix.exit_freeze.IntegratedServerMixin from mod unknown-owner
+[19:27:04] [main/WARN] [mixin]: Error loading class: net/minecraft/client/renderer/texture/TextureMap (net.minecraftforge.fml.common.asm.ASMTransformerWrapper$TransformerException: Exception in class transformer net.minecraftforge.fml.common.asm.transformers.SideTransformer@65b66b08 from coremod FMLCorePlugin)
+[19:27:04] [main/WARN] [mixin]: @Mixin target net.minecraft.client.renderer.texture.TextureMap was not found mixins.vintagefix.json:dynamic_resources.MixinTextureMap from mod unknown-owner
+[19:27:04] [main/WARN] [mixin]: Error loading class: net/minecraft/client/renderer/RenderItem (net.minecraftforge.fml.common.asm.ASMTransformerWrapper$TransformerException: Exception in class transformer net.minecraftforge.fml.common.asm.transformers.SideTransformer@65b66b08 from coremod FMLCorePlugin)
+[19:27:04] [main/WARN] [mixin]: @Mixin target net.minecraft.client.renderer.RenderItem was not found mixins.vintagefix.json:dynamic_resources.MixinRenderItem from mod unknown-owner
+[19:27:04] [main/INFO] [MixinExtras|Service]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.2.1-beta.2).
+[19:27:04] [main/INFO] [Quark ASM]: Transforming net.minecraft.world.WorldServer
+[19:27:04] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [areAllPlayersAsleep, func_73056_e] Descriptor ()Z)
+[19:27:04] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:04] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:04] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [wakeAllPlayers, func_73053_d] Descriptor ()V)
+[19:27:04] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:04] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:04] [main/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraft.util.ITickable ...
+[19:27:04] [main/INFO] [STDOUT]: [xaero.common.core.transformer.ClassNodeTransformer:transform:29]: Transforming class pl net.minecraft.server.management.PlayerList
+[19:27:04] [main/INFO] [STDOUT]: [xaero.map.core.transformer.ClassNodeTransformer:transform:29]: Transforming class net.minecraft.server.management.PlayerList
+[19:27:04] [main/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraft.entity.player.EntityPlayer ...
+[19:27:04] [main/INFO] [STDOUT]: [xaero.common.core.transformer.ClassNodeTransformer:transform:29]: Transforming class aed net.minecraft.entity.player.EntityPlayer
+[19:27:04] [main/INFO] [STDOUT]: [xaero.map.core.transformer.ClassNodeTransformer:transform:29]: Transforming class net.minecraft.entity.player.EntityPlayer
+[19:27:05] [main/INFO] [LoliASM]: Injecting calls in net/minecraft/util/ResourceLocation<init> to canonicalize strings
+[19:27:05] [main/INFO] [LoliASM]: Injecting calls in net/minecraft/util/ResourceLocation<init> to canonicalize strings
+[19:27:05] [main/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraft.entity.Entity ...
+[19:27:05] [main/INFO] [Quark ASM]: Transforming net.minecraft.entity.Entity
+[19:27:05] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [move, func_70091_d] Descriptor (Lnet/minecraft/entity/MoverType;DDD)V)
+[19:27:05] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:05] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:05] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:05] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/entity/Entity.func_145775_I ()V
+[19:27:05] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:05] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [onEntityUpdate, func_70030_z] Descriptor ()V)
+[19:27:05] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:05] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:05] [main/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraft.util.math.AxisAlignedBB ...
+[19:27:05] [main/INFO] [LaunchWrapper]: Launching wrapped minecraft {net.minecraft.server.MinecraftServer}
+[19:27:05] [main/INFO] [LoliASM]: Injecting calls in net/minecraft/util/ResourceLocation<init> to canonicalize strings
+[19:27:05] [main/INFO] [LoliASM]: Injecting calls in net/minecraft/util/ResourceLocation<init> to canonicalize strings
+[19:27:05] [main/INFO] [STDOUT]: [team.chisel.ctm.client.asm.CTMTransformer:preTransform:230]: Transforming Class [net.minecraft.block.Block], Method [getExtendedState]
+[19:27:05] [main/INFO] [STDOUT]: [team.chisel.ctm.client.asm.CTMTransformer:finishTransform:242]: Transforming net.minecraft.block.Block Finished.
+[19:27:05] [main/INFO] [Quark ASM]: Transforming net.minecraft.enchantment.Enchantment
+[19:27:05] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [canApply, func_92089_a] Descriptor (Lnet/minecraft/item/ItemStack;)Z)
+[19:27:05] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:05] [main/INFO] [Quark ASM]: Located patch target node IRETURN
+[19:27:05] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:05] [main/INFO] [Quark ASM]: Transforming net.minecraft.entity.item.EntityItem
+[19:27:05] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [onUpdate, func_70071_h_] Descriptor ()V)
+[19:27:05] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:05] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:05] [main/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraft.util.math.AxisAlignedBB ...
+[19:27:06] [main/INFO] [VintageFix - class definer]: Using Java 8 class definer
+[19:27:06] [main/INFO] [STDOUT]: [appeng.core.transformer.ItemStackPatch:patchCountGetSet:53]: Patched ItemStack Count getter!
+[19:27:06] [main/INFO] [STDOUT]: [appeng.core.transformer.ItemStackPatch:patchCountGetSet:81]: Patched ItemStack Count setter!
+[19:27:06] [main/INFO] [Quark ASM]: Transforming net.minecraft.item.ItemStack
+[19:27:06] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [getTextComponent, func_151000_E] Descriptor ()Lnet/minecraft/util/text/ITextComponent;)
+[19:27:06] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:06] [main/INFO] [Quark ASM]: Located patch target node ARETURN
+[19:27:06] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:06] [main/INFO] [Quark ASM]: Transforming net.minecraft.block.BlockDynamicLiquid
+[19:27:06] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [isBlocked, func_176372_g] Descriptor (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;)Z)
+[19:27:06] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:06] [main/INFO] [Quark ASM]: Located patch target node IRETURN
+[19:27:06] [main/INFO] [Quark ASM]: Located patch target node IRETURN
+[19:27:06] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:06] [main/INFO] [LoliASM]: Replacing ClassHierarchyManager::superclasses with a dummy map.
+[19:27:06] [main/INFO] [Quark ASM]: Transforming net.minecraft.block.BlockPistonBase
+[19:27:06] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [canPush, func_185646_a] Descriptor (Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing;ZLnet/minecraft/util/EnumFacing;)Z)
+[19:27:06] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:06] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/block/Block.hasTileEntity (Lnet/minecraft/block/state/IBlockState;)Z
+[19:27:06] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:06] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [doMove, func_176319_a] Descriptor (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing;Z)Z)
+[19:27:06] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:06] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/block/state/BlockPistonStructureHelper.func_177254_c ()Ljava/util/List;
+[19:27:06] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:06] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [doMove, func_176319_a] Descriptor (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing;Z)Z)
+[19:27:06] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:06] [main/INFO] [Quark ASM]: Located patch target node INVOKESPECIAL net/minecraft/block/state/BlockPistonStructureHelper.<init> (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing;Z)V
+[19:27:06] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:06] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [checkForMove, func_176316_e] Descriptor (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;)V)
+[19:27:06] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:06] [main/INFO] [Quark ASM]: Located patch target node INVOKESPECIAL net/minecraft/block/state/BlockPistonStructureHelper.<init> (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing;Z)V
+[19:27:06] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:06] [main/INFO] [Quark ASM]: Transforming net.minecraft.tileentity.TileEntityPiston
+[19:27:06] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [update, func_73660_a] Descriptor ()V)
+[19:27:06] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:06] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:06] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [clearPistonTileEntity, func_145866_f] Descriptor ()V)
+[19:27:06] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:06] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/world/World.func_180501_a (Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;I)Z
+[19:27:06] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:06] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [update, func_73660_a] Descriptor ()V)
+[19:27:06] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:06] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/world/World.func_180501_a (Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;I)Z
+[19:27:06] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:06] [main/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraft.util.ITickable ...
+[19:27:07] [main/INFO] [Quark ASM]: Transforming net.minecraft.enchantment.EnchantmentDamage
+[19:27:07] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [canApply, func_92089_a] Descriptor (Lnet/minecraft/item/ItemStack;)Z)
+[19:27:07] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:07] [main/INFO] [Quark ASM]: Located patch target node IRETURN
+[19:27:07] [main/INFO] [Quark ASM]: Located patch target node IRETURN
+[19:27:07] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:07] [main/INFO] [Quark ASM]: Transforming net.minecraft.entity.item.EntityMinecart
+[19:27:07] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [killMinecart, func_94095_a] Descriptor (Lnet/minecraft/util/DamageSource;)V)
+[19:27:07] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:07] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/entity/item/EntityMinecart.func_70099_a (Lnet/minecraft/item/ItemStack;F)Lnet/minecraft/entity/item/EntityItem;
+[19:27:07] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:07] [main/INFO] [Quark ASM]: Transforming net.minecraft.entity.item.EntityBoat
+[19:27:07] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [attackEntityFrom, func_70097_a] Descriptor (Lnet/minecraft/util/DamageSource;F)Z)
+[19:27:07] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:07] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/entity/item/EntityBoat.func_145778_a (Lnet/minecraft/item/Item;IF)Lnet/minecraft/entity/item/EntityItem;
+[19:27:07] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:07] [main/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraft.entity.player.EntityPlayerMP ...
+[19:27:07] [main/INFO] [STDOUT]: [xaero.common.core.transformer.ClassNodeTransformer:transform:29]: Transforming class oq net.minecraft.entity.player.EntityPlayerMP
+[19:27:07] [main/INFO] [STDOUT]: [xaero.map.core.transformer.ClassNodeTransformer:transform:29]: Transforming class net.minecraft.entity.player.EntityPlayerMP
+[19:27:07] [main/INFO] [Quark ASM]: Transforming net.minecraft.util.DamageSource
+[19:27:07] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [causePlayerDamage, func_76365_a] Descriptor (Lnet/minecraft/entity/player/EntityPlayer;)Lnet/minecraft/util/DamageSource;)
+[19:27:07] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:07] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:07] [main/INFO] [Quark ASM]: Transforming net.minecraft.enchantment.Enchantment
+[19:27:07] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [canApply, func_92089_a] Descriptor (Lnet/minecraft/item/ItemStack;)Z)
+[19:27:07] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:07] [main/INFO] [Quark ASM]: Located patch target node IRETURN
+[19:27:07] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:07] [main/INFO] [Quark ASM]: Transforming net.minecraft.item.ItemBanner
+[19:27:07] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [appendHoverTextFromTileEntityTag, func_185054_a] Descriptor (Lnet/minecraft/item/ItemStack;Ljava/util/List;)V)
+[19:27:07] [main/INFO] [Quark ASM]: Failed to locate the method!
+[19:27:07] [main/INFO] [meldexun.asmutil.ASMUtil]: Transforming method: EntityPotion#isWaterSensitiveEntity(EntityLivingBase)
+[19:27:07] [main/INFO] [Quark ASM]: Transforming net.minecraft.entity.ai.EntityAITarget
+[19:27:07] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [isSuitableTarget, func_179445_a] Descriptor (Lnet/minecraft/entity/EntityLiving;Lnet/minecraft/entity/EntityLivingBase;ZZ)Z)
+[19:27:07] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:07] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:08] [main/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraftforge.common.ForgeHooks ...
+[19:27:08] [main/INFO] [Quark ASM]: Transforming net.minecraft.item.crafting.RecipesBanners$RecipeAddPattern
+[19:27:08] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [matches, func_77569_a] Descriptor (Lnet/minecraft/inventory/InventoryCrafting;Lnet/minecraft/world/World;)Z)
+[19:27:08] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:08] [main/INFO] [Quark ASM]: Located patch target node INVOKESTATIC net/minecraft/tileentity/TileEntityBanner.func_175113_c (Lnet/minecraft/item/ItemStack;)I
+[19:27:08] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:09] [main/INFO] [LoliASM]: Improving FurnaceRecipes. Lookups are now a lot faster.
+[19:27:09] [main/INFO] [Quark ASM]: Transforming net.minecraft.inventory.ContainerMerchant
+[19:27:09] [main/INFO] [Quark ASM]: Applying Transformation to method (Names [transferStackInSlot, func_82846_b] Descriptor (Lnet/minecraft/entity/player/EntityPlayer;I)Lnet/minecraft/item/ItemStack;)
+[19:27:09] [main/INFO] [Quark ASM]: Located Method, patching...
+[19:27:09] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/inventory/ContainerMerchant.func_75135_a (Lnet/minecraft/item/ItemStack;IIZ)Z
+[19:27:09] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/inventory/ContainerMerchant.func_75135_a (Lnet/minecraft/item/ItemStack;IIZ)Z
+[19:27:09] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/inventory/ContainerMerchant.func_75135_a (Lnet/minecraft/item/ItemStack;IIZ)Z
+[19:27:09] [main/INFO] [Quark ASM]: Located patch target node INVOKEVIRTUAL net/minecraft/inventory/ContainerMerchant.func_75135_a (Lnet/minecraft/item/ItemStack;IIZ)Z
+[19:27:09] [main/INFO] [Quark ASM]: Patch result: true
+[19:27:09] [main/INFO] [STDOUT]: [xaero.common.core.transformer.ClassNodeTransformer:transform:29]: Transforming class bfc net.minecraft.world.storage.SaveFormatOld
+[19:27:09] [main/INFO] [STDOUT]: [xaero.map.core.transformer.ClassNodeTransformer:transform:29]: Transforming class net.minecraft.world.storage.SaveFormatOld
+[19:27:09] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer]: Starting minecraft server version 1.12.2
+[19:27:09] [Server thread/INFO] [FML]: MinecraftForge v14.23.5.2860 Initialized
+[19:27:09] [Server thread/INFO] [FML]: Starts to replace vanilla recipe ingredients with ore ingredients.
+[19:27:09] [Server thread/INFO] [UniDictCoreMod]: Successfully transformed 'net.minecraftforge.oredict.OreIngredient'.
+[19:27:09] [Server thread/INFO] [FML]: Invalid recipe found with multiple oredict ingredients in the same ingredient...
+[19:27:09] [Server thread/INFO] [FML]: Replaced 1227 ore ingredients
+[19:27:09] [Server thread/INFO] [STDOUT]: [com.creativemd.creativecore.transformer.CreativeTransformer:transform:49]: [littletiles] Patched net.minecraftforge.common.ForgeHooks ...
+[19:27:10] [Server thread/INFO] [MixinBooter]: Initializing MixinBooter's Mod Container.
+[19:27:10] [Server thread/INFO] [FML]: Searching /root/main/./mods for mods
+[19:27:10] [Server thread/INFO] [FML]: Searching /root/main/./mods/1.12.2 for mods
+[19:27:10] [Server thread/INFO] [FML]: Disabling mod backtools it is client side only.
+[19:27:11] [Server thread/WARN] [FML]: Mod codechickenlib is missing the required element 'version' and a version.properties file could not be found. Falling back to metadata version 3.2.3.358
+[19:27:11] [Server thread/INFO] [FML]: Disabling mod controlling it is client side only.
+[19:27:11] [Server thread/WARN] [FML]: Mod cosmeticarmorreworked is missing the required element 'version' and a version.properties file could not be found. Falling back to metadata version 1.12.2-v5a
+[19:27:11] [Server thread/INFO] [FML]: Disabling mod ctgui it is client side only.
+[19:27:11] [Server thread/INFO] [FML]: Disabling mod ctm it is client side only.
+[19:27:11] [Server thread/INFO] [FML]: Disabling mod custommainmenu it is client side only.
+[19:27:11] [Server thread/INFO] [FML]: Disabling mod defaultsettings it is client side only.
+[19:27:11] [Server thread/INFO] [FML]: Disabling mod enchdesc it is client side only.
+[19:27:11] [Server thread/WARN] [FML]: Mod enderstorage is missing the required element 'version' and a version.properties file could not be found. Falling back to metadata version 2.4.6.137
+[19:27:12] [Server thread/WARN] [FML]: Mod microblockcbe is missing the required element 'version' and a version.properties file could not be found. Falling back to metadata version 2.6.2.83
+[19:27:12] [Server thread/WARN] [FML]: Mod forgemultipartcbe is missing the required element 'version' and a version.properties file could not be found. Falling back to metadata version 2.6.2.83
+[19:27:12] [Server thread/WARN] [FML]: Mod minecraftmultipartcbe is missing the required element 'version' and a version.properties file could not be found. Falling back to metadata version 2.6.2.83
+[19:27:14] [Server thread/WARN] [FML]: Mod ironchest is missing the required element 'version' and a version.properties file could not be found. Falling back to metadata version 1.12.2-7.0.67.844
+[19:27:14] [Server thread/INFO] [FML]: Disabling mod lootcapacitortooltips it is client side only.
+[19:27:14] [Server thread/INFO] [FML]: Disabling mod modernsplash it is client side only.
+[19:27:14] [Server thread/INFO] [FML]: Disabling mod moreoverlays it is client side only.
+[19:27:14] [Server thread/INFO] [FML]: Disabling mod particleculling it is client side only.
+[19:27:14] [Server thread/WARN] [FML]: Mod patchouli is missing the required element 'version' and a version.properties file could not be found. Falling back to metadata version 1.0-23.6
+[19:27:15] [Server thread/WARN] [FML]: Mod reachfix is missing the required element 'version' and a version.properties file could not be found. Falling back to metadata version 1.0.9
+[19:27:15] [Server thread/INFO] [FML]: Disabling mod reauth it is client side only.
+[19:27:15] [Server thread/WARN] [FML]: Mod jeid is missing the required element 'version' and a version.properties file could not be found. Falling back to metadata version 2.0.7
+[19:27:15] [Server thread/WARN] [FML]: Mod simplyjetpacks is missing the required element 'version' and a version.properties file could not be found. Falling back to metadata version 1.12.2-2.2.20.0
+[19:27:15] [Server thread/INFO] [FML]: Disabling mod torohealthmod it is client side only.
+[19:27:15] [Server thread/ERROR] [FML]: Unable to read a class file correctly
+java.lang.IllegalArgumentException: null
+	at org.objectweb.asm.ClassReader.<init>(ClassReader.java:185) ~[asm-debug-all-5.2.jar:5.2]
+	at org.objectweb.asm.ClassReader.<init>(ClassReader.java:168) ~[asm-debug-all-5.2.jar:5.2]
+	at org.objectweb.asm.ClassReader.<init>(ClassReader.java:439) ~[asm-debug-all-5.2.jar:5.2]
+	at net.minecraftforge.fml.common.discovery.asm.ASMModParser.<init>(ASMModParser.java:57) [ASMModParser.class:?]
+	at net.minecraftforge.fml.common.discovery.JarDiscoverer.redirect$zdk000$redirectNewASMModParser(JarDiscoverer.java:561) [JarDiscoverer.class:?]
+	at net.minecraftforge.fml.common.discovery.JarDiscoverer.findClassesASM(JarDiscoverer.java:102) [JarDiscoverer.class:?]
+	at net.minecraftforge.fml.common.discovery.JarDiscoverer.discover(JarDiscoverer.java:77) [JarDiscoverer.class:?]
+	at net.minecraftforge.fml.common.discovery.ContainerType.findMods(ContainerType.java:47) [ContainerType.class:?]
+	at net.minecraftforge.fml.common.discovery.ModCandidate.explore(ModCandidate.java:74) [ModCandidate.class:?]
+	at net.minecraftforge.fml.common.discovery.ModDiscoverer.identifyMods(ModDiscoverer.java:93) [ModDiscoverer.class:?]
+	at net.minecraftforge.fml.common.Loader.identifyMods(Loader.java:427) [Loader.class:?]
+	at net.minecraftforge.fml.common.Loader.loadMods(Loader.java:568) [Loader.class:?]
+	at net.minecraftforge.fml.server.FMLServerHandler.beginServerLoading(FMLServerHandler.java:98) [FMLServerHandler.class:?]
+	at net.minecraftforge.fml.common.FMLCommonHandler.onServerStart(FMLCommonHandler.java:333) [FMLCommonHandler.class:?]
+	at net.minecraft.server.dedicated.DedicatedServer.init(DedicatedServer.java:125) [nz.class:?]
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:486) [MinecraftServer.class:?]
+	at java.lang.Thread.run(Thread.java:750) [?:1.8.0_412]
+[19:27:15] [Server thread/ERROR] [FML]: There was a problem reading the entry META-INF/versions/9/module-info.class in the jar ./mods/UniversalTweaks-1.12.2-1.9.0.jar - probably a corrupt zip
+net.minecraftforge.fml.common.LoaderException: java.lang.IllegalArgumentException
+
+	at net.minecraftforge.fml.common.discovery.asm.ASMModParser.<init>(ASMModParser.java:63) ~[ASMModParser.class:?]
+	at net.minecraftforge.fml.common.discovery.JarDiscoverer.redirect$zdk000$redirectNewASMModParser(JarDiscoverer.java:561) ~[JarDiscoverer.class:?]
+	at net.minecraftforge.fml.common.discovery.JarDiscoverer.findClassesASM(JarDiscoverer.java:102) [JarDiscoverer.class:?]
+	at net.minecraftforge.fml.common.discovery.JarDiscoverer.discover(JarDiscoverer.java:77) [JarDiscoverer.class:?]
+	at net.minecraftforge.fml.common.discovery.ContainerType.findMods(ContainerType.java:47) [ContainerType.class:?]
+	at net.minecraftforge.fml.common.discovery.ModCandidate.explore(ModCandidate.java:74) [ModCandidate.class:?]
+	at net.minecraftforge.fml.common.discovery.ModDiscoverer.identifyMods(ModDiscoverer.java:93) [ModDiscoverer.class:?]
+	at net.minecraftforge.fml.common.Loader.identifyMods(Loader.java:427) [Loader.class:?]
+	at net.minecraftforge.fml.common.Loader.loadMods(Loader.java:568) [Loader.class:?]
+	at net.minecraftforge.fml.server.FMLServerHandler.beginServerLoading(FMLServerHandler.java:98) [FMLServerHandler.class:?]
+	at net.minecraftforge.fml.common.FMLCommonHandler.onServerStart(FMLCommonHandler.java:333) [FMLCommonHandler.class:?]
+	at net.minecraft.server.dedicated.DedicatedServer.init(DedicatedServer.java:125) [nz.class:?]
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:486) [MinecraftServer.class:?]
+	at java.lang.Thread.run(Thread.java:750) [?:1.8.0_412]
+Caused by: java.lang.IllegalArgumentException
+	at org.objectweb.asm.ClassReader.<init>(ClassReader.java:185) ~[asm-debug-all-5.2.jar:5.2]
+	at org.objectweb.asm.ClassReader.<init>(ClassReader.java:168) ~[asm-debug-all-5.2.jar:5.2]
+	at org.objectweb.asm.ClassReader.<init>(ClassReader.java:439) ~[asm-debug-all-5.2.jar:5.2]
+	at net.minecraftforge.fml.common.discovery.asm.ASMModParser.<init>(ASMModParser.java:57) ~[ASMModParser.class:?]
+	... 13 more
+[19:27:15] [Server thread/WARN] [FML]: Zip file UniversalTweaks-1.12.2-1.9.0.jar failed to read properly, it will be ignored
+net.minecraftforge.fml.common.LoaderException: java.lang.IllegalArgumentException
+
+	at net.minecraftforge.fml.common.discovery.asm.ASMModParser.<init>(ASMModParser.java:63) ~[ASMModParser.class:?]
+	at net.minecraftforge.fml.common.discovery.JarDiscoverer.redirect$zdk000$redirectNewASMModParser(JarDiscoverer.java:561) ~[JarDiscoverer.class:?]
+	at net.minecraftforge.fml.common.discovery.JarDiscoverer.findClassesASM(JarDiscoverer.java:102) ~[JarDiscoverer.class:?]
+	at net.minecraftforge.fml.common.discovery.JarDiscoverer.discover(JarDiscoverer.java:77) [JarDiscoverer.class:?]
+	at net.minecraftforge.fml.common.discovery.ContainerType.findMods(ContainerType.java:47) [ContainerType.class:?]
+	at net.minecraftforge.fml.common.discovery.ModCandidate.explore(ModCandidate.java:74) [ModCandidate.class:?]
+	at net.minecraftforge.fml.common.discovery.ModDiscoverer.identifyMods(ModDiscoverer.java:93) [ModDiscoverer.class:?]
+	at net.minecraftforge.fml.common.Loader.identifyMods(Loader.java:427) [Loader.class:?]
+	at net.minecraftforge.fml.common.Loader.loadMods(Loader.java:568) [Loader.class:?]
+	at net.minecraftforge.fml.server.FMLServerHandler.beginServerLoading(FMLServerHandler.java:98) [FMLServerHandler.class:?]
+	at net.minecraftforge.fml.common.FMLCommonHandler.onServerStart(FMLCommonHandler.java:333) [FMLCommonHandler.class:?]
+	at net.minecraft.server.dedicated.DedicatedServer.init(DedicatedServer.java:125) [nz.class:?]
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:486) [MinecraftServer.class:?]
+	at java.lang.Thread.run(Thread.java:750) [?:1.8.0_412]
+Caused by: java.lang.IllegalArgumentException
+	at org.objectweb.asm.ClassReader.<init>(ClassReader.java:185) ~[asm-debug-all-5.2.jar:5.2]
+	at org.objectweb.asm.ClassReader.<init>(ClassReader.java:168) ~[asm-debug-all-5.2.jar:5.2]
+	at org.objectweb.asm.ClassReader.<init>(ClassReader.java:439) ~[asm-debug-all-5.2.jar:5.2]
+	at net.minecraftforge.fml.common.discovery.asm.ASMModParser.<init>(ASMModParser.java:57) ~[ASMModParser.class:?]
+	... 13 more
+[19:27:15] [Server thread/WARN] [FML]: Mod watermedia is missing the required element 'version' and a version.properties file could not be found. Falling back to metadata version 2.0.25
+[19:27:16] [Server thread/INFO] [FML]: Forge Mod Loader has identified 136 mods to load
+[19:27:16] [Server thread/INFO] [FML]: Found mod(s) [futuremc] containing declared API package vazkii.quark.api (owned by quark) without associated API reference
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for FML: assets/fml/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for configanytime: assets/configanytime/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for redcore: assets/redcore/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for appleskin: assets/appleskin/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for betterpingdisplay: assets/betterpingdisplay/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for buildcraftbuilders: assets/buildcraftbuilders/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for buildcraftcore: assets/buildcraftcore/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for buildcraftenergy: assets/buildcraftenergy/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for buildcraftfactory: assets/buildcraftfactory/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for buildcraftrobotics: assets/buildcraftrobotics/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for buildcraftsilicon: assets/buildcraftsilicon/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for buildcrafttransport: assets/buildcrafttransport/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for cctweaked: assets/cctweaked/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for codechickenlib: assets/codechickenlib/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for cofhcore: assets/cofhcore/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for craftstudioapi: assets/craftstudioapi/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for crafttweakerjei: assets/crafttweakerjei/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for entitypurger: assets/entitypurger/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for fastfurnace: assets/fastfurnace/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for forgelin: assets/forgelin/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for microblockcbe: assets/microblockcbe/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for forgemultipartcbe: assets/forgemultipartcbe/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for minecraftmultipartcbe: assets/minecraftmultipartcbe/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for gunpowderlib: assets/gunpowderlib/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for ic2-classic-spmod: assets/ic2-classic-spmod/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for instantunify: assets/instantunify/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for mantle: assets/mantle/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for packcrashinfo: assets/packcrashinfo/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for placebo: assets/placebo/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for quickteleports: assets/quickteleports/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for reachfix: assets/reachfix/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for redstoneflux: assets/redstoneflux/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for regrowth: assets/regrowth/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for jeid: assets/jeid/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for ruins: assets/ruins/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for teslacorelib_registries: assets/teslacorelib_registries/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for tmel: assets/tmel/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for unidict: assets/unidict/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for vintagefix: assets/vintagefix/lang/en_us.lang
+[19:27:16] [Server thread/WARN] [FML]: Missing English translation for watermedia: assets/watermedia/lang/en_us.lang
+[19:27:16] [Server thread/FATAL] [FML]: net.minecraftforge.fml.common.MissingModsException: Mod netherex (NetherEx) requires [libraryex@[1.2.2,)]
+[19:27:16] [Server thread/ERROR] [net.minecraft.server.MinecraftServer]: Encountered an unexpected exception
+net.minecraftforge.fml.common.MissingModsException: Mod netherex (NetherEx) requires [libraryex@[1.2.2,)]
+	at net.minecraftforge.fml.common.Loader.sortModList(Loader.java:266) ~[Loader.class:?]
+	at net.minecraftforge.fml.common.Loader.loadMods(Loader.java:572) ~[Loader.class:?]
+	at net.minecraftforge.fml.server.FMLServerHandler.beginServerLoading(FMLServerHandler.java:98) ~[FMLServerHandler.class:?]
+	at net.minecraftforge.fml.common.FMLCommonHandler.onServerStart(FMLCommonHandler.java:333) ~[FMLCommonHandler.class:?]
+	at net.minecraft.server.dedicated.DedicatedServer.init(DedicatedServer.java:125) ~[nz.class:?]
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:486) [MinecraftServer.class:?]
+	at java.lang.Thread.run(Thread.java:750) [?:1.8.0_412]
+[19:27:16] [Server thread/ERROR] [net.minecraft.server.MinecraftServer]: This crash report has been saved to: /root/main/./crash-reports/crash-2024-07-20_19.27.16-server.txt
+[19:27:16] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Stopping server
+[19:27:16] [Server thread/INFO] [net.minecraft.server.MinecraftServer]: Saving worlds
+[19:27:16] [Server thread/INFO] [FML]: The state engine was in incorrect state CONSTRUCTING and forced into state SERVER_STOPPED. Errors may have been discarded.
+[19:27:16] [Server Shutdown Thread/INFO] [net.minecraft.server.MinecraftServer]: Stopping server
+[19:27:16] [Server Shutdown Thread/INFO] [net.minecraft.server.MinecraftServer]: Saving worlds
