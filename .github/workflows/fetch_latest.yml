@@ -68,14 +68,8 @@ jobs:
             installationFile=$(find forge*installer.jar)
             echo "installationFile: $installationFile"
 
-            java -jar ./"$file" --installServer
-
-            mcServerFile=$(find minecraft_server*.jar)
-            echo "mcServerFile: $mcServerFile"
-            java -jar ./"$mcServerFile"
-
+            java -jar ./"$installationFile" --installServer
             echo "eula=true" > eula.txt
-
             rm ./"$installationFile"
           EOF
           
@@ -88,21 +82,19 @@ jobs:
             cd /root/main
             FILE=$(ls forge* | head -n 1)
             chmod 7 ./$FILE
-            java -jar ./$FILE
+            java -jar ./$FILE &
 
-            PID=$(cat process_id.txt)
+            PID=$(ps -e | grep java | awk '{print $1}')
             WAIT_TIME=60
 
             for ((i = 0 ; i < WAIT_TIME ; i++)); do
               if ps -p $PID > /dev/null; then
-                cp -r /root/tempMC/* /root/mainMC/
                 sleep 1
               else
-                cat /root/tempMC/logs/latest.log
                 exit 1
               fi
             done
-            echo "Server Process is still running after $WAIT_TIME seconds"
+            echo "Server Process/($PID/) is still running after $WAIT_TIME seconds"
           EOF
 
           
