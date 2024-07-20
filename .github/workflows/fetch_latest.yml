@@ -31,7 +31,7 @@ jobs:
             echo "Running commands on the Droplet"
             cd /root/main
             remote_repo="https://Animels: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@github.com/Animels/minecraft-actions.git"
-            git pull "$remote_repo" main
+            git pull "$remote_repo" main --force
           EOF
 
       - name: Start installation if installer
