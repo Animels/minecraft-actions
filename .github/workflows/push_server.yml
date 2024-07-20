@@ -36,5 +36,6 @@ jobs:
             git add ./server.properties
             git add ./whitelist.json
             git commit -m "Pushing from server"
+            git pull "$remote_repo"
             git push "$remote_repo"
           EOF
