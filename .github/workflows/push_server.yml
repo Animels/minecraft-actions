@@ -1,0 +1,31 @@
+name: Push server files to git
+
+on:
+  workflow_dispatch:
+    inputs:
+      path:
+        description: 'Pushes server files to git'
+        required: true
+        type: boolean
+
+jobs:
+  purge_path:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
+
+      - name: Purge files from /root
+        run: |
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+            cd /root/main
+
+            git add .
+            git commit -m "Pushing from server"
+            git push
+          EOF
