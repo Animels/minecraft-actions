@@ -65,8 +65,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/main
-            file=$(find forge*installer.jar)
-            echo "FILE: $file"
+            installationFile=$(find forge*installer.jar)
+            echo "installationFile: $installationFile"
 
             java -jar ./"$file" --installServer
 
@@ -75,6 +75,8 @@ jobs:
             java -jar ./"$mcServerFile"
 
             echo "eula=true" > eula.txt
+
+            rm ./"$installationFile"
           EOF
           
 
