@@ -18,6 +18,11 @@ on:
         required: false
         default: false
         type: boolean
+      is_reset:
+        description: 'Reset files to last branch?'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   fetch_files_from_latest:
@@ -42,7 +47,7 @@ jobs:
 
             git add .
             git commit -m "Committed before pull"
-            git pull "$remote_repo" main 
+            git pull "$remote_repo" main --no-ff
           EOF
 
       - name: Rebase on main
@@ -59,46 +64,58 @@ jobs:
             git rebase --skip
           EOF
 
-      - name: Start installation if installer
-        if: ${{ github.event.inputs.is_installator }}
+      - name: Reset on last branch
+        if: ${{ github.event.inputs.is_reset == 'true' }}
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/main
-            file=$(forge*installer.jar)
+            git reset main/main --hard           
+          EOF
 
-            java -jar "$file" --installServer /root/main
+      - name: Start installation if installer
+        if: ${{ github.event.inputs.is_installator == 'true' }}
+        run: |
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+            echo "Running commands on the Droplet"
+            cd /root/main
+            installationFile=$(find forge*installer.jar)
+            echo "installationFile: $installationFile"
 
-            mcServerFile=$(minecraft_server*.jar)
-            java -jar ./"$mcServerFile"
-
+            java -jar ./"$installationFile" --installServer
             echo "eula=true" > eula.txt
+            rm ./"$installationFile"*
           EOF
           
 
-      - name: Start server
-        if: ${{ github.event.inputs.start_server }}
+      - name: Killing prev and start server
+        if: ${{ github.event.inputs.start_server == 'true' }}
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/main
+
+            echo "Killing any existing java process"
+            existing_pid=$(ps -e | grep java | awk '{print $1}')
+            kill -9 "$existing_pid"
+
+            echo "Starting server"
             FILE=$(ls forge* | head -n 1)
             chmod 7 ./$FILE
-            java -jar ./$FILE
+            nohup java -jar ./$FILE &
 
-            PID=$(cat process_id.txt)
+            PID=$(ps -e | grep java | awk '{print $1}')
             WAIT_TIME=60
 
+            echo "Spying on process"
             for ((i = 0 ; i < WAIT_TIME ; i++)); do
               if ps -p $PID > /dev/null; then
-                cp -r /root/tempMC/* /root/mainMC/
                 sleep 1
               else
-                cat /root/tempMC/logs/latest.log
                 exit 1
               fi
             done
-            echo "Server Process is still running after $WAIT_TIME seconds"
+            echo "Server Process($PID) is still running after $WAIT_TIME seconds"
           EOF
 
           
