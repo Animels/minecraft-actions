@@ -39,6 +39,9 @@ jobs:
             echo "Running commands on the Droplet"
             cd /root/main
             remote_repo="https://Animels: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@github.com/Animels/minecraft-actions.git"
+
+            git add .
+            git commit -m "Committed before pull"
             git pull "$remote_repo" main 
           EOF
 
@@ -49,11 +52,9 @@ jobs:
             echo "Running commands on the Droplet"
             cd /root/main
             remote_repo="https://Animels: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@github.com/Animels/minecraft-actions.git"
-
-            rm -r ./*
             
             git add .
-            git commit -m "Doesnt matter"
+            git commit -m "Committed before rebase"
             git rebase main
             git rebase --skip
           EOF
