@@ -24,6 +24,10 @@ on:
         default: false
         type: boolean
 
+env:
+  BASE_URL: https://api.curseforge.com
+  SSH_AUTH: root@206.189.84.101
+
 jobs:
   fetch_files_from_latest:
     runs-on: ubuntu-latest
@@ -40,7 +44,7 @@ jobs:
       - name: Pull from main
         if: ${{ github.event.inputs.is_rebase == 'false' }}
         run: |
-          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+          ssh -o StrictHostKeyChecking=no "$SSH_AUTH" << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/main
             remote_repo="https://Animels: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@github.com/Animels/minecraft-actions.git"
@@ -53,7 +57,7 @@ jobs:
       - name: Rebase on main
         if: ${{ github.event.inputs.is_rebase == 'true' }}
         run: |
-          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+          ssh -o StrictHostKeyChecking=no "$SSH_AUTH" << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/main
             remote_repo="https://Animels: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@github.com/Animels/minecraft-actions.git"
@@ -67,7 +71,7 @@ jobs:
       - name: Reset on last branch
         if: ${{ github.event.inputs.is_reset == 'true' }}
         run: |
-          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+          ssh -o StrictHostKeyChecking=no "$SSH_AUTH" << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/main
             git reset main/main --hard           
@@ -76,7 +80,7 @@ jobs:
       - name: Start installation if installer
         if: ${{ github.event.inputs.is_installator == 'true' }}
         run: |
-          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+          ssh -o StrictHostKeyChecking=no "$SSH_AUTH" << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/main
             installationFile=$(find forge*installer.jar)
@@ -91,7 +95,7 @@ jobs:
       - name: Killing prev and start server
         if: ${{ github.event.inputs.start_server == 'true' }}
         run: |
-          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+          ssh -o StrictHostKeyChecking=no "$SSH_AUTH" << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/main
 
