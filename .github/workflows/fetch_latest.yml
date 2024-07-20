@@ -70,7 +70,7 @@ jobs:
 
             java -jar ./"$installationFile" --installServer
             echo "eula=true" > eula.txt
-            rm ./"$installationFile"
+            rm ./"$installationFile"*
           EOF
           
 
