@@ -42,7 +42,7 @@ jobs:
 
             git add .
             git commit -m "Committed before pull"
-            git pull "$remote_repo" main 
+            git pull "$remote_repo" main --no-ff
           EOF
 
       - name: Rebase on main
