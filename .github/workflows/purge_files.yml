@@ -14,6 +14,9 @@ on:
         default: false
         type: boolean
 
+env:
+  SSH_AUTH: root@206.189.84.101
+
 jobs:
   purge_path:
     runs-on: ubuntu-latest
@@ -36,11 +39,11 @@ jobs:
 
       - name: Copy .env file to Droplet
         run: |
-          scp -o StrictHostKeyChecking=no .env root@206.189.84.101:/root/
+          scp -o StrictHostKeyChecking=no .env "$SSH_AUTH":/root/
 
       - name: Purge files from /root
         run: |
-          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+          ssh -o StrictHostKeyChecking=no "$SSH_AUTH" <<'EOF'
             source /root/.env
             if [[ "$IS_GLOB" ]]; then
               rm "$INPUT_PATH"/*
