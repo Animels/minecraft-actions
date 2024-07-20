@@ -26,6 +26,7 @@ jobs:
             cd /root/main
             remote_repo="https://Animels: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@github.com/Animels/minecraft-actions.git"
 
+            git add ./.gitignore
             git add ./forge*
             git add ./minecraft*
             git add ./config
@@ -35,7 +36,8 @@ jobs:
             git add ./ops.json
             git add ./server.properties
             git add ./whitelist.json
-            git commit -m "Pushing from server"
+            git pull "$remote_repo"
             git merge "$remote_repo"
+            git commit -m "Pushing from server"
             git push "$remote_repo"
           EOF
