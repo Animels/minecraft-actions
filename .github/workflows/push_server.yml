@@ -25,7 +25,15 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
             cd /root/main
 
-            git add .
+            git add ./forge*
+            git add ./minecraft*
+            git add ./config
+            git add ./mods
+            git add ./resourcepacks
+            git add ./scripts
+            git add ./ops.json
+            git add ./server.properties
+            git add ./whitelist.json
             git commit -m "Pushing from server"
             git push
           EOF
