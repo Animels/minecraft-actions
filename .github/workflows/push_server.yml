@@ -8,6 +8,9 @@ on:
         required: true
         type: boolean
 
+env: 
+  SSH_AUTH: root@206.189.84.101
+
 jobs:
   purge_path:
     runs-on: ubuntu-latest
@@ -22,7 +25,7 @@ jobs:
 
       - name: Addinf, committing, pushing
         run: |
-          ssh -o StrictHostKeyChecking=no root@206.189.84.101 <<'EOF'
+          ssh -o StrictHostKeyChecking=no "$SSH_AUTH" <<'EOF'
             cd /root/main
             remote_repo="https://Animels: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@github.com/Animels/minecraft-actions.git"
 
