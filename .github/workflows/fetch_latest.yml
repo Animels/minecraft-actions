@@ -54,6 +54,7 @@ jobs:
             
             git add .
             git commit -m "Doesnt matter"
+            git rebase main
             git rebase --skip
           EOF
 
