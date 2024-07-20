@@ -250,18 +250,3 @@ jobs:
             echo "There are some mods that cannot be downloaded via API, download them manually. List of mods: $(cat $notAccessibleModsFile)"
             rm -r "$WORK_PATH"/*
           EOF
-
-      - name: Start server if required
-        if: ${{ startsWith(github.event.inputs.start_server, true)  }}
-        run: |
-          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
-            source /root/.env
-            echo "Running commands on the Droplet"
-            cd "$SERVER_PATH"
-            FILE=$(ls forge* | head -n 1)
-            chmod 7 ./$FILE
-            java -jar ./$FILE
-          EOF
-      
-
-    
