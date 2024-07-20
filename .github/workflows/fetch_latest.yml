@@ -3,6 +3,10 @@ name: Fetch from latest
 on:
   workflow_dispatch:
     inputs:
+      is_rebase:
+        description: 'Rebase on main?'
+        required: false
+        type: boolean
       start_server:
         description: 'Start server'
         required: false
@@ -26,12 +30,23 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
 
       - name: Pull from main
+        if: inputs.is_rebase == 'false'
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/main
             remote_repo="https://Animels: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@github.com/Animels/minecraft-actions.git"
-            git pull "$remote_repo" main --force
+            git pull "$remote_repo" main 
+          EOF
+
+      - name: Rebase on main
+        if: inputs.is_rebase == 'true'
+        run: |
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+            echo "Running commands on the Droplet"
+            cd /root/main
+            remote_repo="https://Animels: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@github.com/Animels/minecraft-actions.git"
+            git rebase main
           EOF
 
       - name: Start installation if installer
