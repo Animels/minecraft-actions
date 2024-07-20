@@ -18,6 +18,11 @@ on:
         required: false
         default: false
         type: boolean
+      is_reset:
+        description: 'Reset files to last branch?'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   fetch_files_from_latest:
@@ -57,6 +62,15 @@ jobs:
             git commit -m "Committed before rebase"
             git rebase main
             git rebase --skip
+          EOF
+
+      - name: Reset on last branch
+        if: ${{ github.event.inputs.is_reset == 'true' }}
+        run: |
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+            echo "Running commands on the Droplet"
+            cd /root/main
+            git reset --hard            
           EOF
 
       - name: Start installation if installer
