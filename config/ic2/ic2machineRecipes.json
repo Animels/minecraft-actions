@@ -126,7 +126,20 @@
   "ic2exprecipe_Tin Dust__2": true,
   "ic2exprecipe_Iron Dust__2": true,
   "ic2exprecipe_Gold Dust__2": true,
-  "ic2exprecipe_Silver Dust__2": true
+  "ic2exprecipe_Silver Dust__2": true,
+  "ic2exprecipe_Certus Quartz Dust_": true,
+  "ic2exprecipe_Nether Quartz Dust_": true,
+  "ic2exprecipe_Nether Quartz Dust__1": true,
+  "ic2exprecipe_Fluix Dust_": true,
+  "ic2exprecipe_Pulverized Aluminum_": true,
+  "item.itemDustCoal": true,
+  "item.itemDustIron": true,
+  "item.itemDustGold": true,
+  "item.itemDustSilver": true,
+  "item.itemDustCopper": true,
+  "item.itemDustBronze": true,
+  "item.itemDustTin": true,
+  "item.itemFlour_-1537062357": true
  },
  "extractor": {
   "item.coal_764578481": true,
@@ -186,7 +199,9 @@
   "item.itemPartPellet_7915127": true,
   "item.potion_441693419": true,
   "ic2exprecipe_Titanium Dust_": true,
-  "pipeSealant": true
+  "pipeSealant": true,
+  "item.potion_441701475": true,
+  "item.iridiumIngot_-610845883": true
  },
  "massfabricatorAmplifier": {
   "ScrapAmplifier": true,
@@ -320,7 +335,9 @@
   "ingotRecycling_ingotCorrupted": true,
   "ingotRecycling_ingot_dark_soularium": true,
   "ingotRecycling_ingotNaturalAluminum": true,
-  "ingotRecycling_ingotDesh": true
+  "ingotRecycling_ingotDesh": true,
+  "ingotRecycling_ingotNetherite": true,
+  "ingotRecycling_ingotAncientDebris": true
  },
  "sawmill": {
   "tile.wood.oak_-867074482": true,
@@ -408,6 +425,9 @@
   "tile.redwoods.fir_planks_To_Sticks_-1765933512_1": true,
   "tile.traverse:fir_planks_To_Sticks_1834480565": true,
   "tile.log.jungle_-1814706450": true,
-  "item.minecraft:melon_-1083706285": true
+  "item.minecraft:melon_-1083706285": true,
+  "tile.oe.palm_planks_825010504": true,
+  "tile.oe.palm_planks_To_Sticks_-2121764484": true,
+  "item.melon_-1083706285": true
  }
 }
