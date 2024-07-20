@@ -1,15 +1,19 @@
-name: Copy files from main branch and start forge
+name: Fetch from latest
 
 on:
   workflow_dispatch:
     inputs:
-      publish:
-        description: 'Update whole server files'
+      start_server:
+        description: 'Start server'
+        required: false
+        type: boolean
+      is_installator:
+        description: 'Is file on git an installer?'
         required: false
         type: boolean
 
 jobs:
-  start_server_from_latest:
+  fetch_files_from_latest:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,21 +25,42 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
 
-      - name: Copy files from main branch and start forge
+      - name: Pull from main
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
-            cd /root/tempMC
+            cd /root/main
             remote_repo="https://Animels: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@github.com/Animels/minecraft-actions.git"
             git pull "$remote_repo" main
+          EOF
+
+      - name: Start installation if installer
+        if: ${{ github.event.inputs.is_installator }}
+        run: |
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+            echo "Running commands on the Droplet"
+            cd /root/main
+            file=$(forge*installer.jar)
+
+            java -jar "$file" --installServer /root/main
+
+            mcServerFile=$(minecraft_server*.jar)
+            java -jar ./"$mcServerFile"
+
+            echo "eula=true" > eula.txt
+          EOF
+          
+
+      - name: Start server
+        if: ${{ github.event.inputs.start_server }}
+        run: |
+          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
+            echo "Running commands on the Droplet"
+            cd /root/main
             FILE=$(ls forge* | head -n 1)
             chmod 7 ./$FILE
             java -jar ./$FILE
-          EOF
 
-      - name: Wait and check process
-        run: |
-          ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             PID=$(cat process_id.txt)
             WAIT_TIME=60
 
@@ -48,12 +73,8 @@ jobs:
                 exit 1
               fi
             done
-
             echo "Server Process is still running after $WAIT_TIME seconds"
           EOF
 
-    
-          
-          
           
           
