@@ -6,14 +6,17 @@ on:
       is_rebase:
         description: 'Rebase on main?'
         required: false
-        type: boolean
-      start_server:
-        description: 'Start server'
-        required: false
+        default: false
         type: boolean
       is_installator:
         description: 'Is file on git an installer?'
         required: false
+        type: boolean
+        default: false
+      start_server:
+        description: 'Start server?'
+        required: false
+        default: false
         type: boolean
 
 jobs:
