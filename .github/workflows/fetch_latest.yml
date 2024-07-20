@@ -74,12 +74,18 @@ jobs:
           EOF
           
 
-      - name: Start server
+      - name: Killing prev and start server
         if: ${{ github.event.inputs.start_server }}
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
             cd /root/main
+
+            echo "Killing any existing java process"
+            existing_pid=$(ps -e | grep java | awk '{print $1}')
+            kill -9 "$existing_pid"
+
+            echo "Starting server"
             FILE=$(ls forge* | head -n 1)
             chmod 7 ./$FILE
             java -jar ./$FILE &
@@ -94,7 +100,7 @@ jobs:
                 exit 1
               fi
             done
-            echo "Server Process/($PID/) is still running after $WAIT_TIME seconds"
+            echo "Server Process($PID) is still running after $WAIT_TIME seconds"
           EOF
 
           
