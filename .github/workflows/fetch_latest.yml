@@ -60,7 +60,7 @@ jobs:
           EOF
 
       - name: Start installation if installer
-        if: ${{ github.event.inputs.is_installator }}
+        if: ${{ github.event.inputs.is_installator == 'true' }}
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
@@ -75,7 +75,7 @@ jobs:
           
 
       - name: Killing prev and start server
-        if: ${{ github.event.inputs.start_server }}
+        if: ${{ github.event.inputs.start_server == 'true' }}
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
