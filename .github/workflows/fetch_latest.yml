@@ -33,7 +33,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_DO_DROPLET }}
 
       - name: Pull from main
-        if: inputs.is_rebase == 'false'
+        if: ${{ github.event.inputs.is_rebase == 'false' }}
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
@@ -43,7 +43,7 @@ jobs:
           EOF
 
       - name: Rebase on main
-        if: inputs.is_rebase == 'true'
+        if: ${{ github.event.inputs.is_rebase == 'true' }}
         run: |
           ssh -o StrictHostKeyChecking=no root@206.189.84.101 << 'EOF'
             echo "Running commands on the Droplet"
