@@ -43,6 +43,7 @@ jobs:
             cd /root/main
             remote_repo="https://Animels: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@github.com/Animels/minecraft-actions.git"
 
+            git branch "$VERSION_NAME"
             git checkout "$VERSION_NAME" 
             
             git add .
