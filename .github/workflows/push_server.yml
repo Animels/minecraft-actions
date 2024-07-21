@@ -33,16 +33,7 @@ jobs:
             git pull "$remote_repo"
             git merge "$remote_repo" --no-ff --strategy-option theirs
 
-            git add ./.gitignore
-            git add ./forge*
-            git add ./minecraft*
-            git add ./config
-            git add ./mods
-            git add ./resourcepacks
-            git add ./scripts
-            git add ./ops.json
-            git add ./server.properties
-            git add ./whitelist.json
+            git add .
             git commit -a -m "Pushing from server"
             git push "$remote_repo"
           EOF
